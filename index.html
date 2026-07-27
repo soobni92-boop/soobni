@@ -25,13 +25,18 @@ body.ready{ opacity:1; }
   position:absolute; top:0; bottom:0; left:23%; width:55%;
   background-image:url('assets/soop-noir-lounge.webp');
   background-repeat:no-repeat; background-size:cover; background-position:64% 50%;
-  box-shadow:0 0 90px rgba(8,4,3,.9);
+  box-shadow:0 0 90px 26px var(--ink);
 }
 .c4-photo::after{
   content:''; position:absolute; inset:0;
-  background:linear-gradient(90deg,var(--ink) 0,transparent 20% 78%,var(--ink) 100%);
+  background:linear-gradient(90deg,var(--ink) 0,rgba(0,0,0,0) 26%,rgba(0,0,0,0) 74%,var(--ink) 100%);
 }
-body.day .c4-photo{ filter:saturate(.85) brightness(1.06); }
+body.day .c4-photo{ filter:saturate(.88) brightness(1.05) contrast(.94); }
+/* 낮 모드: 사진이 종이 위에 검은 덩어리로 뜨지 않게 밝은 베일을 한 겹 */
+body.day .c4-photo::after{
+  background:
+    linear-gradient(90deg,var(--ink) 0,rgba(239,230,225,.34) 30%,rgba(239,230,225,.34) 70%,var(--ink) 100%);
+}
 
 .c4-frame{ position:absolute; z-index:1; inset:3.4vh 2.8vw; border:1px solid var(--line); pointer-events:none; }
 
