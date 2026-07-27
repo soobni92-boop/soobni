@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0c0706">
+<title>업보 · 숩니찡</title>
+<meta name="description" content="SOOBNIJJING OFFICIAL — 업보">
+<meta property="og:title" content="업보 · 숩니찡 NOIR SALON">
+<meta property="og:description" content="보다 보면 숩며든다.">
+<link rel="icon" type="image/jpeg" href="https://profile.img.sooplive.co.kr/LOGO/br/breezy25/breezy25.jpg">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<script>if(localStorage.getItem('theme')==='light')document.body.classList.add('day');</script>
+<div class="mast"><div class="mast-in">
+  <a class="nav-logo" href="../"><b data-hook="name-kr">숩니찡</b><span data-hook="name-en">SOOBNIJJING</span></a>
+  <nav class="nm">
+    <a href="../">Cover<b>메인</b></a>
+    <a href="../profile/">Dossier<b>프로필</b></a>
+    <a href="../schedule/">Agenda<b>일정</b></a>
+    <a href="../notice/">Bulletin<b>공지</b></a>
+    <a href="./" class="act">Ledger<b>업보</b></a>
+    <a href="../diary/">Notes<b>일기</b></a>
+    <a href="../dress/">Atelier<b>옷장</b></a>
+  </nav>
+  <div class="mast-tools">
+    <div class="dk" title="낮 / 밤 전환">NIGHT<span class="sw"><i></i></span>DAY</div>
+    <button class="ask" onclick="openAsk()">✉ SEND</button>
+  </div>
+</div></div>
+<div class="shell">
+<div class="pagehero">
+  <div class="ph-main">
+    <div class="kicker"><i></i><span>FILE 04 · LEDGER</span></div>
+    <div class="ph-kr">업보 장부</div>
+    <div class="ph-title">LED<span>GER</span></div>
+    <p class="ph-sub">단골들이 달아둔 외상 장부. 이름을 누르면 내역이 펼쳐집니다.</p>
+    <div class="ghost">04</div>
+  </div>
+  <div class="ph-side">
+    <div class="ph-meta">SOOBNIJJING<br><b>NOIR SALON</b> · ISSUE 04<br>MEMBERS ONLY</div>
+    <img class="ph-mascot js-mascot" src="../assets/mascot.png" alt="" aria-hidden="true">
+  </div>
+</div>
+<div class="card">
+  <div class="upbo-bar">
+    <input class="search-box" id="search" placeholder="닉네임 또는 아이디로 찾기">
+    <span class="upbo-update" id="update-date"></span>
+  </div>
+  <div class="viewer-grid" id="grid"><div class="spinner"></div></div>
+</div>
+</div><!-- /shell -->
+
+<div class="marquee" aria-hidden="true">
+  <div>
+    <span>보다 보면 숩며든다 <b>✦</b> SOOBNIJJING NOIR SALON <b>✦</b> 아무래도~ <b>✦</b> 찡구 ONLY <b>✦</b>&nbsp;</span>
+    <span>보다 보면 숩며든다 <b>✦</b> SOOBNIJJING NOIR SALON <b>✦</b> 아무래도~ <b>✦</b> 찡구 ONLY <b>✦</b>&nbsp;</span>
+  </div>
+</div>
+
+<footer>
+  © 2026 SOOBNIJJING OFFICIAL<br>
+  <span class="fkr" data-hook="footer-line">비즈니스 문의 — 상단 ✉ SEND 버튼을 이용해 주세요</span>
+</footer>
+
+<div class="askmask" id="askmask">
+  <div class="askmodal">
+    <div class="mk">SEND A SIGNAL</div>
+    <h3>문의하기</h3>
+    <p>숩니찡에게 하고 싶은 말을 남겨주세요. (익명 · 관리자만 확인)</p>
+    <textarea id="askmsg" placeholder="문의 내용을 적어주세요..."></textarea>
+    <div class="askbtns">
+      <button class="no" onclick="closeAsk()">CANCEL</button>
+      <button class="yes" onclick="sendAsk()">TRANSMIT ↗</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<div class="ov" id="ov" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-top" id="modal-top"></div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="../supabase.js"></script>
+<script src="../site.js"></script>
+<script>
+var viewers = [], types = [], counts = [];
+
+function viewerTotal(vid){
+  return counts.filter(function(c){ return c.viewer_id === vid && c.count > 0; })
+               .reduce(function(s,c){ return s + c.count; }, 0);
+}
+
+function render(list){
+  var grid = document.getElementById('grid');
+  if(!list.length){
+    grid.innerHTML = '<div style="grid-column:1/-1"><div class="empty"><b>NO GUEST</b>등록된 손님이 없어요</div></div>';
+    return;
+  }
+  grid.innerHTML = list.map(function(v){
+    var av = NOIR.soopAvatar(v.soop_id);
+    var ini = (v.nickname || '?').charAt(0);
+    var avHtml = av
+      ? '<img class="viewer-av" src="' + av + '" referrerpolicy="no-referrer" onerror="this.outerHTML=\'<div class=&quot;viewer-av-fb&quot;>' + NOIR.esc(ini) + '</div>\'">'
+      : '<div class="viewer-av-fb">' + NOIR.esc(ini) + '</div>';
+    return '<div class="viewer-card" onclick="openModal(' + v.id + ')">' + avHtml
+      + '<div class="viewer-nick">' + NOIR.esc(v.nickname) + '</div>'
+      + '<div class="viewer-id">' + (v.soop_id ? NOIR.esc(v.soop_id) : '&nbsp;') + '</div>'
+      + '<span class="viewer-total">TAB ' + viewerTotal(v.id) + '</span></div>';
+  }).join('');
+}
+
+function openModal(vid){
+  var v = viewers.filter(function(x){ return x.id === vid; })[0];
+  if(!v) return;
+  var av = NOIR.soopAvatar(v.soop_id);
+  var ini = (v.nickname || '?').charAt(0);
+  var avHtml = av
+    ? '<img class="modal-av" src="' + av + '" referrerpolicy="no-referrer" onerror="this.outerHTML=\'<div class=&quot;modal-av-fb&quot;>' + NOIR.esc(ini) + '</div>\'">'
+    : '<div class="modal-av-fb">' + NOIR.esc(ini) + '</div>';
+  document.getElementById('modal-top').innerHTML = avHtml
+    + '<div><div class="modal-nick">' + NOIR.esc(v.nickname) + '</div>'
+    + (v.soop_id ? '<div class="modal-id">' + NOIR.esc(v.soop_id) + '</div>' : '') + '</div>'
+    + '<button class="modal-x" onclick="closeModal()">✕</button>';
+  var my = {};
+  counts.filter(function(c){ return c.viewer_id === vid; }).forEach(function(c){ my[c.type_id] = c.count; });
+  var rows = types.filter(function(t){ return (my[t.id]||0) > 0; }).map(function(t){
+    return '<div class="upbo-row"><span class="nm2">' + NOIR.esc(t.name) + '</span>'
+      + (t.category === '이벤트' ? '<span class="ev2">EVENT</span>' : '')
+      + '<span class="ct">×' + my[t.id] + '</span></div>';
+  }).join('');
+  document.getElementById('modal-body').innerHTML = rows || '<div class="modal-empty">아직 달아둔 외상이 없어요</div>';
+  if(v.memo) document.getElementById('modal-body').innerHTML += '<div class="m-desc" style="margin:16px 0 0;padding-left:0;padding-right:0">' + NOIR.esc(v.memo) + '</div>';
+  document.getElementById('ov').classList.add('show');
+}
+function closeModal(){ document.getElementById('ov').classList.remove('show'); }
+
+NOIR.boot({ after: async function(){
+  try {
+    var r = await Promise.all([
+      fetchAll('viewers',     { order:'sort_order', asc:true }),
+      fetchAll('upbo_types',  { order:'sort_order', asc:true }),
+      fetchAll('upbo_counts', { order:'id', asc:true })
+    ]);
+    viewers = r[0]; types = r[1]; counts = r[2];
+  } catch(e){ viewers = []; types = []; counts = []; }
+  var latest = counts.reduce(function(m,c){ return (c.updated_at && c.updated_at > m) ? c.updated_at : m; }, '');
+  document.getElementById('update-date').textContent = latest ? 'LAST ENTRY ' + latest.slice(0,10) : '';
+  render(viewers);
+  document.getElementById('search').addEventListener('input', function(e){
+    var q = e.target.value.trim().toLowerCase();
+    render(viewers.filter(function(v){
+      return (v.nickname||'').toLowerCase().indexOf(q) >= 0 || (v.soop_id||'').toLowerCase().indexOf(q) >= 0;
+    }));
+  });
+}});
+</script>
+<script src="../fx.js"></script>
+</body>
+</html>

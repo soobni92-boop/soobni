@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0c0706">
+<title>일정 · 숩니찡</title>
+<meta name="description" content="SOOBNIJJING OFFICIAL — 일정">
+<meta property="og:title" content="일정 · 숩니찡 NOIR SALON">
+<meta property="og:description" content="보다 보면 숩며든다.">
+<link rel="icon" type="image/jpeg" href="https://profile.img.sooplive.co.kr/LOGO/br/breezy25/breezy25.jpg">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<script>if(localStorage.getItem('theme')==='light')document.body.classList.add('day');</script>
+<div class="mast"><div class="mast-in">
+  <a class="nav-logo" href="../"><b data-hook="name-kr">숩니찡</b><span data-hook="name-en">SOOBNIJJING</span></a>
+  <nav class="nm">
+    <a href="../">Cover<b>메인</b></a>
+    <a href="../profile/">Dossier<b>프로필</b></a>
+    <a href="./" class="act">Agenda<b>일정</b></a>
+    <a href="../notice/">Bulletin<b>공지</b></a>
+    <a href="../work/">Ledger<b>업보</b></a>
+    <a href="../diary/">Notes<b>일기</b></a>
+    <a href="../dress/">Atelier<b>옷장</b></a>
+  </nav>
+  <div class="mast-tools">
+    <div class="dk" title="낮 / 밤 전환">NIGHT<span class="sw"><i></i></span>DAY</div>
+    <button class="ask" onclick="openAsk()">✉ SEND</button>
+  </div>
+</div></div>
+<div class="shell">
+<div class="pagehero">
+  <div class="ph-main">
+    <div class="kicker"><i></i><span>FILE 02 · AGENDA</span></div>
+    <div class="ph-kr">방송 일정</div>
+    <div class="ph-title">AGEN<span>DA</span></div>
+    <p class="ph-sub">이번 달 영업일. 시간은 랜덤이라 오방공을 함께 확인해 주세요.</p>
+    <div class="ghost">02</div>
+  </div>
+  <div class="ph-side">
+    <div class="ph-meta">SOOBNIJJING<br><b>NOIR SALON</b> · ISSUE 04<br>MEMBERS ONLY</div>
+    <img class="ph-mascot js-mascot" src="../assets/mascot.png" alt="" aria-hidden="true">
+  </div>
+</div>
+<div class="cal">
+  <div class="cal-head">
+    <button class="cal-nav" onclick="changeMonth(-1)">‹</button>
+    <span class="cal-title" id="calTitle"></span>
+    <button class="cal-nav" onclick="changeMonth(1)">›</button>
+  </div>
+  <div class="cal-grid" id="calGrid"></div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="no">A</span>Upcoming <em>다가오는 일정</em></div>
+  <div id="upcoming"><div class="spinner"></div></div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="no">B</span>Weekly Table <em>고정 요일</em></div>
+  <div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px" id="weekBox"></div>
+</div>
+</div><!-- /shell -->
+
+<div class="marquee" aria-hidden="true">
+  <div>
+    <span>보다 보면 숩며든다 <b>✦</b> SOOBNIJJING NOIR SALON <b>✦</b> 아무래도~ <b>✦</b> 찡구 ONLY <b>✦</b>&nbsp;</span>
+    <span>보다 보면 숩며든다 <b>✦</b> SOOBNIJJING NOIR SALON <b>✦</b> 아무래도~ <b>✦</b> 찡구 ONLY <b>✦</b>&nbsp;</span>
+  </div>
+</div>
+
+<footer>
+  © 2026 SOOBNIJJING OFFICIAL<br>
+  <span class="fkr" data-hook="footer-line">비즈니스 문의 — 상단 ✉ SEND 버튼을 이용해 주세요</span>
+</footer>
+
+<div class="askmask" id="askmask">
+  <div class="askmodal">
+    <div class="mk">SEND A SIGNAL</div>
+    <h3>문의하기</h3>
+    <p>숩니찡에게 하고 싶은 말을 남겨주세요. (익명 · 관리자만 확인)</p>
+    <textarea id="askmsg" placeholder="문의 내용을 적어주세요..."></textarea>
+    <div class="askbtns">
+      <button class="no" onclick="closeAsk()">CANCEL</button>
+      <button class="yes" onclick="sendAsk()">TRANSMIT ↗</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<div class="ov" id="ov" onclick="if(event.target===this)closeModal()">
+  <div class="modal" id="modal-body"></div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="../supabase.js"></script>
+<script src="../site.js"></script>
+<script>
+var currentYear, currentMonth, allSchedule = [];
+var DAYS = ['일','월','화','수','목','금','토'];
+var DOW_EN = ['MON','TUE','WED','THU','FRI','SAT','SUN'];
+function kind(t){ return t === '휴방' ? 'off' : 'on'; }
+function colorClass(s){ return 'c-' + (s.color || (kind(s.type)==='off' ? 'pink' : 'green')); }
+
+function changeMonth(d){
+  currentMonth += d;
+  if(currentMonth > 11){ currentMonth = 0; currentYear++; }
+  if(currentMonth < 0){ currentMonth = 11; currentYear--; }
+  renderCalendar();
+  if(typeof initIframeResize === 'function') initIframeResize();
+}
+
+function renderCalendar(){
+  document.getElementById('calTitle').textContent = currentYear + '. ' + String(currentMonth+1).padStart(2,'0');
+  var grid = document.getElementById('calGrid');
+  var first = new Date(currentYear, currentMonth, 1);
+  var last  = new Date(currentYear, currentMonth+1, 0);
+  var startDay = first.getDay();
+  var today = new Date();
+  var html = DAYS.map(function(d){ return '<div class="cal-dow">' + d + '</div>'; }).join('');
+  var prevLast = new Date(currentYear, currentMonth, 0).getDate();
+  for(var i = startDay-1; i >= 0; i--) html += '<div class="cal-cell other"><span class="cal-date">' + (prevLast-i) + '</span></div>';
+  for(var d = 1; d <= last.getDate(); d++){
+    var dateStr = currentYear + '-' + String(currentMonth+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+    var isToday = today.getFullYear()===currentYear && today.getMonth()===currentMonth && today.getDate()===d;
+    var events = allSchedule.filter(function(s){ return s.date === dateStr; });
+    var hl = events.some(function(e){ return e.highlight; });
+    var evHtml = events.map(function(e){
+      var label = (e.time ? e.time + ' ' : '') + (e.title || (kind(e.type)==='off' ? '휴방' : '방송'));
+      return '<div class="ev ' + colorClass(e) + '">' + NOIR.esc(label) + '</div>';
+    }).join('');
+    var cls = 'cal-cell' + (isToday?' today':'') + (events.length?' has':'') + (hl?' hl':'');
+    var click = events.length ? ' onclick="openModal(\'' + dateStr + '\')"' : '';
+    html += '<div class="' + cls + '"' + click + '><span class="cal-date">' + d + '</span>' + evHtml + '</div>';
+  }
+  var total = startDay + last.getDate();
+  var rem = total % 7 === 0 ? 0 : 7 - (total % 7);
+  for(var j = 1; j <= rem; j++) html += '<div class="cal-cell other"><span class="cal-date">' + j + '</span></div>';
+  grid.innerHTML = html;
+}
+
+function renderUpcoming(){
+  var today = new Date(); today.setHours(0,0,0,0);
+  var ts = today.getFullYear() + '-' + String(today.getMonth()+1).padStart(2,'0') + '-' + String(today.getDate()).padStart(2,'0');
+  var up = allSchedule.filter(function(s){ return s.date >= ts; }).slice(0, 10);
+  var el = document.getElementById('upcoming');
+  if(!up.length){ el.innerHTML = '<div class="empty"><b>NO AGENDA</b>다가오는 일정이 없어요</div>'; return; }
+  el.innerHTML = up.map(function(s){
+    var dd = new Date(s.date + 'T00:00:00');
+    var off = kind(s.type) === 'off';
+    var times = [s.time, s.time2].filter(Boolean).join(' · ');
+    return '<div class="up-item" onclick="openModal(\'' + s.date + '\')">'
+      + '<div class="up-date">' + String(dd.getMonth()+1).padStart(2,'0') + '.' + String(dd.getDate()).padStart(2,'0') + ' (' + DAYS[dd.getDay()] + ')</div>'
+      + '<div class="up-info"><div class="up-title">' + NOIR.esc(s.title || (off ? '휴방' : '방송')) + '</div>'
+      + (times ? '<div class="up-time">' + NOIR.esc(times) + '</div>' : '') + '</div>'
+      + '<span class="up-badge' + (off ? ' off' : '') + '">' + (off ? 'CLOSED' : 'OPEN') + '</span></div>';
+  }).join('');
+}
+
+function renderWeek(){
+  var on = NOIR.val('days').split(',').map(function(s){ return s.trim(); });
+  var todayIdx = (new Date().getDay() + 6) % 7;
+  document.getElementById('weekBox').innerHTML = DOW_EN.map(function(d, i){
+    var live = on.indexOf(String(i)) >= 0;
+    return '<div style="border:1px solid ' + (i===todayIdx ? 'var(--brass)' : 'var(--line)') + ';padding:14px 6px;text-align:center">'
+      + '<div style="font-family:var(--micro);font-size:9px;font-weight:800;letter-spacing:.16em;color:' + (live ? 'var(--brass-lt)' : 'var(--tx3)') + '">' + d + '</div>'
+      + '<div style="font-size:11px;margin-top:8px;color:' + (live ? 'var(--paper)' : 'var(--tx3)') + '">' + (live ? 'OPEN' : 'REST') + '</div>'
+      + '<div style="font-size:10px;margin-top:5px;color:var(--tx3)">' + NOIR.esc(NOIR.val('wk-' + i)) + '</div></div>';
+  }).join('');
+}
+
+function openModal(dateStr){
+  var events = allSchedule.filter(function(s){ return s.date === dateStr; });
+  if(!events.length) return;
+  var dd = new Date(dateStr + 'T00:00:00');
+  var html = '<div class="m-date">' + dateStr + ' (' + DAYS[dd.getDay()] + ')</div>';
+  events.forEach(function(s){
+    var off = kind(s.type) === 'off';
+    html += '<div class="m-badge ' + (off ? 'c-pink' : '') + '">' + (off ? 'CLOSED · 휴방' : 'OPEN · 방송') + '</div>';
+    html += '<div class="m-part"><div class="pt">' + (s.time ? NOIR.esc(s.time) : '1부') + '</div><div class="pn">' + NOIR.esc(s.title || (off ? '휴방' : '방송')) + '</div></div>';
+    if(s.title2 || s.time2)
+      html += '<div class="m-part"><div class="pt">' + (s.time2 ? NOIR.esc(s.time2) : '2부') + '</div><div class="pn">' + NOIR.esc(s.title2 || '방송') + '</div></div>';
+    if(s.description) html += '<div class="m-desc">' + NOIR.esc(s.description) + '</div>';
+  });
+  html += '<button class="m-close" onclick="closeModal()">CLOSE</button>';
+  document.getElementById('modal-body').innerHTML = html;
+  document.getElementById('ov').classList.add('show');
+}
+function closeModal(){ document.getElementById('ov').classList.remove('show'); }
+
+NOIR.boot({ after: async function(){
+  var now = new Date();
+  currentYear = now.getFullYear(); currentMonth = now.getMonth();
+  try { allSchedule = await fetchAll('schedule', { order:'date', asc:true }); } catch(e){ allSchedule = []; }
+  renderCalendar(); renderUpcoming(); renderWeek();
+}});
+</script>
+<script src="../fx.js"></script>
+</body>
+</html>

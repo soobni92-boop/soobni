@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>🔐 숩니찡 ADMIN · NOIR SALON</title>
+<link rel="icon" type="image/jpeg" href="https://profile.img.sooplive.co.kr/LOGO/br/breezy25/breezy25.jpg">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0C0706; --ink-2:#130C0A; --paper:#F0DBDA;
+  --brass:#C87848; --brass-lt:#E39A6E; --rose:#FA3883;
+  --line:rgba(240,219,218,.26); --line-2:rgba(240,219,218,.13);
+  --tx2:rgba(240,219,218,.70); --tx3:rgba(240,219,218,.46);
+  --fill:rgba(240,219,218,.045); --fill-2:rgba(240,219,218,.085);
+  --disp:Georgia,'Noto Serif KR',serif;
+  --micro:'Helvetica Neue',Arial,'Noto Sans KR',sans-serif;
+  --body:'Noto Sans KR',Pretendard,sans-serif;
+}
+*{ box-sizing:border-box; }
+body{ margin:0; background:var(--ink); color:var(--paper); font-family:var(--body); font-size:13.5px; line-height:1.65; }
+a{ color:var(--brass-lt); }
+h1,h2,h3,p{ margin:0; }
+
+/* ── 로그인 ── */
+#gate{ position:fixed; inset:0; z-index:100; display:grid; place-items:center; background:var(--ink); padding:24px; }
+#gate .box{ width:min(380px,100%); border:1px solid var(--line); padding:34px 30px; text-align:center; }
+#gate .mk{ font-family:var(--micro); font-size:9px; font-weight:800; letter-spacing:.28em; color:var(--brass); }
+#gate h1{ font-family:var(--disp); font-size:30px; font-weight:400; margin:10px 0 6px; }
+#gate p{ color:var(--tx3); font-size:12px; margin-bottom:20px; }
+
+/* ── 레이아웃 ── */
+.wrap{ max-width:1140px; margin:0 auto; padding:26px 18px 80px; }
+.top{ border-bottom:1px solid var(--line); padding-bottom:18px; margin-bottom:20px; text-align:center; }
+.top .mk{ font-family:var(--micro); font-size:9px; font-weight:800; letter-spacing:.28em; color:var(--brass); }
+.top h1{ font-family:var(--disp); font-size:32px; font-weight:400; margin-top:6px; }
+.top .sub{ color:var(--tx3); font-size:11.5px; margin-top:4px; }
+.top .out{ margin-top:12px; }
+
+.tabs{ display:flex; flex-wrap:wrap; gap:0; margin-bottom:22px; }
+.tab{
+  padding:11px 16px; border:1px solid var(--line); margin:0 -1px -1px 0; background:transparent;
+  cursor:pointer; font-family:var(--micro); font-size:10px; font-weight:800; letter-spacing:.14em; color:var(--tx3);
+}
+.tab.active{ color:var(--brass-lt); border-color:var(--brass); position:relative; z-index:1; }
+.panel{ display:none; }
+.panel.active{ display:block; }
+
+.card{ border:1px solid var(--line); background:var(--fill); padding:22px; margin-bottom:18px; }
+.card-title{
+  display:flex; align-items:baseline; gap:10px; margin-bottom:16px; padding-bottom:11px;
+  border-bottom:1px solid var(--line-2);
+  font-family:var(--micro); font-size:10px; font-weight:800; letter-spacing:.22em; color:var(--brass-lt);
+}
+.card-title em{ font-family:var(--body); font-style:normal; font-size:11.5px; letter-spacing:0; color:var(--tx3); }
+
+.grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px 16px; }
+.grid3{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px 16px; }
+.full{ grid-column:1/-1; }
+.f label{
+  display:block; margin-bottom:5px;
+  font-family:var(--micro); font-size:9px; font-weight:800; letter-spacing:.16em; color:var(--brass);
+}
+.f .hint{ display:block; margin-top:5px; color:var(--tx3); font-size:11px; line-height:1.5; }
+.input,select.input,textarea.input{
+  width:100%; box-sizing:border-box; padding:10px 12px; border:1px solid var(--line);
+  background:rgba(240,219,218,.03); color:var(--paper); font-size:13px; font-family:var(--body);
+  outline:none; border-radius:0;
+}
+.input:focus{ border-color:var(--brass); }
+textarea.input{ min-height:92px; resize:vertical; line-height:1.6; }
+select.input{ appearance:none; }
+select.input option{ background:#1A100E; color:#F0DBDA; }
+
+.btn{
+  display:inline-block; padding:11px 20px; border:1px solid var(--line); background:transparent;
+  color:var(--paper); cursor:pointer; font-family:var(--micro); font-size:9.5px; font-weight:800; letter-spacing:.18em;
+}
+.btn:hover{ border-color:var(--brass); color:var(--brass-lt); }
+.btn.pri{ background:var(--rose); border-color:var(--rose); color:#fff; }
+.btn.pri:hover{ color:#fff; opacity:.9; }
+.btn.sm{ padding:7px 12px; font-size:9px; }
+.btn.del{ color:var(--rose); border-color:rgba(250,56,131,.4); }
+.savebar{ display:flex; gap:10px; align-items:center; margin:6px 0 26px; flex-wrap:wrap; }
+.savebar .note{ color:var(--tx3); font-size:11.5px; }
+
+.chk{ display:flex; flex-wrap:wrap; gap:8px; }
+.chk label{
+  display:flex; align-items:center; gap:6px; border:1px solid var(--line); padding:8px 12px;
+  cursor:pointer; font-family:var(--micro); font-size:10px; font-weight:800; letter-spacing:.12em; color:var(--tx2);
+}
+.chk input{ accent-color:var(--rose); }
+
+/* ── 표 ── */
+.table-wrap{ overflow-x:auto; border:1px solid var(--line-2); }
+.table-wrap table{ width:100%; border-collapse:collapse; min-width:560px; }
+.table-wrap th{
+  background:rgba(240,219,218,.07); padding:11px 12px; text-align:left; white-space:nowrap;
+  font-family:var(--micro); font-size:9px; font-weight:800; letter-spacing:.16em; color:var(--brass-lt);
+  border-bottom:1px solid var(--line);
+}
+.table-wrap td{ padding:11px 12px; border-bottom:1px solid var(--line-2); font-size:12.5px; vertical-align:middle; }
+.table-wrap th:last-child,.table-wrap td:last-child{ width:78px; text-align:center; white-space:nowrap; }
+.table-wrap tr:hover td{ background:var(--fill); }
+.tb-thumb{ width:38px; height:38px; object-fit:cover; border:1px solid var(--line); display:block; }
+.tb-empty{ padding:30px; text-align:center; color:var(--tx3); font-size:12.5px; }
+.pill{
+  display:inline-block; padding:2px 7px; border:1px solid var(--line);
+  font-family:var(--micro); font-size:8.5px; font-weight:800; letter-spacing:.14em; color:var(--tx2);
+}
+.pill.on{ border-color:var(--rose); color:var(--rose); }
+.pill.br{ border-color:var(--brass); color:var(--brass-lt); }
+
+/* ── 팔레트 ── */
+.pal{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+.pal-row{ display:grid; grid-template-columns:1fr; gap:8px; border:1px solid var(--line-2); padding:14px; }
+.pal-row .pl{ font-family:var(--micro); font-size:9px; font-weight:800; letter-spacing:.16em; color:var(--brass); }
+.pal-row .pd{ color:var(--tx3); font-size:11px; }
+.pal-in{ display:grid; grid-template-columns:52px 1fr; gap:10px; align-items:center; }
+.pal-in input[type=color]{ width:52px; height:38px; padding:0; border:1px solid var(--line); background:transparent; cursor:pointer; }
+.preview{ border:1px solid var(--line); padding:22px; margin-top:16px; }
+.preview .pv-t{ font-family:var(--disp); font-size:26px; }
+.preview .pv-k{ font-family:var(--micro); font-size:9px; font-weight:800; letter-spacing:.24em; }
+
+.toast{
+  position:fixed; left:50%; bottom:30px; transform:translate(-50%,16px); z-index:200;
+  padding:12px 22px; border:1px solid var(--brass); background:var(--ink-2); font-size:12.5px;
+  opacity:0; pointer-events:none; transition:opacity .25s,transform .25s;
+}
+.toast.show{ opacity:1; transform:translate(-50%,0); }
+
+@media (max-width:760px){
+  .grid,.grid3,.pal{ grid-template-columns:1fr; }
+  .tab{ flex:1 0 auto; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════ 로그인 ══════════ -->
+<div id="gate">
+  <div class="box">
+    <div class="mk">MEMBERS ONLY</div>
+    <h1>NOIR SALON</h1>
+    <p>관리자 비밀번호를 입력해 주세요</p>
+    <input class="input" id="pw" type="password" placeholder="비밀번호" onkeydown="if(event.key==='Enter')login()">
+    <div style="margin-top:12px"><button class="btn pri" style="width:100%" onclick="login()">ENTER ↗</button></div>
+  </div>
+</div>
+
+<div class="wrap" id="app" style="display:none">
+
+  <div class="top">
+    <div class="mk">SOOBNIJJING · CONTROL ROOM</div>
+    <h1>관리자 페이지</h1>
+    <div class="sub">여기서 고친 내용은 저장 즉시 사이트 전체에 반영됩니다</div>
+    <div class="out"><a class="btn sm" href="../" target="_blank">사이트 열기 ↗</a> <button class="btn sm" onclick="logout()">LOG OUT</button></div>
+  </div>
+
+  <div class="tabs" id="tabs">
+    <button class="tab active" data-tab="main">🏠 메인</button>
+    <button class="tab" data-tab="profile">🎀 프로필</button>
+    <button class="tab" data-tab="notice">📢 공지</button>
+    <button class="tab" data-tab="schedule">📅 일정</button>
+    <button class="tab" data-tab="work">⚡ 업보</button>
+    <button class="tab" data-tab="diary">📓 일기</button>
+    <button class="tab" data-tab="dress">👗 옷장</button>
+    <button class="tab" data-tab="ask">✉ 문의함</button>
+    <button class="tab" data-tab="theme">🎨 테마</button>
+  </div>
+
+  <!-- ══════════════════ 🏠 메인 ══════════════════ -->
+  <div class="panel active" id="tab-main">
+    <div class="savebar">
+      <button class="btn pri" onclick="saveProfile()">메인 · 프로필 저장</button>
+      <span class="note">메인/프로필 탭은 저장 버튼 하나로 함께 저장됩니다</span>
+    </div>
+
+    <div class="card">
+      <div class="card-title">01 · IDENTITY <em>기본 · 이미지</em></div>
+      <div class="grid">
+        <div class="f"><label>SOOP 아이디</label>
+          <input class="input" id="f-soop-id">
+          <span class="hint">방송국 주소 sooplive.com/station/<b>여기</b>. 프로필 사진이 자동으로 따라옵니다.</span></div>
+        <div class="f"><label>프로필 사진 직접 지정 (선택)</label>
+          <input class="input" id="f-avatar" placeholder="https://...jpg">
+          <span class="hint">비워두면 SOOP 프사 자동. 넣으면 이쪽이 우선합니다.</span></div>
+        <div class="f full"><label>커버 배경 사진 URL (선택)</label>
+          <input class="input" id="f-cover-img" placeholder="https://...jpg">
+          <span class="hint">메인 첫 화면 가운데 큰 사진. 비우면 기본 이미지(assets/soop-noir-lounge.webp). <b>가로형(16:9) 권장</b>, 인물이 오른쪽에 있으면 가장 잘 맞습니다.</span></div>
+        <div class="f full"><label>마스코트 이미지 URL (선택)</label>
+          <input class="input" id="f-mascot-img" placeholder="https://...png">
+          <span class="hint">배경이 뚫린 <b>투명 PNG</b>를 넣어주세요. 메인 커버·각 페이지 제목 옆·로딩화면에 함께 쓰입니다. 비우면 기본 악마날개 마스코트.</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">02 · COVER <em>메인 커버 문구</em></div>
+      <div class="grid3">
+        <div class="f"><label>왼쪽 머리글</label><input class="input" id="f-mast-left">
+          <span class="hint">커버 맨 위 왼쪽 (예: NOIR SALON)</span></div>
+        <div class="f"><label>이름 (한글)</label><input class="input" id="f-name-kr">
+          <span class="hint">커버 가운데 · 전 페이지 로고</span></div>
+        <div class="f"><label>오른쪽 호수</label><input class="input" id="f-mast-issue">
+          <span class="hint">예: ISSUE 04</span></div>
+        <div class="f"><label>이름 (영문)</label><input class="input" id="f-name-en">
+          <span class="hint">로고 아래 작은 영문</span></div>
+        <div class="f"><label>대문 글자 1행</label><input class="input" id="f-name-en1">
+          <span class="hint">커버 대형 글자 윗줄 (예: SOOPNI)</span></div>
+        <div class="f"><label>대문 글자 2행</label><input class="input" id="f-name-en2">
+          <span class="hint">아랫줄 — 테두리만 있는 글자 (예: JJING)</span></div>
+        <div class="f full"><label>에디션 라벨</label><input class="input" id="f-edition">
+          <span class="hint">대문 글자 위 작은 문구 (예: THE NIGHT EDITION)</span></div>
+        <div class="f full"><label>커버 문구</label><textarea class="input" id="f-cover-quote" style="min-height:70px"></textarea>
+          <span class="hint">줄바꿈하면 커버에서도 그대로 줄이 나뉩니다. 2줄 권장.</span></div>
+      </div>
+      <div class="grid" style="margin-top:16px">
+        <div class="f"><label>메타 1 라벨</label><input class="input" id="f-meta1-k"></div>
+        <div class="f"><label>메타 1 값</label><input class="input" id="f-meta1-v"></div>
+        <div class="f"><label>메타 2 라벨</label><input class="input" id="f-meta2-k"></div>
+        <div class="f"><label>메타 2 값</label><input class="input" id="f-meta2-v"></div>
+        <div class="f"><label>메타 3 라벨</label><input class="input" id="f-meta3-k"></div>
+        <div class="f"><label>메타 3 값</label><input class="input" id="f-meta3-v"></div>
+        <div class="f full"><span class="hint" style="display:block">커버 왼쪽 아래에 3줄로 들어가는 정보입니다. 라벨은 <b>짧은 영문 대문자</b>가 가장 잘 어울려요.</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">03 · WEEKLY AGENDA <em>주간 일정표</em></div>
+      <div class="f" style="margin-bottom:14px">
+        <label>방송 요일</label>
+        <div class="chk" id="daysBox"></div>
+        <span class="hint">체크한 요일이 커버·일정 페이지에서 <b>OPEN</b>으로 표시됩니다. (월=0 … 일=6)</span>
+      </div>
+      <div class="grid3" id="wkBox"></div>
+      <div class="grid" style="margin-top:16px">
+        <div class="f"><label>다음 방송 라벨</label><input class="input" id="f-next-label">
+          <span class="hint">예: NEXT TRANSMISSION</span></div>
+        <div class="f"><label>다음 방송 내용 (선택)</label><input class="input" id="f-next-value" placeholder="비우면 자동 계산">
+          <span class="hint">비워두면 <b>방송 요일 체크</b>를 보고 자동으로 다음 방송을 표시합니다.</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">04 · CHANNELS <em>링크 · 푸터</em></div>
+      <div class="grid">
+        <div class="f"><label>SOOP</label><input class="input" id="f-link-soop"></div>
+        <div class="f"><label>유튜브</label><input class="input" id="f-link-youtube"></div>
+        <div class="f"><label>X (트위터)</label><input class="input" id="f-link-x" placeholder="비우면 버튼이 숨겨집니다"></div>
+        <div class="f"><label>기타 링크</label><input class="input" id="f-link-etc" placeholder="비우면 버튼이 숨겨집니다"></div>
+        <div class="f"><label>기타 링크 이름</label><input class="input" id="f-link-etc-label">
+          <span class="hint">예: DISCORD, 마시멜로, 팬카페</span></div>
+        <div class="f"><label>푸터 문구</label><input class="input" id="f-footer-line">
+          <span class="hint">모든 하위 페이지 맨 아래 한 줄. 메일 주소를 적어도 좋아요.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════ 🎀 프로필 ══════════════════ -->
+  <div class="panel" id="tab-profile">
+    <div class="savebar">
+      <button class="btn pri" onclick="saveProfile()">메인 · 프로필 저장</button>
+      <span class="note">저장 후 프로필 페이지를 새로고침하면 바로 보입니다</span>
+    </div>
+
+    <div class="card">
+      <div class="card-title">01 · IDENTITY <em>신상 명세</em></div>
+      <div class="grid3">
+        <div class="f"><label>이름</label><input class="input" id="f-info-name"></div>
+        <div class="f"><label>팬 애칭</label><input class="input" id="f-info-fandom"></div>
+        <div class="f"><label>생일</label><input class="input" id="f-info-birth" placeholder="09-28">
+          <span class="hint">MM-DD 형식. 여기서 <b>생일 D-Day</b>가 자동 계산됩니다.</span></div>
+        <div class="f"><label>데뷔일</label><input class="input" id="f-info-debut" placeholder="2026-02-28">
+          <span class="hint">YYYY-MM-DD. 방송 며칠째인지 자동 계산됩니다.</span></div>
+        <div class="f"><label>MBTI</label><input class="input" id="f-info-mbti"></div>
+        <div class="f"><label>소속</label><input class="input" id="f-info-agency"></div>
+        <div class="f"><label>성별</label><input class="input" id="f-info-gender"></div>
+        <div class="f"><label>주요 콘텐츠</label><input class="input" id="f-info-content"></div>
+        <div class="f"><label>방송 주기</label><input class="input" id="f-info-schedule"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">02 · VOICE <em>한마디 · 소개</em></div>
+      <div class="grid">
+        <div class="f"><label>입버릇 / 캐치프레이즈</label><input class="input" id="f-catchphrase">
+          <span class="hint">프로필 상단 큰 따옴표 자리</span></div>
+        <div class="f"><label>한 줄 소개</label><input class="input" id="f-bio-short">
+          <span class="hint">프로필 사진 아래 띠에 얹힙니다</span></div>
+        <div class="f full"><label>자기소개 (여러 줄)</label><textarea class="input" id="f-about"></textarea>
+          <span class="hint">줄바꿈 그대로 반영됩니다. 3줄 정도가 가장 예뻐요.</span></div>
+        <div class="f full"><label>어록 (한 줄에 하나)</label><textarea class="input" id="f-quotes"></textarea>
+          <span class="hint">한 줄에 하나씩. 각각 따옴표 박스로 그려집니다.</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">03 · MENU <em>좋아함 · 싫어함</em></div>
+      <div class="grid">
+        <div class="f"><label>좋아함 1</label><input class="input" id="f-like1"></div>
+        <div class="f"><label>싫어함 1</label><input class="input" id="f-dislike1"></div>
+        <div class="f"><label>좋아함 2</label><input class="input" id="f-like2"></div>
+        <div class="f"><label>싫어함 2</label><input class="input" id="f-dislike2"></div>
+        <div class="f"><label>좋아함 3</label><input class="input" id="f-like3"></div>
+        <div class="f"><label>싫어함 3</label><input class="input" id="f-dislike3"></div>
+        <div class="f"><label>좋아함 4</label><input class="input" id="f-like4"></div>
+        <div class="f full"><span class="hint" style="display:block">비워둔 칸은 프로필 페이지에 아예 표시되지 않습니다.</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">04 · SIGNATURE <em>TMI · 태그</em></div>
+      <div class="grid">
+        <div class="f"><label>좋아하는 음식</label><input class="input" id="f-tmi-food"></div>
+        <div class="f"><label>주력 게임</label><input class="input" id="f-tmi-game"></div>
+        <div class="f"><label>노래</label><input class="input" id="f-tmi-song"></div>
+        <div class="f"><label>시그니처 동작 / 아이템</label><input class="input" id="f-tmi-item"></div>
+        <div class="f full"><label>특징 태그</label><input class="input" id="f-tags">
+          <span class="hint">쉼표(,)로 구분. 예: 하트, 달/밤하늘, 악마날개, 시크</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">05 · SPECS <em>능력치 · 마일스톤</em></div>
+      <div class="grid">
+        <div class="f"><label>능력치</label><textarea class="input" id="f-stats"></textarea>
+          <span class="hint">한 줄에 하나, <b>이름:숫자</b> 형식 (0~100). 예: <code>입담:92</code></span></div>
+        <div class="f"><label>마일스톤 / 목표</label><textarea class="input" id="f-milestones"></textarea>
+          <span class="hint">한 줄에 하나, <b>상태|내용</b> 형식. 예: <code>진행중|찡구 1,000명</code></span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">06 · RERUN <em>다시보기(VOD)</em></div>
+      <div class="grid">
+        <div class="f"><label>제목</label><input class="input" id="vod-title" placeholder="예: 첫 방송 다시보기"></div>
+        <div class="f"><label>VOD 번호</label><input class="input" id="vod-id" placeholder="예: 123456789">
+          <span class="hint">SOOP 다시보기 주소 <code>vod.sooplive.co.kr/player/<b>123456789</b></code> 의 숫자만 넣으세요.</span></div>
+      </div>
+      <div style="margin:14px 0 18px"><button class="btn" onclick="addVod()">＋ 다시보기 추가</button></div>
+      <div class="table-wrap"><table><thead><tr><th>제목</th><th>VOD 번호</th><th>삭제</th></tr></thead><tbody id="vodTable"></tbody></table></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════ 📢 공지 ══════════════════ -->
+  <div class="panel" id="tab-notice">
+    <div class="card">
+      <div class="card-title">NEW BULLETIN <em>공지 등록</em></div>
+      <div class="grid">
+        <div class="f full"><label>제목</label><input class="input" id="nt-title"></div>
+        <div class="f full"><label>내용</label><textarea class="input" id="nt-content"></textarea></div>
+        <div class="f full"><label>이미지 주소 (선택 · 한 줄에 하나)</label><textarea class="input" id="nt-images" style="min-height:70px"></textarea>
+          <span class="hint">SOOP 비공개 게시판에 올린 뒤 이미지 <b>우클릭 → 이미지 주소 복사</b>. 글 주소가 아니라 <code>stimg.sooplive.com/…</code> 로 시작하는 직접 주소여야 합니다.</span></div>
+        <div class="f"><label>고정</label>
+          <div class="chk"><label><input type="checkbox" id="nt-pinned"> 맨 위에 고정</label></div></div>
+      </div>
+      <div style="margin-top:16px"><button class="btn pri" onclick="addNotice()">공지 등록</button></div>
+    </div>
+    <div class="card">
+      <div class="card-title">BULLETIN LIST <em>등록된 공지</em></div>
+      <div class="table-wrap"><table><thead><tr><th>고정</th><th>제목</th><th>이미지</th><th>날짜</th><th>삭제</th></tr></thead><tbody id="noticeTable"></tbody></table></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════ 📅 일정 ══════════════════ -->
+  <div class="panel" id="tab-schedule">
+    <div class="card">
+      <div class="card-title">NEW AGENDA <em>일정 등록</em></div>
+      <div class="grid3">
+        <div class="f"><label>날짜</label><input class="input" id="sc-date" type="date"></div>
+        <div class="f"><label>구분</label>
+          <select class="input" id="sc-type"><option>일반</option><option>특별</option><option>콜라보</option><option>휴방</option></select>
+          <span class="hint">‘휴방’을 고르면 페이지에 CLOSED로 표시됩니다</span></div>
+        <div class="f"><label>달력 색</label>
+          <select class="input" id="sc-color">
+            <option value="green">초록</option><option value="blue">파랑</option><option value="pink">핑크</option>
+            <option value="purple">보라</option><option value="orange">주황</option><option value="red">빨강</option>
+            <option value="yellow">노랑</option><option value="gray">회색</option>
+          </select></div>
+        <div class="f"><label>1부 시간</label><input class="input" id="sc-time" placeholder="20:00"></div>
+        <div class="f"><label>1부 제목</label><input class="input" id="sc-title" placeholder="배그 소통"></div>
+        <div class="f"><label>강조</label>
+          <div class="chk"><label><input type="checkbox" id="sc-highlight"> 달력에서 강조</label></div></div>
+        <div class="f"><label>2부 시간 (선택)</label><input class="input" id="sc-time2" placeholder="23:00"></div>
+        <div class="f"><label>2부 제목 (선택)</label><input class="input" id="sc-title2"></div>
+        <div class="f full"><label>설명 (선택)</label><textarea class="input" id="sc-desc" style="min-height:70px"></textarea>
+          <span class="hint">달력에서 날짜를 눌렀을 때 나오는 상세 설명</span></div>
+      </div>
+      <div style="margin-top:16px"><button class="btn pri" onclick="addSchedule()">일정 등록</button></div>
+    </div>
+    <div class="card">
+      <div class="card-title">AGENDA LIST <em>등록된 일정</em></div>
+      <div class="table-wrap"><table><thead><tr><th>날짜</th><th>구분</th><th>1부</th><th>2부</th><th>색</th><th>삭제</th></tr></thead><tbody id="scheduleTable"></tbody></table></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════ ⚡ 업보 ══════════════════ -->
+  <div class="panel" id="tab-work">
+    <div class="grid">
+      <div class="card">
+        <div class="card-title">GUESTS <em>시청자 등록</em></div>
+        <div class="f" style="margin-bottom:12px"><label>닉네임</label><input class="input" id="vw-nick"></div>
+        <div class="f" style="margin-bottom:12px"><label>SOOP 아이디 (선택)</label><input class="input" id="vw-id">
+          <span class="hint">넣으면 그 사람 프로필 사진이 자동으로 붙습니다</span></div>
+        <div class="f" style="margin-bottom:14px"><label>메모 (선택)</label><input class="input" id="vw-memo">
+          <span class="hint">업보 상세창 맨 아래에 표시됩니다</span></div>
+        <button class="btn pri" onclick="addViewer()">시청자 추가</button>
+      </div>
+      <div class="card">
+        <div class="card-title">TYPES <em>업보 종류</em></div>
+        <div class="f" style="margin-bottom:12px"><label>업보 이름</label><input class="input" id="tp-name" placeholder="예: 지각, 트롤, 킬뺏기"></div>
+        <div class="f" style="margin-bottom:14px"><label>분류</label>
+          <select class="input" id="tp-cat"><option>일반</option><option>이벤트</option></select>
+          <span class="hint">‘이벤트’는 상세창에서 EVENT 배지가 붙습니다</span></div>
+        <button class="btn pri" onclick="addType()">업보 종류 추가</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">GUEST LIST <em>등록된 시청자</em></div>
+      <div class="table-wrap"><table><thead><tr><th>닉네임</th><th>아이디</th><th>메모</th><th>총 업보</th><th>삭제</th></tr></thead><tbody id="viewerTable"></tbody></table></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">TYPE LIST <em>등록된 업보 종류</em></div>
+      <div class="table-wrap"><table><thead><tr><th>이름</th><th>분류</th><th>삭제</th></tr></thead><tbody id="typeTable"></tbody></table></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">COUNTER <em>업보 카운트 입력</em></div>
+      <div class="f" style="margin-bottom:14px"><label>시청자 선택</label>
+        <select class="input" id="cnt-viewer" onchange="renderCounter()"></select>
+        <span class="hint">시청자를 고르면 아래에 업보 종류별 횟수 칸이 나옵니다. 숫자를 고치고 <b>카운트 저장</b>을 누르세요.</span></div>
+      <div class="grid3" id="counterBox"></div>
+      <div style="margin-top:16px"><button class="btn pri" onclick="saveCounts()">카운트 저장</button></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════ 📓 일기 ══════════════════ -->
+  <div class="panel" id="tab-diary">
+    <div class="card">
+      <div class="card-title">NEW NOTE <em>일기 작성</em></div>
+      <div class="grid">
+        <div class="f"><label>날짜</label><input class="input" id="dr-date" type="date"></div>
+        <div class="f"><label>기분 (선택)</label><input class="input" id="dr-mood" placeholder="예: 나른함 / 신남">
+          <span class="hint">제목 옆 작은 배지로 붙습니다</span></div>
+        <div class="f full"><label>제목</label><input class="input" id="dr-title"></div>
+        <div class="f full"><label>내용</label><textarea class="input" id="dr-content" style="min-height:140px"></textarea></div>
+        <div class="f full"><label>이미지 주소 (선택 · 한 줄에 하나)</label><textarea class="input" id="dr-images" style="min-height:70px"></textarea>
+          <span class="hint">이미지 <b>직접 주소</b>를 붙여넣으세요 (우클릭 → 이미지 주소 복사)</span></div>
+      </div>
+      <div style="margin-top:16px"><button class="btn pri" onclick="addDiary()">일기 등록</button></div>
+    </div>
+    <div class="card">
+      <div class="card-title">NOTE LIST <em>등록된 일기</em></div>
+      <div class="table-wrap"><table><thead><tr><th>날짜</th><th>제목</th><th>기분</th><th>이미지</th><th>삭제</th></tr></thead><tbody id="diaryTable"></tbody></table></div>
+    </div>
+    <div class="card">
+      <div class="card-title">COMMENTS <em>달린 한마디 관리</em></div>
+      <div class="table-wrap"><table><thead><tr><th>일기</th><th>닉네임</th><th>내용</th><th>날짜</th><th>삭제</th></tr></thead><tbody id="commentTable"></tbody></table></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════ 👗 옷장 ══════════════════ -->
+  <div class="panel" id="tab-dress">
+    <div class="card">
+      <div class="card-title">NEW LOOK <em>옷 등록</em></div>
+      <div class="grid">
+        <div class="f"><label>분류</label>
+          <select class="input" id="ds-cat"><option value="hair">헤어</option><option value="outfit">의상</option><option value="lens">렌즈</option></select></div>
+        <div class="f"><label>이름</label><input class="input" id="ds-name"></div>
+        <div class="f full"><label>이미지 주소</label><input class="input" id="ds-img" placeholder="https://stimg.sooplive.com/...">
+          <span class="hint"><b>세로 3:4 (900×1200) 권장.</b> SOOP 비공개 게시판에 올린 뒤 이미지 우클릭 → 이미지 주소 복사.</span></div>
+        <div class="f full"><label>설명 (선택)</label><input class="input" id="ds-desc"></div>
+        <div class="f full"><label>포스터</label>
+          <div class="chk"><label><input type="checkbox" id="ds-new" checked> ✦ 새 옷으로 올리기</label></div>
+          <span class="hint">체크하면 옷장의 <b>NEW LOOKS</b> 포스터 벽에, 해제하면 <b>ARCHIVE</b> 그리드에 들어갑니다. 나중에 표에서 언제든 전환할 수 있어요.</span></div>
+      </div>
+      <div style="margin-top:16px"><button class="btn pri" onclick="addDress()">옷 등록</button></div>
+    </div>
+    <div class="card">
+      <div class="card-title">WARDROBE <em>등록된 옷</em></div>
+      <div class="table-wrap"><table><thead><tr><th>미리보기</th><th>분류</th><th>이름</th><th>상태</th><th>전환</th><th>삭제</th></tr></thead><tbody id="dressTable"></tbody></table></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════ ✉ 문의함 ══════════════════ -->
+  <div class="panel" id="tab-ask">
+    <div class="card">
+      <div class="card-title">INBOX <em>받은 문의</em></div>
+      <div class="table-wrap"><table><thead><tr><th>날짜</th><th>내용</th><th>삭제</th></tr></thead><tbody id="askTable"></tbody></table></div>
+    </div>
+  </div>
+
+  <!-- ══════════════════ 🎨 테마 ══════════════════ -->
+  <div class="panel" id="tab-theme">
+    <div class="savebar">
+      <button class="btn pri" onclick="saveTheme()">테마 저장</button>
+      <button class="btn" onclick="resetTheme()">기본값으로 되돌리기</button>
+      <span class="note">저장하면 메인·프로필·전 카테고리 페이지 색이 한 번에 바뀝니다</span>
+    </div>
+    <div class="card">
+      <div class="card-title">PALETTE <em>색 6종</em></div>
+      <div class="pal" id="palBox"></div>
+      <div class="preview" id="palPreview">
+        <div class="pv-k" style="color:var(--brass)">THE NIGHT EDITION</div>
+        <div class="pv-t" style="margin-top:6px">숩니찡 · NOIR SALON</div>
+        <div style="height:1px;background:var(--line);margin:14px 0"></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <span class="pill br">BRASS</span><span class="pill on">ROSE</span><span class="pill">LINE</span>
+        </div>
+        <p style="color:var(--tx3);font-size:11.5px;margin-top:12px">색을 고르면 이 상자에서 바로 확인할 수 있어요.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="../supabase.js"></script>
+<script src="../site.js"></script>
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   숩니찡 ADMIN — 저장 키 목록
+   ⚠ 이 배열 · 아래 f-{키} 입력칸 · 각 페이지 data-hook 은 항상 같은 집합이어야 합니다.
+   ═══════════════════════════════════════════════════════════════ */
+var profileKeys = [
+  /* 🏠 메인 */
+  'soop-id','avatar','cover-img','mascot-img',
+  'mast-left','mast-issue','edition','name-kr','name-en','name-en1','name-en2',
+  'cover-quote','meta1-k','meta1-v','meta2-k','meta2-v','meta3-k','meta3-v',
+  'days','wk-0','wk-1','wk-2','wk-3','wk-4','wk-5','wk-6','next-label','next-value',
+  'link-soop','link-youtube','link-x','link-etc','link-etc-label','footer-line',
+  /* 🎀 프로필 */
+  'info-name','info-fandom','info-birth','info-debut','info-mbti','info-agency','info-gender',
+  'info-content','info-schedule','catchphrase','bio-short','about','quotes',
+  'like1','like2','like3','like4','dislike1','dislike2','dislike3',
+  'tmi-food','tmi-game','tmi-song','tmi-item','tags','stats','milestones',
+  /* 🎨 테마 */
+  'theme-ink','theme-paper','theme-brass','theme-brass-lt','theme-rose','theme-day-bg'
+];
+
+var PALETTE = [
+  { key:'theme-ink',      label:'배경 (INK)',        def:'#0C0706', desc:'페이지 전체 바탕색. 가장 어두운 색.' },
+  { key:'theme-paper',    label:'글자 (PAPER)',      def:'#F0DBDA', desc:'본문 글자색. 배경과 충분히 대비되게.' },
+  { key:'theme-brass',    label:'포인트 (BRASS)',    def:'#C87848', desc:'라벨·테두리 강조에 쓰이는 편집색.' },
+  { key:'theme-brass-lt', label:'포인트 밝게',        def:'#E39A6E', desc:'제목·숫자에 쓰는 밝은 포인트.' },
+  { key:'theme-rose',     label:'시그널 (ROSE)',     def:'#FA3883', desc:'버튼·고정공지·NEW 배지 등 강한 색.' },
+  { key:'theme-day-bg',   label:'모달 배경',          def:'#130C0A', desc:'문의창·상세창 상자의 배경색.' }
+];
+
+var DAY_NAMES = ['월','화','수','목','금','토','일'];
+var DEF = NOIR.DEFAULTS;
+var PW = '1234';   /* ⚠ 배포 전에 반드시 바꾸세요 */
+
+var P = {}, vodRows = [], viewers = [], types = [], counts = [];
+
+/* ─── 공통 ─── */
+function $(id){ return document.getElementById(id); }
+function esc(s){ return NOIR.esc(s); }
+function toast(m){ var t=$('toast'); t.textContent=m; t.classList.add('show'); clearTimeout(t._t); t._t=setTimeout(function(){t.classList.remove('show');},2400); }
+function fmt(s){ if(!s) return ''; var d=new Date(s); if(isNaN(d)) return String(s).slice(0,10);
+  return d.getFullYear()+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+String(d.getDate()).padStart(2,'0'); }
+
+/* ─── 로그인 ─── */
+function login(){
+  if($('pw').value === PW){
+    sessionStorage.setItem('noir-admin','1');
+    $('gate').style.display='none'; $('app').style.display='';
+    initAll();
+  } else { toast('비밀번호가 달라요'); }
+}
+function logout(){ sessionStorage.removeItem('noir-admin'); location.reload(); }
+if(sessionStorage.getItem('noir-admin') === '1'){
+  $('gate').style.display='none'; $('app').style.display='';
+}
+
+/* ─── 탭 ─── */
+document.querySelectorAll('.tab').forEach(function(b){
+  b.onclick = function(){
+    document.querySelectorAll('.tab').forEach(function(x){ x.classList.remove('active'); });
+    document.querySelectorAll('.panel').forEach(function(x){ x.classList.remove('active'); });
+    b.classList.add('active');
+    $('tab-' + b.dataset.tab).classList.add('active');
+    window.scrollTo(0,0);
+  };
+});
+
+/* ─── 요일 · 주간 아젠다 칸 만들기 ─── */
+(function(){
+  $('daysBox').innerHTML = DAY_NAMES.map(function(d,i){
+    return '<label><input type="checkbox" class="dayck" value="' + i + '">' + d + '</label>';
+  }).join('');
+  $('wkBox').innerHTML = DAY_NAMES.map(function(d,i){
+    return '<div class="f"><label>' + d + '요일 표시글</label><input class="input" id="f-wk-' + i + '">'
+      + (i===0 ? '<span class="hint">커버 주간표에 그대로 뜹니다. 예: <code>GAME 21:00</code>, <code>DAY OFF</code></span>' : '') + '</div>';
+  }).join('');
+  $('palBox').innerHTML = PALETTE.map(function(p){
+    return '<div class="pal-row"><div class="pl">' + p.label + '</div><div class="pd">' + p.desc + '</div>'
+      + '<div class="pal-in"><input type="color" id="c-' + p.key + '" oninput="syncColor(\'' + p.key + '\',this.value)">'
+      + '<input class="input" id="f-' + p.key + '" placeholder="' + p.def + '" oninput="syncHex(\'' + p.key + '\',this.value)"></div></div>';
+  }).join('');
+})();
+
+/* ═══════════ 프로필(메인+프로필+테마) 불러오기 / 저장 ═══════════ */
+async function loadProfile(){
+  try{ var r = await db.from('profile').select('data').eq('id',1).single(); P = (r && r.data && r.data.data) || {}; }
+  catch(e){ P = {}; }
+  profileKeys.forEach(function(k){
+    var el = $('f-' + k); if(!el) return;
+    var v = (P[k] !== undefined && P[k] !== null && P[k] !== '') ? P[k] : (DEF[k] !== undefined ? DEF[k] : '');
+    if(Array.isArray(v)) v = v.join('\n');
+    else if(v && typeof v === 'object'){ try{ v = Object.values(v).join('\n'); }catch(e){ v=''; } }
+    el.value = (k.indexOf('theme-') === 0 && !P[k]) ? '' : String(v);
+  });
+  /* 요일 체크 */
+  var on = String(P['days'] !== undefined && P['days'] !== '' ? P['days'] : DEF['days']).split(',').map(function(s){return s.trim();});
+  document.querySelectorAll('.dayck').forEach(function(c){ c.checked = on.indexOf(c.value) >= 0; });
+  /* 팔레트 미리보기 */
+  PALETTE.forEach(function(p){
+    var v = (P[p.key] || '').trim() || p.def;
+    var c = $('c-' + p.key); if(c) c.value = /^#[0-9a-fA-F]{6}$/.test(v) ? v : p.def;
+  });
+  applyPreview();
+}
+
+async function saveProfile(){
+  var data = {};
+  Object.keys(P).forEach(function(k){ data[k] = P[k]; });
+  profileKeys.forEach(function(k){
+    var el = $('f-' + k); if(!el) return;
+    data[k] = el.value.trim();
+  });
+  var days = [];
+  document.querySelectorAll('.dayck').forEach(function(c){ if(c.checked) days.push(c.value); });
+  data['days'] = days.join(',');
+  var ok = await updateRow('profile', 1, { data: data, updated_at: new Date().toISOString() });
+  if(ok){ P = data; toast('저장했어요 ✦ 사이트를 새로고침하면 반영됩니다'); }
+  else toast('저장에 실패했어요');
+}
+
+/* ═══════════ 🎨 테마 ═══════════ */
+function syncColor(key, v){ var t = $('f-' + key); if(t) t.value = v; applyPreview(); }
+function syncHex(key, v){
+  v = v.trim(); var c = $('c-' + key);
+  if(c && /^#[0-9a-fA-F]{6}$/.test(v)) c.value = v;
+  applyPreview();
+}
+function applyPreview(){
+  var map = NOIR.THEME_MAP;
+  PALETTE.forEach(function(p){
+    var v = ($('f-' + p.key).value || '').trim() || p.def;
+    document.documentElement.style.setProperty(map[p.key], v);
+  });
+}
+async function saveTheme(){ await saveProfile(); }
+function resetTheme(){
+  PALETTE.forEach(function(p){ $('f-' + p.key).value = ''; $('c-' + p.key).value = p.def; });
+  applyPreview();
+  toast('기본값으로 되돌렸어요 — 저장을 눌러야 반영됩니다');
+}
+
+/* ═══════════ 다시보기(VOD) ═══════════ */
+async function loadVod(){
+  try{ vodRows = await fetchAll('original_songs', { order:'created_at', asc:false }); }catch(e){ vodRows = []; }
+  $('vodTable').innerHTML = vodRows.length ? vodRows.map(function(v){
+    return '<tr><td>' + esc(v.title) + '</td><td>' + esc(v.vod_id || '') + '</td>'
+      + '<td><button class="btn sm del" onclick="delRow(\'original_songs\',' + v.id + ',loadVod)">삭제</button></td></tr>';
+  }).join('') : '<tr><td colspan="3" class="tb-empty">등록된 다시보기가 없어요</td></tr>';
+}
+async function addVod(){
+  var t = $('vod-title').value.trim(), i = $('vod-id').value.trim();
+  if(!t){ toast('제목을 적어 주세요'); return; }
+  if(await insertRow('original_songs', { title:t, vod_id:i })){
+    $('vod-title').value=''; $('vod-id').value=''; toast('추가했어요'); loadVod();
+  } else toast('추가에 실패했어요');
+}
+
+/* ═══════════ 📢 공지 ═══════════ */
+async function loadNotice(){
+  var rows = [];
+  try{ rows = await fetchAll('notice', { order:'created_at', asc:false }); }catch(e){}
+  $('noticeTable').innerHTML = rows.length ? rows.map(function(n){
+    var imgs = (n.images && n.images.length) ? n.images : (n.image_url ? [n.image_url] : []);
+    return '<tr><td>' + (n.pinned ? '<span class="pill on">PIN</span>' : '') + '</td>'
+      + '<td>' + esc(n.title) + '</td>'
+      + '<td>' + (imgs.length ? '<img class="tb-thumb" src="' + esc(imgs[0]) + '" referrerpolicy="no-referrer">' : '-') + '</td>'
+      + '<td>' + fmt(n.created_at) + '</td>'
+      + '<td><button class="btn sm del" onclick="delRow(\'notice\',' + n.id + ',loadNotice)">삭제</button></td></tr>';
+  }).join('') : '<tr><td colspan="5" class="tb-empty">등록된 공지가 없어요</td></tr>';
+}
+async function addNotice(){
+  var t = $('nt-title').value.trim();
+  if(!t){ toast('제목을 적어 주세요'); return; }
+  var imgs = $('nt-images').value.split('\n').map(function(s){return s.trim();}).filter(Boolean);
+  if(await insertRow('notice', { title:t, content:$('nt-content').value, pinned:$('nt-pinned').checked, images:imgs, image_url:imgs[0]||null })){
+    $('nt-title').value=''; $('nt-content').value=''; $('nt-images').value=''; $('nt-pinned').checked=false;
+    toast('공지를 등록했어요'); loadNotice();
+  } else toast('등록에 실패했어요');
+}
+
+/* ═══════════ 📅 일정 ═══════════ */
+async function loadSchedule(){
+  var rows = [];
+  try{ rows = await fetchAll('schedule', { order:'date', asc:false }); }catch(e){}
+  $('scheduleTable').innerHTML = rows.length ? rows.map(function(s){
+    return '<tr><td>' + esc(s.date) + '</td>'
+      + '<td><span class="pill' + (s.type==='휴방' ? ' on' : ' br') + '">' + esc(s.type||'일반') + '</span>' + (s.highlight ? ' <span class="pill on">★</span>' : '') + '</td>'
+      + '<td>' + esc([s.time, s.title].filter(Boolean).join(' ')) + '</td>'
+      + '<td>' + esc([s.time2, s.title2].filter(Boolean).join(' ')) + '</td>'
+      + '<td>' + esc(s.color || 'green') + '</td>'
+      + '<td><button class="btn sm del" onclick="delRow(\'schedule\',' + s.id + ',loadSchedule)">삭제</button></td></tr>';
+  }).join('') : '<tr><td colspan="6" class="tb-empty">등록된 일정이 없어요</td></tr>';
+}
+async function addSchedule(){
+  var d = $('sc-date').value;
+  if(!d){ toast('날짜를 골라 주세요'); return; }
+  var row = {
+    date:d, title:$('sc-title').value.trim(), time:$('sc-time').value.trim(),
+    type:$('sc-type').value, color:$('sc-color').value, highlight:$('sc-highlight').checked,
+    time2:$('sc-time2').value.trim(), title2:$('sc-title2').value.trim(), description:$('sc-desc').value.trim()
+  };
+  if(await insertRow('schedule', row)){
+    ['sc-title','sc-time','sc-time2','sc-title2','sc-desc'].forEach(function(i){ $(i).value=''; });
+    $('sc-highlight').checked=false;
+    toast('일정을 등록했어요'); loadSchedule();
+  } else toast('등록에 실패했어요');
+}
+
+/* ═══════════ ⚡ 업보 ═══════════ */
+async function loadWork(){
+  try{
+    var r = await Promise.all([
+      fetchAll('viewers',     { order:'sort_order', asc:true }),
+      fetchAll('upbo_types',  { order:'sort_order', asc:true }),
+      fetchAll('upbo_counts', { order:'id', asc:true })
+    ]);
+    viewers = r[0]; types = r[1]; counts = r[2];
+  }catch(e){ viewers=[]; types=[]; counts=[]; }
+
+  function total(vid){ return counts.filter(function(c){ return c.viewer_id===vid; }).reduce(function(s,c){ return s+(c.count||0); },0); }
+
+  $('viewerTable').innerHTML = viewers.length ? viewers.map(function(v){
+    return '<tr><td>' + esc(v.nickname) + '</td><td>' + esc(v.soop_id||'') + '</td><td>' + esc(v.memo||'') + '</td>'
+      + '<td>' + total(v.id) + '</td>'
+      + '<td><button class="btn sm del" onclick="delRow(\'viewers\',' + v.id + ',loadWork)">삭제</button></td></tr>';
+  }).join('') : '<tr><td colspan="5" class="tb-empty">등록된 시청자가 없어요</td></tr>';
+
+  $('typeTable').innerHTML = types.length ? types.map(function(t){
+    return '<tr><td>' + esc(t.name) + '</td><td><span class="pill' + (t.category==='이벤트'?' on':'') + '">' + esc(t.category||'일반') + '</span></td>'
+      + '<td><button class="btn sm del" onclick="delRow(\'upbo_types\',' + t.id + ',loadWork)">삭제</button></td></tr>';
+  }).join('') : '<tr><td colspan="3" class="tb-empty">등록된 업보 종류가 없어요</td></tr>';
+
+  var sel = $('cnt-viewer');
+  var keep = sel.value;
+  sel.innerHTML = viewers.map(function(v){ return '<option value="' + v.id + '">' + esc(v.nickname) + '</option>'; }).join('')
+    || '<option value="">시청자를 먼저 추가해 주세요</option>';
+  if(keep) sel.value = keep;
+  renderCounter();
+}
+function renderCounter(){
+  var vid = +$('cnt-viewer').value;
+  if(!vid || !types.length){
+    $('counterBox').innerHTML = '<div class="tb-empty" style="grid-column:1/-1">시청자와 업보 종류를 먼저 추가해 주세요</div>';
+    return;
+  }
+  var my = {};
+  counts.filter(function(c){ return c.viewer_id === vid; }).forEach(function(c){ my[c.type_id] = c.count; });
+  $('counterBox').innerHTML = types.map(function(t){
+    return '<div class="f"><label>' + esc(t.name) + '</label>'
+      + '<input class="input cntin" type="number" min="0" data-type="' + t.id + '" value="' + (my[t.id]||0) + '"></div>';
+  }).join('');
+}
+async function saveCounts(){
+  var vid = +$('cnt-viewer').value;
+  if(!vid){ toast('시청자를 골라 주세요'); return; }
+  var els = document.querySelectorAll('.cntin');
+  for(var i = 0; i < els.length; i++){
+    var tid = +els[i].dataset.type, n = parseInt(els[i].value, 10) || 0;
+    var ex = counts.filter(function(c){ return c.viewer_id===vid && c.type_id===tid; })[0];
+    if(ex) await updateRow('upbo_counts', ex.id, { count:n, updated_at:new Date().toISOString() });
+    else if(n > 0) await insertRow('upbo_counts', { viewer_id:vid, type_id:tid, count:n });
+  }
+  toast('카운트를 저장했어요'); loadWork();
+}
+async function addViewer(){
+  var n = $('vw-nick').value.trim();
+  if(!n){ toast('닉네임을 적어 주세요'); return; }
+  if(await insertRow('viewers', { nickname:n, soop_id:$('vw-id').value.trim(), memo:$('vw-memo').value.trim(), sort_order:viewers.length })){
+    $('vw-nick').value=''; $('vw-id').value=''; $('vw-memo').value=''; toast('추가했어요'); loadWork();
+  } else toast('추가에 실패했어요');
+}
+async function addType(){
+  var n = $('tp-name').value.trim();
+  if(!n){ toast('업보 이름을 적어 주세요'); return; }
+  if(await insertRow('upbo_types', { name:n, category:$('tp-cat').value, sort_order:types.length })){
+    $('tp-name').value=''; toast('추가했어요'); loadWork();
+  } else toast('추가에 실패했어요');
+}
+
+/* ═══════════ 📓 일기 ═══════════ */
+async function loadDiary(){
+  var rows = [], cmts = [];
+  try{ rows = await fetchAll('diary', { order:'diary_date', asc:false }); }catch(e){}
+  try{ cmts = await fetchAll('comments', { order:'created_at', asc:false }); }catch(e){}
+  $('diaryTable').innerHTML = rows.length ? rows.map(function(d){
+    var imgs = (d.images && d.images.length) ? d.images : (d.image_url ? [d.image_url] : []);
+    return '<tr><td>' + esc(d.diary_date||'') + '</td><td>' + esc(d.title) + '</td><td>' + esc(d.mood||'') + '</td>'
+      + '<td>' + (imgs.length ? '<img class="tb-thumb" src="' + esc(imgs[0]) + '" referrerpolicy="no-referrer">' : '-') + '</td>'
+      + '<td><button class="btn sm del" onclick="delRow(\'diary\',' + d.id + ',loadDiary)">삭제</button></td></tr>';
+  }).join('') : '<tr><td colspan="5" class="tb-empty">등록된 일기가 없어요</td></tr>';
+
+  var titleOf = {};
+  rows.forEach(function(d){ titleOf[d.id] = d.title; });
+  $('commentTable').innerHTML = cmts.length ? cmts.map(function(c){
+    return '<tr><td>' + esc(titleOf[c.diary_id] || ('#' + c.diary_id)) + '</td><td>' + esc(c.nickname||'익명') + '</td>'
+      + '<td>' + esc(c.message||'') + '</td><td>' + fmt(c.created_at) + '</td>'
+      + '<td><button class="btn sm del" onclick="delRow(\'comments\',' + c.id + ',loadDiary)">삭제</button></td></tr>';
+  }).join('') : '<tr><td colspan="5" class="tb-empty">달린 한마디가 없어요</td></tr>';
+}
+async function addDiary(){
+  var t = $('dr-title').value.trim();
+  if(!t){ toast('제목을 적어 주세요'); return; }
+  var imgs = $('dr-images').value.split('\n').map(function(s){return s.trim();}).filter(Boolean);
+  var row = {
+    title:t, content:$('dr-content').value, mood:$('dr-mood').value.trim(),
+    diary_date:$('dr-date').value || null, images:imgs, image_url:imgs[0]||null
+  };
+  if(await insertRow('diary', row)){
+    ['dr-title','dr-content','dr-images','dr-mood'].forEach(function(i){ $(i).value=''; });
+    toast('일기를 등록했어요'); loadDiary();
+  } else toast('등록에 실패했어요');
+}
+
+/* ═══════════ 👗 옷장 ═══════════ */
+var DRESS_CATS = { hair:'헤어', outfit:'의상', lens:'렌즈' };   /* ⚠ 옷장 페이지 CATS · 위 select 와 같은 값 */
+var dressRows = [];
+async function loadDress(){
+  try{ var r = await db.from('dress_items').select('*').order('sort_order').order('created_at', { ascending:false }); dressRows = r.data || []; }
+  catch(e){ dressRows = []; }
+  function isNew(it){ return (it.badges||[]).some(function(b){ var l=(b&&(b.label!=null?b.label:b))||''; return String(l).trim().toUpperCase()==='NEW'; }); }
+  $('dressTable').innerHTML = dressRows.length ? dressRows.map(function(d){
+    var n = isNew(d);
+    return '<tr><td>' + (d.image_url ? '<img class="tb-thumb" src="' + esc(d.image_url) + '" referrerpolicy="no-referrer">' : '-') + '</td>'
+      + '<td>' + esc(DRESS_CATS[d.category] || d.category) + '</td><td>' + esc(d.name) + '</td>'
+      + '<td><span class="pill' + (n ? ' on' : '') + '">' + (n ? 'NEW' : 'ARCHIVE') + '</span></td>'
+      + '<td><button class="btn sm" onclick="toggleDress(\'' + d.id + '\',' + (n?'false':'true') + ')">' + (n ? '보관으로' : '새 옷으로') + '</button></td>'
+      + '<td><button class="btn sm del" onclick="delDress(\'' + d.id + '\')">삭제</button></td></tr>';
+  }).join('') : '<tr><td colspan="6" class="tb-empty">등록된 옷이 없어요</td></tr>';
+}
+async function addDress(){
+  var n = $('ds-name').value.trim();
+  if(!n){ toast('이름을 적어 주세요'); return; }
+  var row = {
+    category:$('ds-cat').value, name:n, description:$('ds-desc').value.trim(),
+    image_url:$('ds-img').value.trim(), badges: $('ds-new').checked ? [{label:'NEW'}] : []
+  };
+  if(await insertRow('dress_items', row)){
+    $('ds-name').value=''; $('ds-desc').value=''; $('ds-img').value='';
+    toast('옷을 등록했어요'); loadDress();
+  } else toast('등록에 실패했어요');
+}
+async function toggleDress(id, makeNew){
+  var ok = await updateRow('dress_items', id, { badges: makeNew ? [{label:'NEW'}] : [] });
+  if(ok){ toast('바꿨어요'); loadDress(); } else toast('변경에 실패했어요');
+}
+async function delDress(id){
+  if(!confirm('정말 삭제할까요?')) return;
+  if(await deleteRow('dress_items', id)){ toast('삭제했어요'); loadDress(); } else toast('삭제에 실패했어요');
+}
+
+/* ═══════════ ✉ 문의함 ═══════════ */
+async function loadAsk(){
+  var rows = [];
+  try{ rows = await fetchAll('inquiries', { order:'created_at', asc:false }); }catch(e){}
+  $('askTable').innerHTML = rows.length ? rows.map(function(a){
+    return '<tr><td>' + fmt(a.created_at) + '</td><td style="white-space:pre-wrap">' + esc(a.message) + '</td>'
+      + '<td><button class="btn sm del" onclick="delRow(\'inquiries\',' + a.id + ',loadAsk)">삭제</button></td></tr>';
+  }).join('') : '<tr><td colspan="3" class="tb-empty">받은 문의가 없어요</td></tr>';
+}
+
+/* ═══════════ 공통 삭제 ═══════════ */
+async function delRow(table, id, reload){
+  if(!confirm('정말 삭제할까요?')) return;
+  if(await deleteRow(table, id)){ toast('삭제했어요'); reload(); } else toast('삭제에 실패했어요');
+}
+
+/* ═══════════ 시작 ═══════════ */
+async function initAll(){
+  await loadProfile();
+  loadVod(); loadNotice(); loadSchedule(); loadWork(); loadDiary(); loadDress(); loadAsk();
+}
+if(sessionStorage.getItem('noir-admin') === '1') initAll();
+</script>
+</body>
+</html>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0c0706">
+<title>프로필 · 숩니찡</title>
+<meta name="description" content="SOOBNIJJING OFFICIAL — 프로필">
+<meta property="og:title" content="프로필 · 숩니찡 NOIR SALON">
+<meta property="og:description" content="보다 보면 숩며든다.">
+<link rel="icon" type="image/jpeg" href="https://profile.img.sooplive.co.kr/LOGO/br/breezy25/breezy25.jpg">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<script>if(localStorage.getItem('theme')==='light')document.body.classList.add('day');</script>
+<div class="mast"><div class="mast-in">
+  <a class="nav-logo" href="../"><b data-hook="name-kr">숩니찡</b><span data-hook="name-en">SOOBNIJJING</span></a>
+  <nav class="nm">
+    <a href="../">Cover<b>메인</b></a>
+    <a href="./" class="act">Dossier<b>프로필</b></a>
+    <a href="../schedule/">Agenda<b>일정</b></a>
+    <a href="../notice/">Bulletin<b>공지</b></a>
+    <a href="../work/">Ledger<b>업보</b></a>
+    <a href="../diary/">Notes<b>일기</b></a>
+    <a href="../dress/">Atelier<b>옷장</b></a>
+  </nav>
+  <div class="mast-tools">
+    <div class="dk" title="낮 / 밤 전환">NIGHT<span class="sw"><i></i></span>DAY</div>
+    <button class="ask" onclick="openAsk()">✉ SEND</button>
+  </div>
+</div></div>
+<div class="shell">
+<div class="pagehero">
+  <div class="ph-main">
+    <div class="kicker"><i></i><span>FILE 01 · DOSSIER</span></div>
+    <div class="ph-kr">프로필</div>
+    <div class="ph-title">DOS<span>SIER</span></div>
+    <p class="ph-sub">살롱 주인장의 신상 명세. 기본 정보부터 어록·능력치·다시보기까지 한 장에.</p>
+    <div class="ghost">01</div>
+  </div>
+  <div class="ph-side">
+    <div class="ph-meta">SOOBNIJJING<br><b>NOIR SALON</b> · ISSUE 04<br>MEMBERS ONLY</div>
+    <img class="ph-mascot js-mascot" src="../assets/mascot.png" alt="" aria-hidden="true">
+  </div>
+</div>
+<div class="pf-top">
+  <div class="pf-left">
+    <div class="pf-photo">
+      <img data-img="avatar" src="https://profile.img.sooplive.co.kr/LOGO/br/breezy25/breezy25.jpg" alt="숩니찡 프로필 사진" referrerpolicy="no-referrer">
+      <div class="tagline"><span data-hook="bio-short">보다 보면 숩며든다.</span></div>
+    </div>
+    <div class="pf-badges">
+      <div class="pf-dday" data-dday>BIRTHDAY D-</div>
+      <div class="pf-dday alt" data-since>DAY 0</div>
+    </div>
+  </div>
+  <div class="pf-right">
+    <div class="pf-name"><span data-hook="name-kr" style="display:inline">숩니찡</span><span data-hook="name-en">SOOBNIJJING</span></div>
+    <p class="pf-quote" data-hook="catchphrase">아무래도~</p>
+    <div class="card" style="margin-top:20px;margin-bottom:0">
+      <div class="card-title"><span class="no">01</span>Identity <em>기본 정보</em></div>
+      <dl class="dl two">
+        <dt>NAME</dt><dd data-hook="info-name">숩니찡</dd>
+        <dt>FANDOM</dt><dd data-hook="info-fandom">찡구</dd>
+        <dt>BIRTH</dt><dd data-hook="info-birth">09-28</dd>
+        <dt>DEBUT</dt><dd data-hook="info-debut">2026-02-28</dd>
+        <dt>MBTI</dt><dd data-hook="info-mbti">-</dd>
+        <dt>AGENCY</dt><dd data-hook="info-agency">개인세</dd>
+        <dt>GENDER</dt><dd data-hook="info-gender">여</dd>
+        <dt>CONTENT</dt><dd data-hook="info-content">배그 / 마크 / 소통</dd>
+        <dt>SCHEDULE</dt><dd data-hook="info-schedule">랜덤</dd>
+      </dl>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="no">02</span>House Rules <em>소개</em></div>
+  <p data-hook="about" data-multiline style="color:var(--tx2);font-size:13.4px"></p>
+</div>
+
+<div class="grid2">
+  <div class="card">
+    <div class="card-title"><span class="no">03</span>On the Menu <em>좋아함</em></div>
+    <ul class="lk" id="likeBox"></ul>
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="no">04</span>Off the Menu <em>싫어함</em></div>
+    <ul class="lk no" id="dislikeBox"></ul>
+  </div>
+</div>
+
+<div class="grid2" style="margin-top:20px">
+  <div class="card">
+    <div class="card-title"><span class="no">05</span>House Specs <em>능력치</em></div>
+    <div id="statBox"></div>
+  </div>
+  <div class="card">
+    <div class="card-title"><span class="no">06</span>Signature <em>TMI</em></div>
+    <dl class="dl">
+      <dt>FOOD</dt><dd data-hook="tmi-food">간장게장</dd>
+      <dt>GAME</dt><dd data-hook="tmi-game">배그</dd>
+      <dt>SONG</dt><dd data-hook="tmi-song">안 함</dd>
+      <dt>ITEM</dt><dd data-hook="tmi-item">볼에 하트</dd>
+    </dl>
+  </div>
+</div>
+
+<div class="card" style="margin-top:20px">
+  <div class="card-title"><span class="no">07</span>Reservations <em>마일스톤</em></div>
+  <div id="msBox"></div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="no">08</span>Overheard <em>어록</em></div>
+  <div id="quoteBox" style="display:grid;gap:12px"></div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="no">09</span>Keywords <em>특징 태그</em></div>
+  <div class="tags" id="tagBox"></div>
+</div>
+
+<div class="card" id="songs-card">
+  <div class="card-title"><span class="no">10</span>Rerun <em>다시보기</em></div>
+  <div class="vod-grid" id="ovod-grid"><div class="spinner"></div></div>
+</div>
+
+<div class="card">
+  <div class="card-title"><span class="no">11</span>Channels <em>관련 링크</em></div>
+  <div class="linkrow">
+    <a class="linkbox" data-link="link-soop" target="_blank" rel="noopener"><b>SOOP LIVE</b><span>↗</span></a>
+    <a class="linkbox" data-link="link-youtube" target="_blank" rel="noopener"><b>YOUTUBE</b><span>↗</span></a>
+    <a class="linkbox" data-link="link-x" target="_blank" rel="noopener"><b>X (TWITTER)</b><span>↗</span></a>
+    <a class="linkbox" data-link="link-etc" target="_blank" rel="noopener"><b id="etcLabel">LINK</b><span>↗</span></a>
+  </div>
+</div>
+</div><!-- /shell -->
+
+<div class="marquee" aria-hidden="true">
+  <div>
+    <span>보다 보면 숩며든다 <b>✦</b> SOOBNIJJING NOIR SALON <b>✦</b> 아무래도~ <b>✦</b> 찡구 ONLY <b>✦</b>&nbsp;</span>
+    <span>보다 보면 숩며든다 <b>✦</b> SOOBNIJJING NOIR SALON <b>✦</b> 아무래도~ <b>✦</b> 찡구 ONLY <b>✦</b>&nbsp;</span>
+  </div>
+</div>
+
+<footer>
+  © 2026 SOOBNIJJING OFFICIAL<br>
+  <span class="fkr" data-hook="footer-line">비즈니스 문의 — 상단 ✉ SEND 버튼을 이용해 주세요</span>
+</footer>
+
+<div class="askmask" id="askmask">
+  <div class="askmodal">
+    <div class="mk">SEND A SIGNAL</div>
+    <h3>문의하기</h3>
+    <p>숩니찡에게 하고 싶은 말을 남겨주세요. (익명 · 관리자만 확인)</p>
+    <textarea id="askmsg" placeholder="문의 내용을 적어주세요..."></textarea>
+    <div class="askbtns">
+      <button class="no" onclick="closeAsk()">CANCEL</button>
+      <button class="yes" onclick="sendAsk()">TRANSMIT ↗</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="../supabase.js"></script>
+<script src="../site.js"></script>
+<script>
+NOIR.boot({ after: async function(){
+  /* 좋아함 / 싫어함 */
+  function fill(box, keys){
+    var items = keys.map(function(k){ return NOIR.val(k); }).filter(Boolean);
+    box.innerHTML = items.length
+      ? items.map(function(v){ return '<li>' + NOIR.esc(v) + '</li>'; }).join('')
+      : '<li style="color:var(--tx3)">아직 등록된 항목이 없어요</li>';
+  }
+  fill(document.getElementById('likeBox'),    ['like1','like2','like3','like4']);
+  fill(document.getElementById('dislikeBox'), ['dislike1','dislike2','dislike3']);
+
+  /* 능력치 — "이름:숫자" 줄 (배열/객체도 방어) */
+  var stats = NOIR.lines('stats').map(function(l){
+    var m = l.split(/[:：]/); var n = parseInt((m[1]||'').replace(/[^0-9]/g,''),10);
+    return { name:(m[0]||'').trim(), val: isNaN(n) ? 0 : Math.max(0, Math.min(100,n)) };
+  }).filter(function(s){ return s.name; });
+  document.getElementById('statBox').innerHTML = stats.length ? stats.map(function(s){
+    return '<div class="stat-row"><span class="sn">' + NOIR.esc(s.name) + '</span>'
+         + '<span class="stat-bar"><i style="width:' + s.val + '%"></i></span>'
+         + '<span class="sv">' + s.val + '</span></div>';
+  }).join('') : '<div class="empty">능력치가 아직 없어요</div>';
+
+  /* 마일스톤 — "상태|내용" 줄 */
+  var ms = NOIR.lines('milestones').map(function(l){
+    var p = l.split('|');
+    return p.length > 1 ? { k:p[0].trim(), v:p.slice(1).join('|').trim() } : { k:'예정', v:l };
+  });
+  document.getElementById('msBox').innerHTML = ms.length ? ms.map(function(m){
+    return '<div class="ms-row"><span class="mk">' + NOIR.esc(m.k) + '</span><span class="mv">' + NOIR.esc(m.v) + '</span></div>';
+  }).join('') : '<div class="empty">등록된 목표가 없어요</div>';
+
+  /* 어록 */
+  var qs = NOIR.lines('quotes');
+  document.getElementById('quoteBox').innerHTML = qs.length ? qs.map(function(q){
+    return '<div style="font-family:var(--disp);font-size:17px;line-height:1.6;border-left:2px solid var(--brass);padding-left:14px">“' + NOIR.esc(q) + '”</div>';
+  }).join('') : '<div class="empty">어록이 아직 없어요</div>';
+
+  /* 특징 태그 */
+  var tags = NOIR.val('tags').split(/[,\n]/).map(function(s){ return s.trim(); }).filter(Boolean);
+  document.getElementById('tagBox').innerHTML = tags.length
+    ? tags.map(function(t){ return '<span>' + NOIR.esc(t) + '</span>'; }).join('')
+    : '<span style="border:0;color:var(--tx3)">태그가 아직 없어요</span>';
+
+  var el = document.getElementById('etcLabel');
+  if(el) el.textContent = NOIR.val('link-etc-label') || 'LINK';
+
+  /* 다시보기(VOD) */
+  var grid = document.getElementById('ovod-grid');
+  var rows = [];
+  try { rows = await fetchAll('original_songs', { order:'created_at', asc:false }); } catch(e){ rows = []; }
+  if(!rows.length){
+    grid.innerHTML = '<div class="empty" style="grid-column:1/-1"><b>NO RERUN</b>등록된 다시보기가 없어요<br>관리자 → 프로필 탭에서 VOD 번호를 넣어주세요</div>';
+    return;
+  }
+  grid.innerHTML = rows.map(function(v){
+    var inner = v.vod_id
+      ? '<iframe src="https://vod.sooplive.co.kr/player/' + NOIR.esc(v.vod_id) + '/embed" allowfullscreen loading="lazy"></iframe>'
+      : '<div class="vod-ph">▶</div>';
+    return '<div class="vod-box"><div class="fr">' + inner + '</div><div class="vod-cap">' + NOIR.esc(v.title || '다시보기') + '</div></div>';
+  }).join('');
+}});
+</script>
+<script src="../fx.js"></script>
+</body>
+</html>

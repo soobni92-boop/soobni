@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0c0706">
+<title>옷장 · 숩니찡</title>
+<meta name="description" content="SOOBNIJJING OFFICIAL — 옷장">
+<meta property="og:title" content="옷장 · 숩니찡 NOIR SALON">
+<meta property="og:description" content="보다 보면 숩며든다.">
+<link rel="icon" type="image/jpeg" href="https://profile.img.sooplive.co.kr/LOGO/br/breezy25/breezy25.jpg">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<script>if(localStorage.getItem('theme')==='light')document.body.classList.add('day');</script>
+<div class="mast"><div class="mast-in">
+  <a class="nav-logo" href="../"><b data-hook="name-kr">숩니찡</b><span data-hook="name-en">SOOBNIJJING</span></a>
+  <nav class="nm">
+    <a href="../">Cover<b>메인</b></a>
+    <a href="../profile/">Dossier<b>프로필</b></a>
+    <a href="../schedule/">Agenda<b>일정</b></a>
+    <a href="../notice/">Bulletin<b>공지</b></a>
+    <a href="../work/">Ledger<b>업보</b></a>
+    <a href="../diary/">Notes<b>일기</b></a>
+    <a href="./" class="act">Atelier<b>옷장</b></a>
+  </nav>
+  <div class="mast-tools">
+    <div class="dk" title="낮 / 밤 전환">NIGHT<span class="sw"><i></i></span>DAY</div>
+    <button class="ask" onclick="openAsk()">✉ SEND</button>
+  </div>
+</div></div>
+<div class="shell">
+<div class="pagehero">
+  <div class="ph-main">
+    <div class="kicker"><i></i><span>FILE 06 · ATELIER</span></div>
+    <div class="ph-kr">옷장</div>
+    <div class="ph-title">ATE<span>LIER</span></div>
+    <p class="ph-sub">새로 맞춘 옷은 포스터로, 지난 옷은 아카이브로. 눌러서 크게 볼 수 있어요.</p>
+    <div class="ghost">06</div>
+  </div>
+  <div class="ph-side">
+    <div class="ph-meta">SOOBNIJJING<br><b>NOIR SALON</b> · ISSUE 04<br>MEMBERS ONLY</div>
+    <img class="ph-mascot js-mascot" src="../assets/mascot.png" alt="" aria-hidden="true">
+  </div>
+</div>
+<div class="card">
+  <div class="mode-seg" id="mode-seg">
+    <button class="seg-btn active" data-mode="new">NEW LOOKS · 새 옷</button>
+    <button class="seg-btn" data-mode="old">ARCHIVE · 기존 옷</button>
+  </div>
+  <div class="cat-tabs" id="cat-tabs"></div>
+  <div id="dress-body"><div class="spinner"></div></div>
+</div>
+</div><!-- /shell -->
+
+<div class="marquee" aria-hidden="true">
+  <div>
+    <span>보다 보면 숩며든다 <b>✦</b> SOOBNIJJING NOIR SALON <b>✦</b> 아무래도~ <b>✦</b> 찡구 ONLY <b>✦</b>&nbsp;</span>
+    <span>보다 보면 숩며든다 <b>✦</b> SOOBNIJJING NOIR SALON <b>✦</b> 아무래도~ <b>✦</b> 찡구 ONLY <b>✦</b>&nbsp;</span>
+  </div>
+</div>
+
+<footer>
+  © 2026 SOOBNIJJING OFFICIAL<br>
+  <span class="fkr" data-hook="footer-line">비즈니스 문의 — 상단 ✉ SEND 버튼을 이용해 주세요</span>
+</footer>
+
+<div class="askmask" id="askmask">
+  <div class="askmodal">
+    <div class="mk">SEND A SIGNAL</div>
+    <h3>문의하기</h3>
+    <p>숩니찡에게 하고 싶은 말을 남겨주세요. (익명 · 관리자만 확인)</p>
+    <textarea id="askmsg" placeholder="문의 내용을 적어주세요..."></textarea>
+    <div class="askbtns">
+      <button class="no" onclick="closeAsk()">CANCEL</button>
+      <button class="yes" onclick="sendAsk()">TRANSMIT ↗</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+<div class="lightbox" id="lightbox" onclick="if(event.target===this)closeLb()">
+  <span class="lightbox-close" onclick="closeLb()">×</span>
+  <div class="inner">
+    <img id="lb-img" src="" alt="">
+    <div class="lightbox-cap">
+      <div class="lb-name" id="lb-name"></div>
+      <div class="lb-desc" id="lb-desc"></div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="../supabase.js"></script>
+<script src="../site.js"></script>
+<script>
+/* ⚠ 분류를 바꿀 땐 세 곳 동시에: 여기 CATS · admin select · admin DRESS_CATS */
+var CATS = [
+  { key:'hair',   label:'헤어' },
+  { key:'outfit', label:'의상' },
+  { key:'lens',   label:'렌즈' }
+];
+var LABELS = {}; CATS.forEach(function(c){ LABELS[c.key] = c.label; });
+var PER_PAGE = 9;
+var allItems = [], curCat = CATS[0].key, curMode = 'new', curPage = 1;
+
+function isNew(it){
+  return (it.badges || []).some(function(b){
+    var label = (b && (b.label != null ? b.label : b)) || '';
+    return String(label).trim().toUpperCase() === 'NEW';
+  });
+}
+function fmtDate(s){
+  try{ var d = new Date(s); if(isNaN(d)) return '';
+    return String(d.getFullYear()).slice(2) + '.' + String(d.getMonth()+1).padStart(2,'0') + '.' + String(d.getDate()).padStart(2,'0');
+  }catch(e){ return ''; }
+}
+function viewItems(){
+  return allItems.filter(function(i){ return i.category === curCat && (curMode === 'new' ? isNew(i) : !isNew(i)); })
+    .sort(function(a,b){ return new Date(b.created_at||0) - new Date(a.created_at||0); });
+}
+function buildTabs(){
+  var wrap = document.getElementById('cat-tabs');
+  wrap.innerHTML = '';
+  CATS.forEach(function(c){
+    var cnt = allItems.filter(function(i){ return i.category === c.key && (curMode === 'new' ? isNew(i) : !isNew(i)); }).length;
+    var b = document.createElement('button');
+    b.className = 'cat-tab' + (c.key === curCat ? ' active' : '');
+    b.innerHTML = c.label + '<span class="cnt">' + cnt + '</span>';
+    b.onclick = function(){ curCat = c.key; curPage = 1; buildTabs(); render(); };
+    wrap.appendChild(b);
+  });
+}
+function posterHTML(items){
+  return '<div class="poster-head"><div class="pt">NEW LOOKS</div><div class="pm">SOOBNIJJING · ' + NOIR.esc(LABELS[curCat]||'') + '</div></div>'
+    + '<div class="poster-grid">' + items.map(function(it, idx){
+      var img = it.image_url ? '<img src="' + NOIR.esc(it.image_url) + '" alt="' + NOIR.esc(it.name) + '" loading="lazy" referrerpolicy="no-referrer">' : '<span class="p-ph">✦</span>';
+      return '<div class="poster' + (it.image_url ? '' : ' no-img') + '" data-idx="' + idx + '">' + img
+        + '<div class="p-top"><span class="p-brand">SOOBNIJJING</span><span class="p-new">✦ NEW</span></div>'
+        + '<div class="p-bottom"><span class="p-cat">' + NOIR.esc(LABELS[it.category] || '') + '</span>'
+        + '<div class="p-line"></div><div class="p-name">' + NOIR.esc(it.name) + '</div>'
+        + (it.created_at ? '<div class="p-meta">' + fmtDate(it.created_at) + '</div>' : '')
+        + (it.description ? '<div class="p-desc">' + NOIR.esc(it.description) + '</div>' : '')
+        + '</div></div>';
+    }).join('') + '</div>';
+}
+function gridHTML(items){
+  return '<div class="item-grid">' + items.map(function(it, idx){
+    var inner = it.image_url ? '<img src="' + NOIR.esc(it.image_url) + '" alt="' + NOIR.esc(it.name) + '" loading="lazy" referrerpolicy="no-referrer">' : '<span style="opacity:.35;font-size:26px">✦</span>';
+    return '<div class="item-card' + (it.image_url ? '' : ' no-img') + '" data-idx="' + idx + '">' + inner
+      + '<div class="item-cap"><div class="name">' + NOIR.esc(it.name) + '</div>'
+      + (it.description ? '<div class="desc">' + NOIR.esc(it.description) + '</div>' : '') + '</div></div>';
+  }).join('') + '</div>';
+}
+function render(){
+  var body = document.getElementById('dress-body');
+  var items = viewItems();
+  if(!items.length){
+    body.innerHTML = '<div class="empty"><b>EMPTY RACK</b>' + NOIR.esc(LABELS[curCat]||'')
+      + (curMode === 'new' ? ' 새 옷이 아직 없어요<br><span style="font-size:11.5px;opacity:.8">관리자에서 옷을 올릴 때 “새 옷으로 올리기”를 체크하면 여기 포스터로 걸려요</span>' : ' 아카이브가 아직 비어 있어요') + '</div>';
+    return;
+  }
+  var totalPages = Math.max(1, Math.ceil(items.length / PER_PAGE));
+  if(curPage > totalPages) curPage = 1;
+  var pageItems = items.slice((curPage-1)*PER_PAGE, curPage*PER_PAGE);
+  var pager = '';
+  if(totalPages > 1){
+    pager = '<div class="pager">';
+    for(var i = 1; i <= totalPages; i++) pager += '<button class="' + (i===curPage?'active':'') + '" data-pg="' + i + '">' + i + '</button>';
+    pager += '</div>';
+  }
+  body.innerHTML = (curMode === 'new' ? posterHTML(pageItems) : gridHTML(pageItems)) + pager;
+  body.querySelectorAll('[data-idx]').forEach(function(el){
+    el.addEventListener('click', function(){
+      var it = pageItems[+el.dataset.idx];
+      if(it && it.image_url) openLb(it);
+    });
+  });
+  body.querySelectorAll('[data-pg]').forEach(function(b){
+    b.addEventListener('click', function(){ curPage = +b.dataset.pg; render(); window.scrollTo(0,0); });
+  });
+}
+function openLb(it){
+  document.getElementById('lb-img').src = it.image_url;
+  document.getElementById('lb-name').textContent = it.name || '';
+  var d = document.getElementById('lb-desc');
+  d.textContent = it.description || '';
+  d.style.display = it.description ? 'block' : 'none';
+  document.getElementById('lightbox').classList.add('open');
+}
+function closeLb(){ document.getElementById('lightbox').classList.remove('open'); }
+document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeLb(); });
+
+NOIR.boot({ after: async function(){
+  try{
+    var r = await db.from('dress_items').select('*').order('sort_order').order('created_at');
+    allItems = r.data || [];
+  }catch(e){ allItems = []; }
+  document.querySelectorAll('#mode-seg .seg-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      curMode = btn.dataset.mode; curPage = 1;
+      document.querySelectorAll('#mode-seg .seg-btn').forEach(function(b){ b.classList.toggle('active', b.dataset.mode === curMode); });
+      buildTabs(); render();
+    });
+  });
+  buildTabs(); render();
+}});
+</script>
+<script src="../fx.js"></script>
+</body>
+</html>

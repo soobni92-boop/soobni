@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0c0706">
+<title>공지 · 숩니찡</title>
+<meta name="description" content="SOOBNIJJING OFFICIAL — 공지">
+<meta property="og:title" content="공지 · 숩니찡 NOIR SALON">
+<meta property="og:description" content="보다 보면 숩며든다.">
+<link rel="icon" type="image/jpeg" href="https://profile.img.sooplive.co.kr/LOGO/br/breezy25/breezy25.jpg">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<script>if(localStorage.getItem('theme')==='light')document.body.classList.add('day');</script>
+<div class="mast"><div class="mast-in">
+  <a class="nav-logo" href="../"><b data-hook="name-kr">숩니찡</b><span data-hook="name-en">SOOBNIJJING</span></a>
+  <nav class="nm">
+    <a href="../">Cover<b>메인</b></a>
+    <a href="../profile/">Dossier<b>프로필</b></a>
+    <a href="../schedule/">Agenda<b>일정</b></a>
+    <a href="./" class="act">Bulletin<b>공지</b></a>
+    <a href="../work/">Ledger<b>업보</b></a>
+    <a href="../diary/">Notes<b>일기</b></a>
+    <a href="../dress/">Atelier<b>옷장</b></a>
+  </nav>
+  <div class="mast-tools">
+    <div class="dk" title="낮 / 밤 전환">NIGHT<span class="sw"><i></i></span>DAY</div>
+    <button class="ask" onclick="openAsk()">✉ SEND</button>
+  </div>
+</div></div>
+<div class="shell">
+<div class="pagehero">
+  <div class="ph-main">
+    <div class="kicker"><i></i><span>FILE 03 · BULLETIN</span></div>
+    <div class="ph-kr">공지사항</div>
+    <div class="ph-title">BULLE<span>TIN</span></div>
+    <p class="ph-sub">살롱 문 앞에 붙는 안내문. 고정 공지가 맨 위에 걸립니다.</p>
+    <div class="ghost">03</div>
+  </div>
+  <div class="ph-side">
+    <div class="ph-meta">SOOBNIJJING<br><b>NOIR SALON</b> · ISSUE 04<br>MEMBERS ONLY</div>
+    <img class="ph-mascot js-mascot" src="../assets/mascot.png" alt="" aria-hidden="true">
+  </div>
+</div>
+<div class="card">
+  <div class="card-title"><span class="no">A</span>Bulletin <em id="count">불러오는 중…</em></div>
+  <div id="notice-list"><div class="spinner"></div></div>
+</div>
+</div><!-- /shell -->
+
+<div class="marquee" aria-hidden="true">
+  <div>
+    <span>보다 보면 숩며든다 <b>✦</b> SOOBNIJJING NOIR SALON <b>✦</b> 아무래도~ <b>✦</b> 찡구 ONLY <b>✦</b>&nbsp;</span>
+    <span>보다 보면 숩며든다 <b>✦</b> SOOBNIJJING NOIR SALON <b>✦</b> 아무래도~ <b>✦</b> 찡구 ONLY <b>✦</b>&nbsp;</span>
+  </div>
+</div>
+
+<footer>
+  © 2026 SOOBNIJJING OFFICIAL<br>
+  <span class="fkr" data-hook="footer-line">비즈니스 문의 — 상단 ✉ SEND 버튼을 이용해 주세요</span>
+</footer>
+
+<div class="askmask" id="askmask">
+  <div class="askmodal">
+    <div class="mk">SEND A SIGNAL</div>
+    <h3>문의하기</h3>
+    <p>숩니찡에게 하고 싶은 말을 남겨주세요. (익명 · 관리자만 확인)</p>
+    <textarea id="askmsg" placeholder="문의 내용을 적어주세요..."></textarea>
+    <div class="askbtns">
+      <button class="no" onclick="closeAsk()">CANCEL</button>
+      <button class="yes" onclick="sendAsk()">TRANSMIT ↗</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="../supabase.js"></script>
+<script src="../site.js"></script>
+<script>
+NOIR.boot({ after: async function(){
+  var rows = [];
+  try { rows = await fetchAll('notice', { order:'created_at', asc:false }); } catch(e){ rows = []; }
+  var all = rows.filter(function(n){ return n.pinned; }).concat(rows.filter(function(n){ return !n.pinned; }));
+  document.getElementById('count').textContent = '총 ' + all.length + '건';
+  var el = document.getElementById('notice-list');
+  if(!all.length){ el.innerHTML = '<div class="empty"><b>NO BULLETIN</b>아직 붙은 공지가 없어요</div>'; return; }
+  el.innerHTML = all.map(function(n, i){
+    var d = new Date(n.created_at);
+    var ds = d.getFullYear() + '.' + String(d.getMonth()+1).padStart(2,'0') + '.' + String(d.getDate()).padStart(2,'0');
+    var imgs = (n.images && n.images.length) ? n.images : (n.image_url ? [n.image_url] : []);
+    var thumb = imgs.length ? '<img class="notice-thumb" src="' + NOIR.esc(imgs[0]) + '" loading="lazy" alt="" referrerpolicy="no-referrer">' : '';
+    var body = imgs.map(function(u){ return '<img class="post-img" src="' + NOIR.esc(u) + '" loading="lazy" alt="" referrerpolicy="no-referrer">'; }).join('');
+    return '<div class="notice-item' + (n.pinned ? ' pinned' : '') + '" onclick="this.classList.toggle(\'open\')">'
+      + '<div class="notice-head"><span class="notice-no">' + String(all.length - i).padStart(2,'0') + '</span>'
+      + (n.pinned ? '<span class="notice-pin">PIN</span>' : '')
+      + '<span class="notice-title">' + NOIR.esc(n.title) + '</span>' + thumb
+      + '<span class="notice-date">' + ds + '</span><span class="notice-arrow">›</span></div>'
+      + '<div class="notice-body">' + body + NOIR.esc(n.content || '') + '</div></div>';
+  }).join('');
+}});
+</script>
+<script src="../fx.js"></script>
+</body>
+</html>

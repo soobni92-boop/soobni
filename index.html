@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0c0706">
+<title>숩니찡 · NOIR SALON</title>
+<meta name="description" content="SOOBNIJJING OFFICIAL — NOIR SALON. 보다 보면 숩며든다.">
+<meta property="og:title" content="숩니찡 · NOIR SALON">
+<meta property="og:description" content="보다 보면 숩며든다. — 심야에만 문을 여는 살롱">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/jpeg" href="https://profile.img.sooplive.co.kr/LOGO/br/breezy25/breezy25.jpg">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+/* ═══ COVER — ISSUE 04 / NOIR SALON (시안 1:1 재현 + 배선) ═══ */
+:root{ --char:url('assets/mascot.png'); }
+html,body{ width:100%; height:100%; margin:0; overflow:hidden; }
+body{ opacity:0; transition:opacity .42s ease; }
+body.ready{ opacity:1; }
+
+.page{ position:relative; width:100%; height:100%; overflow:hidden; }
+
+.c4-photo{
+  position:absolute; top:0; bottom:0; left:23%; width:55%;
+  background-image:url('assets/soop-noir-lounge.webp');
+  background-repeat:no-repeat; background-size:cover; background-position:64% 50%;
+  box-shadow:0 0 90px rgba(8,4,3,.9);
+}
+.c4-photo::after{
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(90deg,var(--ink) 0,transparent 20% 78%,var(--ink) 100%);
+}
+body.day .c4-photo{ filter:saturate(.85) brightness(1.06); }
+
+.c4-frame{ position:absolute; z-index:1; inset:3.4vh 2.8vw; border:1px solid var(--line); pointer-events:none; }
+
+.c4-mast{
+  position:absolute; z-index:4; top:3.4vh; left:4.1vw; right:4.1vw;
+  display:grid; height:6vh; grid-template-columns:1fr auto 1fr; align-items:center;
+  border-bottom:1px solid var(--line);
+}
+.c4-mast span,.c4-mast em{
+  font-family:var(--micro); font-size:clamp(8px,.58vw,11px); font-style:normal;
+  font-weight:800; letter-spacing:.22em; color:var(--tx2);
+}
+.c4-mast b{ font-family:var(--disp); font-size:clamp(22px,1.75vw,34px); font-weight:400; }
+.c4-mast em{ justify-self:end; color:var(--brass); }
+
+.c4-editorial{ position:absolute; z-index:2; top:15vh; left:4.3vw; width:26vw; }
+.c4-editorial .edition{
+  font-family:var(--micro); color:var(--brass); font-size:clamp(8px,.6vw,11px);
+  font-weight:900; letter-spacing:.2em;
+}
+.c4-editorial h1{
+  margin-top:2vh; font-family:var(--disp); font-size:clamp(52px,6.8vw,132px);
+  font-weight:400; letter-spacing:-.08em; line-height:.76;
+}
+.c4-editorial h1 span{ display:block; color:transparent; -webkit-text-stroke:1px var(--brass); }
+.c4-editorial .quote{
+  margin-top:4vh; font-family:var(--disp); font-size:clamp(14px,1.2vw,23px); line-height:1.65;
+}
+.c4-meta{ display:grid; margin-top:4vh; gap:1.2vh; border-top:1px solid var(--line); padding-top:1.8vh; }
+.c4-meta span{
+  display:grid; grid-template-columns:4.6vw 1fr; color:var(--tx2);
+  font-family:var(--micro); font-size:clamp(8px,.56vw,10px); font-weight:700; letter-spacing:.13em;
+}
+.c4-meta b{ color:var(--brass); }
+
+.c4-agenda{ position:absolute; z-index:3; top:15vh; right:4vw; width:min(24vw,450px); }
+.c4-agenda>p{
+  margin-bottom:2vh; font-family:var(--micro); color:var(--brass);
+  font-size:clamp(8px,.58vw,11px); font-weight:900; letter-spacing:.2em;
+}
+.c4-agenda ol{ border-top:1px solid var(--line); }
+.c4-agenda li{
+  display:grid; grid-template-columns:2.4vw 3.6vw 1fr; align-items:center;
+  min-height:6.1vh; border-bottom:1px solid var(--line-2);
+}
+.c4-agenda li i{ font-family:var(--disp); font-style:normal; font-size:clamp(11px,.85vw,16px); color:var(--tx3); }
+.c4-agenda li b{ font-family:var(--micro); font-size:clamp(9px,.67vw,13px); letter-spacing:.1em; }
+.c4-agenda li em{
+  justify-self:end; font-family:var(--micro); font-style:normal; color:var(--tx2);
+  font-size:clamp(8px,.6vw,11px); letter-spacing:.1em; text-align:right;
+}
+.c4-agenda li.on b{ color:var(--paper); }
+.c4-agenda li.today{ border-bottom-color:var(--brass); color:var(--brass-lt); }
+.c4-agenda li.today em,.c4-agenda li.today i{ color:var(--brass-lt); }
+
+.c4-next{ display:grid; margin-top:2.6vh; border-left:2px solid var(--brass); padding-left:1.1vw; gap:.7vh; }
+.c4-next span{ font-family:var(--micro); font-size:8px; font-weight:800; letter-spacing:.18em; color:var(--tx3); }
+.c4-next b{ font-family:var(--disp); font-size:clamp(15px,1.3vw,25px); font-weight:400; }
+
+.c4-links{
+  display:flex; margin-top:2.8vh; gap:1.5vw; font-family:var(--micro);
+  font-size:clamp(8px,.56vw,10px); font-weight:800; letter-spacing:.12em;
+}
+.c4-links a:hover{ color:var(--brass-lt); }
+
+/* 마스코트 — 살롱 마스코트 도장 */
+.c4-mascot{
+  position:absolute; z-index:3; left:25.5%; bottom:11vh; width:clamp(78px,8.6vw,132px);
+  filter:drop-shadow(0 16px 30px rgba(0,0,0,.55));
+  animation:mascot-float 5.5s ease-in-out infinite; pointer-events:none;
+}
+.c4-mascot-cap{
+  position:absolute; z-index:3; left:25.5%; bottom:8.4vh; width:clamp(78px,8.6vw,132px);
+  text-align:center; font-family:var(--micro); font-size:7.5px; font-weight:800;
+  letter-spacing:.2em; color:var(--tx3); pointer-events:none;
+}
+
+/* 하단 인덱스 바 = 목차 + 도구 */
+.c4-foot{
+  position:absolute; z-index:4; left:4.1vw; right:4.1vw; bottom:3.4vh;
+  height:6vh; display:flex; align-items:center; gap:1.4vw;
+  border-top:1px solid var(--line);
+}
+.c4-foot .idx{ display:flex; gap:1.5vw; flex-wrap:wrap; }
+.c4-foot .idx a{
+  display:flex; align-items:baseline; gap:6px; font-family:var(--micro);
+  font-size:clamp(8px,.56vw,10px); font-weight:800; letter-spacing:.16em; color:var(--tx3);
+}
+.c4-foot .idx a b{ font-family:var(--body); font-size:11px; font-weight:400; letter-spacing:0; color:var(--tx2); }
+.c4-foot .idx a:hover,.c4-foot .idx a:hover b{ color:var(--brass-lt); }
+.c4-foot .tools{ margin-left:auto; display:flex; align-items:center; gap:12px; }
+.c4-foot .dk .sw{ width:20px; height:20px; }
+.c4-foot .dk .sw i{ width:12px; height:12px; left:3px; top:3px; }
+body.day .c4-foot .dk .sw i{ transform:translateX(0); }
+.c4-foot .ask{ padding:7px 12px; font-size:8.5px; }
+
+@media (min-aspect-ratio:2/1){ .c4-photo{ background-position:64% 43%; } }
+@media (max-height:780px){ .c4-agenda li{ min-height:5.4vh; } .c4-editorial .quote{ margin-top:2.6vh; } }
+
+@media (max-width:960px){
+  html,body{ height:auto; overflow:auto; }
+  .page{ height:auto; min-height:100vh; padding-bottom:26px; }
+  .c4-photo{ position:relative; left:0; width:100%; height:56vh; }
+  .c4-frame{ display:none; }
+  .c4-mast{ position:absolute; top:0; left:0; right:0; height:auto; padding:14px 20px; }
+  .c4-editorial{ position:relative; top:auto; left:auto; width:auto; padding:26px 20px 0; }
+  .c4-editorial h1{ font-size:15vw; }
+  .c4-agenda{ position:relative; top:auto; right:auto; width:auto; padding:30px 20px 0; }
+  .c4-mascot{ left:auto; right:16px; bottom:auto; top:36vh; width:88px; }
+  .c4-mascot-cap{ display:none; }
+  .c4-foot{ position:relative; left:auto; right:auto; bottom:auto; height:auto;
+            flex-wrap:wrap; gap:12px; margin:26px 20px 0; padding-top:16px; }
+  .c4-foot .tools{ margin-left:0; }
+}
+</style>
+</head>
+<body>
+<script>if(localStorage.getItem('theme')==='light')document.body.classList.add('day');</script>
+
+<main class="page">
+  <div class="c4-photo" data-img="cover-img" role="img" aria-label="심야 살롱의 숩니찡"></div>
+  <div class="c4-frame"></div>
+
+  <header class="c4-mast">
+    <span data-hook="mast-left">NOIR SALON</span>
+    <b data-hook="name-kr">숩니찡</b>
+    <em data-hook="mast-issue">ISSUE 04</em>
+  </header>
+
+  <section class="c4-editorial" aria-label="숩니찡 소개">
+    <p class="edition" data-hook="edition">THE NIGHT EDITION</p>
+    <h1><span data-hook="name-en1">SOOPNI</span><span data-hook="name-en2">JJING</span></h1>
+    <p class="quote" data-hook="cover-quote" data-multiline>늦은 밤의 수다와<br>조금 긴 게임 이야기.</p>
+    <div class="c4-meta">
+      <span><b data-hook="meta1-k">TYPE</b><i data-hook="meta1-v" style="font-style:normal">CREATOR</i></span>
+      <span><b data-hook="meta2-k">MOOD</b><i data-hook="meta2-v" style="font-style:normal">SWEET / NOIR</i></span>
+      <span><b data-hook="meta3-k">LIVE</b><i data-hook="meta3-v" style="font-style:normal">SOOP</i></span>
+    </div>
+  </section>
+
+  <img class="c4-mascot js-mascot" src="assets/mascot.png" alt="숩니찡 마스코트">
+  <div class="c4-mascot-cap">SALON MASCOT</div>
+
+  <aside class="c4-agenda" aria-label="이번 주 방송 일정">
+    <p>WEEKLY AGENDA / KST</p>
+    <ol id="agenda"></ol>
+    <div class="c4-next">
+      <span data-hook="next-label">NEXT TRANSMISSION</span>
+      <b id="nextval">—</b>
+    </div>
+    <nav class="c4-links" aria-label="외부 링크">
+      <a data-link="link-soop" target="_blank" rel="noopener">SOOP ↗</a>
+      <a data-link="link-youtube" target="_blank" rel="noopener">YOUTUBE ↗</a>
+      <a data-link="link-x" target="_blank" rel="noopener">X ↗</a>
+      <a data-link="link-etc" target="_blank" rel="noopener" id="etclink">LINK ↗</a>
+    </nav>
+  </aside>
+
+  <div class="c4-foot">
+    <div class="idx">
+      <a href="profile/">01<b>프로필</b></a>
+      <a href="schedule/">02<b>일정</b></a>
+      <a href="notice/">03<b>공지</b></a>
+      <a href="work/">04<b>업보</b></a>
+      <a href="diary/">05<b>일기</b></a>
+      <a href="dress/">06<b>옷장</b></a>
+    </div>
+    <div class="tools">
+      <div class="dk" title="낮 / 밤 전환">NIGHT<span class="sw"><i></i></span>DAY</div>
+      <button class="ask" onclick="openAsk()">✉ SEND</button>
+    </div>
+  </div>
+</main>
+
+<!-- 문의 모달 -->
+<div class="askmask" id="askmask">
+  <div class="askmodal">
+    <div class="mk">SEND A SIGNAL</div>
+    <h3>문의하기</h3>
+    <p>숩니찡에게 하고 싶은 말을 남겨주세요. (익명 · 관리자만 확인)</p>
+    <textarea id="askmsg" placeholder="문의 내용을 적어주세요..."></textarea>
+    <div class="askbtns">
+      <button class="no" onclick="closeAsk()">CANCEL</button>
+      <button class="yes" onclick="sendAsk()">TRANSMIT ↗</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="supabase.js"></script>
+<script src="site.js"></script>
+<script>
+/* 커버 = 주간 아젠다까지 전부 admin 값으로 그림 */
+var DOW_EN = ['MON','TUE','WED','THU','FRI','SAT','SUN'];
+var DOW_KR = ['월','화','수','목','금','토','일'];
+
+NOIR.boot({ after: function(){
+  var todayIdx = (new Date().getDay() + 6) % 7;              /* 0=월 … 6=일 */
+  var on = NOIR.val('days').split(',').map(function(s){ return s.trim(); });
+  var html = '', nextTxt = '';
+  for (var i = 0; i < 7; i++){
+    var txt = NOIR.val('wk-' + i) || 'REST';
+    var live = on.indexOf(String(i)) >= 0;
+    var cls = (live ? ' on' : '') + (i === todayIdx ? ' today' : '');
+    html += '<li class="' + cls.trim() + '"><i>' + String(i+1).padStart(2,'0') + '</i>'
+          + '<b>' + DOW_EN[i] + '</b><em>' + NOIR.esc(txt) + '</em></li>';
+  }
+  document.getElementById('agenda').innerHTML = html;
+
+  /* NEXT TRANSMISSION — admin 값이 있으면 그대로, 없으면 다음 방송요일 자동 계산 */
+  nextTxt = NOIR.val('next-value');
+  if(!nextTxt){
+    for (var k = 0; k < 7; k++){
+      var idx = (todayIdx + k) % 7;
+      if (on.indexOf(String(idx)) >= 0){
+        nextTxt = DOW_EN[idx] + ' · ' + (NOIR.val('wk-' + idx) || '').replace(/^[A-Z]+\s*/, '');
+        nextTxt = nextTxt.replace(/ · $/, '');
+        if (k === 0) nextTxt = 'TONIGHT · ' + DOW_KR[idx] + '요일';
+        break;
+      }
+    }
+  }
+  document.getElementById('nextval').textContent = nextTxt || '오방공 확인';
+
+  var etc = document.getElementById('etclink');
+  if (etc && etc.style.display !== 'none') etc.textContent = (NOIR.val('link-etc-label') || 'LINK') + ' ↗';
+}});
+</script>
+<script src="fx.js"></script>
+</body>
+</html>

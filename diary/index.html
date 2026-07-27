@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0c0706">
+<title>일기 · 숩니찡</title>
+<meta name="description" content="SOOBNIJJING OFFICIAL — 일기">
+<meta property="og:title" content="일기 · 숩니찡 NOIR SALON">
+<meta property="og:description" content="보다 보면 숩며든다.">
+<link rel="icon" type="image/jpeg" href="https://profile.img.sooplive.co.kr/LOGO/br/breezy25/breezy25.jpg">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<script>if(localStorage.getItem('theme')==='light')document.body.classList.add('day');</script>
+<div class="mast"><div class="mast-in">
+  <a class="nav-logo" href="../"><b data-hook="name-kr">숩니찡</b><span data-hook="name-en">SOOBNIJJING</span></a>
+  <nav class="nm">
+    <a href="../">Cover<b>메인</b></a>
+    <a href="../profile/">Dossier<b>프로필</b></a>
+    <a href="../schedule/">Agenda<b>일정</b></a>
+    <a href="../notice/">Bulletin<b>공지</b></a>
+    <a href="../work/">Ledger<b>업보</b></a>
+    <a href="./" class="act">Notes<b>일기</b></a>
+    <a href="../dress/">Atelier<b>옷장</b></a>
+  </nav>
+  <div class="mast-tools">
+    <div class="dk" title="낮 / 밤 전환">NIGHT<span class="sw"><i></i></span>DAY</div>
+    <button class="ask" onclick="openAsk()">✉ SEND</button>
+  </div>
+</div></div>
+<div class="shell">
+<div class="pagehero">
+  <div class="ph-main">
+    <div class="kicker"><i></i><span>FILE 05 · NOTES</span></div>
+    <div class="ph-kr">심야 일기</div>
+    <div class="ph-title">NO<span>TES</span></div>
+    <p class="ph-sub">방송이 끝난 뒤 남기는 밤의 기록. 한마디를 남길 수 있어요.</p>
+    <div class="ghost">05</div>
+  </div>
+  <div class="ph-side">
+    <div class="ph-meta">SOOBNIJJING<br><b>NOIR SALON</b> · ISSUE 04<br>MEMBERS ONLY</div>
+    <img class="ph-mascot js-mascot" src="../assets/mascot.png" alt="" aria-hidden="true">
+  </div>
+</div>
+<div class="card">
+  <div class="card-title"><span class="no">A</span>Night Notes <em id="dcount">불러오는 중…</em></div>
+  <div id="diary-list"><div class="spinner"></div></div>
+  <div class="pager" id="pagination"></div>
+</div>
+</div><!-- /shell -->
+
+<div class="marquee" aria-hidden="true">
+  <div>
+    <span>보다 보면 숩며든다 <b>✦</b> SOOBNIJJING NOIR SALON <b>✦</b> 아무래도~ <b>✦</b> 찡구 ONLY <b>✦</b>&nbsp;</span>
+    <span>보다 보면 숩며든다 <b>✦</b> SOOBNIJJING NOIR SALON <b>✦</b> 아무래도~ <b>✦</b> 찡구 ONLY <b>✦</b>&nbsp;</span>
+  </div>
+</div>
+
+<footer>
+  © 2026 SOOBNIJJING OFFICIAL<br>
+  <span class="fkr" data-hook="footer-line">비즈니스 문의 — 상단 ✉ SEND 버튼을 이용해 주세요</span>
+</footer>
+
+<div class="askmask" id="askmask">
+  <div class="askmodal">
+    <div class="mk">SEND A SIGNAL</div>
+    <h3>문의하기</h3>
+    <p>숩니찡에게 하고 싶은 말을 남겨주세요. (익명 · 관리자만 확인)</p>
+    <textarea id="askmsg" placeholder="문의 내용을 적어주세요..."></textarea>
+    <div class="askbtns">
+      <button class="no" onclick="closeAsk()">CANCEL</button>
+      <button class="yes" onclick="sendAsk()">TRANSMIT ↗</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="../supabase.js"></script>
+<script src="../site.js"></script>
+<script>
+var PAGE_SIZE = 10, allData = [], curPage = 1;
+
+function renderPage(page){
+  curPage = page;
+  var start = (page-1) * PAGE_SIZE;
+  var items = allData.slice(start, start + PAGE_SIZE);
+  var el = document.getElementById('diary-list');
+  if(!allData.length){
+    el.innerHTML = '<div class="empty"><b>NO NOTES</b>아직 남긴 기록이 없어요</div>';
+    document.getElementById('pagination').innerHTML = '';
+    return;
+  }
+  el.innerHTML = items.map(function(d, i){
+    var imgs = (d.images && d.images.length) ? d.images : (d.image_url ? [d.image_url] : []);
+    var imgHtml = imgs.map(function(u){ return '<img class="post-img" src="' + NOIR.esc(u) + '" loading="lazy" alt="" referrerpolicy="no-referrer">'; }).join('');
+    var thumb = imgs.length ? '<img class="diary-thumb" src="' + NOIR.esc(imgs[0]) + '" loading="lazy" alt="" referrerpolicy="no-referrer">' : '';
+    return '<div class="diary-item" data-id="' + d.id + '">'
+      + '<div class="diary-head" onclick="toggleDiary(this)">'
+      + '<span class="diary-no">' + String(allData.length - (start+i)).padStart(2,'0') + '</span>'
+      + '<div class="diary-meta"><div class="diary-title">' + NOIR.esc(d.title) + '</div>'
+      + '<div class="diary-date">' + NOIR.esc(d.diary_date || '') + '</div></div>'
+      + (d.mood ? '<span class="diary-mood">' + NOIR.esc(d.mood) + '</span>' : '')
+      + thumb + '<span class="diary-arrow">›</span></div>'
+      + '<div class="diary-body">' + imgHtml + NOIR.esc(d.content || '')
+      + '<div class="cmt-wrap"><div class="cmt-title">COMMENTS · 한마디</div>'
+      + '<div class="cmt-list" id="cmt-list-' + d.id + '"></div>'
+      + '<div class="cmt-form">'
+      + '<input id="cmt-nick-' + d.id + '" placeholder="닉네임" onclick="event.stopPropagation()">'
+      + '<input id="cmt-msg-' + d.id + '" placeholder="한마디 남기기…" onclick="event.stopPropagation()" onkeydown="if(event.key===\'Enter\')addComment(' + d.id + ')">'
+      + '<button class="cmt-send" onclick="event.stopPropagation();addComment(' + d.id + ')">SEND</button>'
+      + '</div></div></div></div>';
+  }).join('');
+
+  var totalPages = Math.ceil(allData.length / PAGE_SIZE);
+  var pg = document.getElementById('pagination');
+  pg.innerHTML = '';
+  if(totalPages > 1){
+    for(var p = 1; p <= totalPages; p++){
+      var b = document.createElement('button');
+      b.className = 'page-btn' + (p === page ? ' active' : '');
+      if(p === page) b.classList.add('active');
+      b.textContent = p;
+      b.onclick = (function(n){ return function(){ renderPage(n); window.scrollTo(0,0); }; })(p);
+      pg.appendChild(b);
+    }
+  }
+}
+
+function toggleDiary(head){
+  var item = head.closest('.diary-item');
+  var wasOpen = item.classList.contains('open');
+  item.classList.toggle('open');
+  if(!wasOpen){ loadComments(item.dataset.id); }
+  if(typeof initIframeResize === 'function') initIframeResize();
+}
+
+async function loadComments(diaryId){
+  var list = document.getElementById('cmt-list-' + diaryId);
+  if(!list) return;
+  var all = [];
+  try { all = await fetchAll('comments', { order:'created_at', asc:true }); } catch(e){ all = []; }
+  var mine = all.filter(function(c){ return String(c.diary_id) === String(diaryId); });
+  list.innerHTML = mine.length
+    ? mine.map(function(c){ return '<div class="cmt-item"><div class="cn">' + NOIR.esc(c.nickname || '익명') + '</div><div class="cm">' + NOIR.esc(c.message || '') + '</div></div>'; }).join('')
+    : '<div class="cmt-empty">아직 한마디가 없어요. 첫 한마디를 남겨보세요.</div>';
+}
+
+async function addComment(diaryId){
+  var msgEl = document.getElementById('cmt-msg-' + diaryId);
+  var nickEl = document.getElementById('cmt-nick-' + diaryId);
+  var msg = (msgEl.value || '').trim();
+  if(!msg){ NOIR.toast('한마디를 적어 주세요'); return; }
+  var ok = await insertRow('comments', { diary_id: diaryId, nickname: (nickEl.value || '').trim() || '익명', message: msg });
+  if(ok){ msgEl.value = ''; loadComments(diaryId); NOIR.toast('남겼어요 ✦'); }
+  else NOIR.toast('등록에 실패했어요');
+}
+
+NOIR.boot({ after: async function(){
+  try { allData = await fetchAll('diary', { order:'diary_date', asc:false }); } catch(e){ allData = []; }
+  document.getElementById('dcount').textContent = '총 ' + allData.length + '편';
+  renderPage(1);
+}});
+</script>
+<script src="../fx.js"></script>
+</body>
+</html>
