@@ -1,18 +1,14 @@
-/* ═══════════════════════════════════════════════════════════════
-   site.js — 숩니찡 NOIR SALON 공통 동작
-   · admin(profile 테이블 id=1)에 저장한 값을 전 페이지에 실제로 그립니다 (§2-B.2)
-   · 낮/밤 토글(localStorage 'theme') · 문의 모달 · iframe 자동높이 · FOUC 게이트
-   ⚠ 로드 순서: supabase.js → site.js → fx.js
-   ═══════════════════════════════════════════════════════════════ */
+/* Shared runtime: paints admin-saved values on every page.
+   Load order: supabase.js -> site.js -> fx.js */
 window.NOIR = (function () {
 
-  /* ── 기본값: DB가 비어 있어도 사이트가 완성된 모습으로 보이게 ── */
+  /* Fallback values used when the row is empty */
   var DEFAULTS = {
     'soop-id'      : 'breezy25',
     'name-kr'      : '숩니찡',
     'name-en'      : 'SOOBNIJJING',
-    'name-en1'     : 'SOOPNI',
-    'name-en2'     : 'JJING',
+    'name-en1'     : 'SOOB',
+    'name-en2'     : 'NI',
     'mast-left'    : 'NOIR SALON',
     'mast-issue'   : 'ISSUE 04',
     'edition'      : 'THE NIGHT EDITION',
@@ -67,7 +63,8 @@ window.NOIR = (function () {
     'milestones'   : '완료|2026.02.28 첫 방송 개국\n진행중|찡구 1,000명 모으기\n예정|첫 팬아트 전시 · 굿즈\n예정|생일 기념 특별 방송',
     'quotes'       : '아무래도~\n보다 보면 숩며든다.\n오늘도 늦게까지 있을 거지?',
     'theme-ink'    : '', 'theme-paper':'', 'theme-brass':'', 'theme-brass-lt':'',
-    'theme-rose'   : '', 'theme-day-bg':''
+    'theme-rose'   : '', 'theme-day-bg':'',
+    'type-display' : '1', 'type-title':'1', 'type-body':'1', 'type-label':'1'
   };
 
   var THEME_MAP = {
@@ -76,15 +73,19 @@ window.NOIR = (function () {
     'theme-brass'   : '--brass',
     'theme-brass-lt': '--brass-lt',
     'theme-rose'    : '--rose',
-    'theme-day-bg'  : '--ink-2'
+    'theme-day-bg'  : '--ink-2',
+    'type-display'  : '--fs-display',
+    'type-title'    : '--fs-title',
+    'type-body'     : '--fs-body',
+    'type-label'    : '--fs-label'
   };
 
-  var P = {};   /* 로드된 프로필 데이터 */
+  var P = {};   /* Loaded profile row */
 
-  /* ─────────── 유틸 ─────────── */
+  /* Utils */
   function esc(s){ return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
-  /* DB 값은 배열·객체로 들어올 수 있음 → 항상 문자열로 (§DB 타입 방어) */
+  /* DB values may arrive as array/object; always return a string */
   function val(key){
     var v = (P && P[key] !== undefined && P[key] !== null && P[key] !== '') ? P[key] : DEFAULTS[key];
     if (v === undefined || v === null) return '';
@@ -103,7 +104,7 @@ window.NOIR = (function () {
   }
   function avatarUrl(){ return val('avatar') || soopAvatar(val('soop-id')); }
 
-  /* 생일 D-Day (MMDD / MM-DD / YYYY-MM-DD 모두 허용) */
+  /* Birthday countdown. Accepts MMDD, MM-DD, YYYY-MM-DD */
   function dday(s){
     var m = String(s||'').match(/(\d{1,2})\D?(\d{1,2})\s*$/);
     if(!m) return null;
@@ -115,7 +116,7 @@ window.NOIR = (function () {
     if(next < t) next = new Date(y+1, mm-1, dd);
     return Math.round((next - t) / 86400000);
   }
-  /* 데뷔 후 며칠 */
+  /* Days since debut */
   function daysSince(s){
     var d = new Date(String(s||'') + 'T00:00:00');
     if(isNaN(d)) return null;
@@ -123,7 +124,7 @@ window.NOIR = (function () {
     return Math.max(0, Math.round((t - d) / 86400000));
   }
 
-  /* ─────────── 낮 / 밤 ─────────── */
+  /* Day / night */
   function restoreTheme(){
     if (localStorage.getItem('theme') === 'light') document.body.classList.add('day');
   }
@@ -136,7 +137,7 @@ window.NOIR = (function () {
     });
   }
 
-  /* ─────────── 문의 모달 ─────────── */
+  /* Inquiry modal */
   function openAsk(){ var m = document.getElementById('askmask'); if(m) m.classList.add('on'); }
   function closeAsk(){ var m = document.getElementById('askmask'); if(m) m.classList.remove('on'); }
   async function sendAsk(){
@@ -144,12 +145,22 @@ window.NOIR = (function () {
     var v = (t && t.value || '').trim();
     if(!v){ toast('내용을 적어 주세요'); return; }
     try{
-      await insertRow('inquiries', { message: v });   /* 컬럼명은 message */
+      await insertRow('inquiries', { message: v });   /* Column is 'message' */
       toast('전송했어요. 고마워요 ✦');
     }catch(e){ toast('전송에 실패했어요. 잠시 후 다시 시도해 주세요'); }
     if(t) t.value = '';
     closeAsk();
   }
+  /* Every mask closes on ESC. New modals only need one of these class names. */
+  function bindEsc(){
+    document.addEventListener('keydown', function(e){
+      if (e.key !== 'Escape') return;
+      document.querySelectorAll('.askmask.on').forEach(function(el){ el.classList.remove('on'); });
+      document.querySelectorAll('.ov.show').forEach(function(el){ el.classList.remove('show'); });
+      document.querySelectorAll('.lightbox.open').forEach(function(el){ el.classList.remove('open'); });
+    });
+  }
+
   function toast(msg){
     var t = document.getElementById('toast');
     if(!t){ t = document.createElement('div'); t.id='toast'; t.className='toast'; document.body.appendChild(t); }
@@ -157,7 +168,7 @@ window.NOIR = (function () {
     clearTimeout(t._tm); t._tm = setTimeout(function(){ t.classList.remove('show'); }, 2400);
   }
 
-  /* ─────────── 팔레트 (admin 🎨 테마 탭) ─────────── */
+  /* Palette from the admin theme tab */
   function applyPalette(){
     Object.keys(THEME_MAP).forEach(function(k){
       var v = (P && P[k]) ? String(P[k]).trim() : '';
@@ -165,7 +176,41 @@ window.NOIR = (function () {
     });
   }
 
-  /* ─────────── data-hook 렌더 ─────────── */
+  /* Fixed copy: [data-t] text, [data-tph] placeholder. Keys are shared across pages. */
+  var _txtObs = null;
+  function applyTexts(root){
+    if(!root) return;
+    var list = [];
+    if(root.nodeType === 1 && root.hasAttribute){
+      if(root.hasAttribute('data-t')) list.push(root);
+      if(root.hasAttribute('data-tph')) list.push(root);
+    }
+    if(root.querySelectorAll){
+      root.querySelectorAll('[data-t],[data-tph]').forEach(function(el){ list.push(el); });
+    }
+    list.forEach(function(el){
+      if(el.hasAttribute('data-t')){
+        var v = val('txt-' + el.getAttribute('data-t'));
+        if(v && el.textContent !== v) el.textContent = v;
+      }
+      if(el.hasAttribute('data-tph')){
+        var pv = val('txt-' + el.getAttribute('data-tph'));
+        if(pv && el.placeholder !== pv) el.placeholder = pv;
+      }
+    });
+  }
+  /* Modals and tabs render later; without the observer coverage stops around 70%. */
+  function watchTexts(){
+    if(!window.MutationObserver || _txtObs) return;
+    _txtObs = new MutationObserver(function(muts){
+      for(var m = 0; m < muts.length; m++)
+        for(var n = 0; n < muts[m].addedNodes.length; n++)
+          if(muts[m].addedNodes[n].nodeType === 1) applyTexts(muts[m].addedNodes[n]);
+    });
+    _txtObs.observe(document.body, { childList:true, subtree:true });
+  }
+
+  /* Paint data-hook / data-link / data-img */
   function paint(){
     document.querySelectorAll('[data-hook]').forEach(function(el){
       var v = val(el.getAttribute('data-hook'));
@@ -185,7 +230,7 @@ window.NOIR = (function () {
       if(el.tagName === 'IMG') el.src = v;
       else el.style.backgroundImage = 'url("' + v + '")';
     });
-    /* 마스코트 이미지 교체 (admin에서 URL 넣으면 우선) */
+    /* Mascot override */
     var mv = val('mascot-img');
     if(mv){
       document.querySelectorAll('.js-mascot').forEach(function(el){
@@ -193,7 +238,7 @@ window.NOIR = (function () {
       });
       document.documentElement.style.setProperty('--char', 'url("' + mv + '")');
     }
-    /* D-Day */
+    /* Countdowns */
     var n = dday(val('info-birth'));
     document.querySelectorAll('[data-dday]').forEach(function(el){
       el.textContent = (n === null) ? '' : (n === 0 ? 'BIRTHDAY TODAY ✦' : 'BIRTHDAY D-' + n);
@@ -202,7 +247,7 @@ window.NOIR = (function () {
     document.querySelectorAll('[data-since]').forEach(function(el){
       el.textContent = (ds === null) ? '' : ('DAY ' + ds);
     });
-    /* 방송 요일 (0=월 … 6=일) */
+    /* Stream days: 0=Mon ... 6=Sun */
     var on = val('days').split(',').map(function(s){ return s.trim(); }).filter(function(s){ return s !== ''; });
     document.querySelectorAll('[data-day]').forEach(function(el){
       var i = el.getAttribute('data-day');
@@ -210,7 +255,7 @@ window.NOIR = (function () {
     });
   }
 
-  /* ─────────── 로드 ─────────── */
+  /* Load */
   async function loadProfile(){
     try{
       var r = await db.from('profile').select('data').eq('id',1).single();
@@ -224,30 +269,32 @@ window.NOIR = (function () {
     if (typeof initIframeResize === 'function') { try{ initIframeResize(); }catch(e){} }
   }
 
-  /* 페이지마다 boot({page:'...'}) 한 줄만 호출 */
+  /* Each page calls boot() once */
   async function boot(opt){
     opt = opt || {};
     restoreTheme();
     bindTheme();
     var mask = document.getElementById('askmask');
     if(mask) mask.addEventListener('click', function(e){ if(e.target === mask) closeAsk(); });
-    setTimeout(ready, 1600);                       /* FOUC 폴백 — 영영 숨지 않게 */
+    bindEsc();
+    setTimeout(ready, 1600);   /* Show the page even if the fetch never resolves */
     await loadProfile();
     applyPalette();
-    try{ paint(); }catch(e){ console.error(e); }
+    try{ paint(); applyTexts(document); watchTexts(); }catch(e){ console.error(e); }
     if(typeof opt.after === 'function'){ try{ await opt.after(P); }catch(e){ console.error(e); } }
     ready();
   }
 
   return {
     boot: boot, val: val, raw: raw, lines: lines, esc: esc, toast: toast,
+    applyTexts: applyTexts,
     dday: dday, daysSince: daysSince, soopAvatar: soopAvatar, avatarUrl: avatarUrl,
     openAsk: openAsk, closeAsk: closeAsk, sendAsk: sendAsk,
     data: function(){ return P; }, DEFAULTS: DEFAULTS, THEME_MAP: THEME_MAP
   };
 })();
 
-/* 인라인 onclick 호환 */
+
 function openAsk(){ NOIR.openAsk(); }
 function closeAsk(){ NOIR.closeAsk(); }
 function sendAsk(){ NOIR.sendAsk(); }

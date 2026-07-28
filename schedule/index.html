@@ -17,26 +17,26 @@
 <div class="mast"><div class="mast-in">
   <a class="nav-logo" href="../"><b data-hook="name-kr">숩니찡</b><span data-hook="name-en">SOOBNIJJING</span></a>
   <nav class="nm">
-    <a href="../">Cover<b>메인</b></a>
-    <a href="../profile/">Dossier<b>프로필</b></a>
-    <a href="./" class="act">Agenda<b>일정</b></a>
-    <a href="../notice/">Bulletin<b>공지</b></a>
-    <a href="../work/">Ledger<b>업보</b></a>
-    <a href="../diary/">Notes<b>일기</b></a>
-    <a href="../dress/">Atelier<b>옷장</b></a>
+    <a href="../">Cover<b data-t="nav-main">메인</b></a>
+    <a href="../profile/">Dossier<b data-t="nav-profile">프로필</b></a>
+    <a href="./" class="act">Agenda<b data-t="nav-schedule">일정</b></a>
+    <a href="../notice/">Bulletin<b data-t="nav-notice">공지</b></a>
+    <a href="../work/">Ledger<b data-t="nav-work">업보</b></a>
+    <a href="../diary/">Notes<b data-t="nav-diary">일기</b></a>
+    <a href="../dress/">Atelier<b data-t="nav-dress">옷장</b></a>
   </nav>
   <div class="mast-tools">
     <div class="dk" title="낮 / 밤 전환">NIGHT<span class="sw"><i></i></span>DAY</div>
-    <button class="ask" onclick="openAsk()">✉ SEND</button>
+    <button class="ask" onclick="openAsk()" data-t="send-btn">✉ SEND</button>
   </div>
 </div></div>
 <div class="shell">
 <div class="pagehero">
   <div class="ph-main">
     <div class="kicker"><i></i><span>FILE 02 · AGENDA</span></div>
-    <div class="ph-kr">방송 일정</div>
+    <div class="ph-kr" data-t="s-kr">방송 일정</div>
     <div class="ph-title">AGEN<span>DA</span></div>
-    <p class="ph-sub">이번 달 영업일. 시간은 랜덤이라 오방공을 함께 확인해 주세요.</p>
+    <p class="ph-sub" data-t="s-sub">이번 달 영업일. 시간은 랜덤이라 오방공을 함께 확인해 주세요.</p>
     <div class="ghost">02</div>
   </div>
   <div class="ph-side">
@@ -54,20 +54,20 @@
 </div>
 
 <div class="card">
-  <div class="card-title"><span class="no">A</span>Upcoming <em>다가오는 일정</em></div>
+  <div class="card-title"><span class="no">A</span>Upcoming <em data-t="s-c1">다가오는 일정</em></div>
   <div id="upcoming"><div class="spinner"></div></div>
 </div>
 
 <div class="card">
-  <div class="card-title"><span class="no">B</span>Weekly Table <em>고정 요일</em></div>
+  <div class="card-title"><span class="no">B</span>Weekly Table <em data-t="s-c2">고정 요일</em></div>
   <div style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px" id="weekBox"></div>
 </div>
 </div><!-- /shell -->
 
 <div class="marquee" aria-hidden="true">
   <div>
-    <span>보다 보면 숩며든다 <b>✦</b> SOOBNIJJING NOIR SALON <b>✦</b> 아무래도~ <b>✦</b> 찡구 ONLY <b>✦</b>&nbsp;</span>
-    <span>보다 보면 숩며든다 <b>✦</b> SOOBNIJJING NOIR SALON <b>✦</b> 아무래도~ <b>✦</b> 찡구 ONLY <b>✦</b>&nbsp;</span>
+    <span><i data-t="marquee" style="font-style:normal">보다 보면 숩며든다</i> <b>✦</b> SOOBNIJJING NOIR SALON <b>✦</b> 아무래도~ <b>✦</b> 찡구 ONLY <b>✦</b>&nbsp;</span>
+    <span><i data-t="marquee" style="font-style:normal">보다 보면 숩며든다</i> <b>✦</b> SOOBNIJJING NOIR SALON <b>✦</b> 아무래도~ <b>✦</b> 찡구 ONLY <b>✦</b>&nbsp;</span>
   </div>
 </div>
 
@@ -78,13 +78,13 @@
 
 <div class="askmask" id="askmask">
   <div class="askmodal">
-    <div class="mk">SEND A SIGNAL</div>
-    <h3>문의하기</h3>
-    <p>숩니찡에게 하고 싶은 말을 남겨주세요. (익명 · 관리자만 확인)</p>
-    <textarea id="askmsg" placeholder="문의 내용을 적어주세요..."></textarea>
+    <div class="mk" data-t="ask-kicker">SEND A SIGNAL</div>
+    <h3 data-t="ask-title">문의하기</h3>
+    <p data-t="ask-note">남긴 내용은 관리자만 확인합니다</p>
+    <textarea id="askmsg" data-tph="ask-ph" placeholder="문의 내용을 적어주세요..."></textarea>
     <div class="askbtns">
-      <button class="no" onclick="closeAsk()">CANCEL</button>
-      <button class="yes" onclick="sendAsk()">TRANSMIT ↗</button>
+      <button class="no" onclick="closeAsk()" data-t="ask-cancel">CANCEL</button>
+      <button class="yes" onclick="sendAsk()" data-t="ask-ok">TRANSMIT ↗</button>
     </div>
   </div>
 </div>
@@ -100,6 +100,10 @@ var currentYear, currentMonth, allSchedule = [];
 var DAYS = ['일','월','화','수','목','금','토'];
 var DOW_EN = ['MON','TUE','WED','THU','FRI','SAT','SUN'];
 function kind(t){ return t === '휴방' ? 'off' : 'on'; }
+/* end_date empty = single day; set = band from date to end_date */
+function eventsOn(k){
+  return allSchedule.filter(function(s){ return s.date <= k && k <= (s.end_date || s.date); });
+}
 function colorClass(s){ return 'c-' + (s.color || (kind(s.type)==='off' ? 'pink' : 'green')); }
 
 function changeMonth(d){
@@ -123,11 +127,17 @@ function renderCalendar(){
   for(var d = 1; d <= last.getDate(); d++){
     var dateStr = currentYear + '-' + String(currentMonth+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
     var isToday = today.getFullYear()===currentYear && today.getMonth()===currentMonth && today.getDate()===d;
-    var events = allSchedule.filter(function(s){ return s.date === dateStr; });
+    var events = eventsOn(dateStr);
     var hl = events.some(function(e){ return e.highlight; });
+    var col = (startDay + d - 1) % 7;
     var evHtml = events.map(function(e){
+      var last = e.end_date || e.date;
       var label = (e.time ? e.time + ' ' : '') + (e.title || (kind(e.type)==='off' ? '휴방' : '방송'));
-      return '<div class="ev ' + colorClass(e) + '">' + NOIR.esc(label) + '</div>';
+      if(last <= e.date) return '<div class="ev ' + colorClass(e) + '">' + NOIR.esc(label) + '</div>';
+      var cls = 'ev band ' + colorClass(e) + ' wk' + col
+        + (dateStr === e.date ? ' bstart' : ' mid')
+        + (dateStr === last ? ' bend' : '');
+      return '<div class="' + cls + '">' + NOIR.esc(label) + '</div>';
     }).join('');
     var cls = 'cal-cell' + (isToday?' today':'') + (events.length?' has':'') + (hl?' hl':'');
     var click = events.length ? ' onclick="openModal(\'' + dateStr + '\')"' : '';
@@ -149,8 +159,9 @@ function renderUpcoming(){
     var dd = new Date(s.date + 'T00:00:00');
     var off = kind(s.type) === 'off';
     var times = [s.time, s.time2].filter(Boolean).join(' · ');
+    var span = (s.end_date && s.end_date > s.date) ? (' ~ ' + s.end_date.slice(5).replace('-','.')) : '';
     return '<div class="up-item" onclick="openModal(\'' + s.date + '\')">'
-      + '<div class="up-date">' + String(dd.getMonth()+1).padStart(2,'0') + '.' + String(dd.getDate()).padStart(2,'0') + ' (' + DAYS[dd.getDay()] + ')</div>'
+      + '<div class="up-date">' + String(dd.getMonth()+1).padStart(2,'0') + '.' + String(dd.getDate()).padStart(2,'0') + ' (' + DAYS[dd.getDay()] + ')' + span + '</div>'
       + '<div class="up-info"><div class="up-title">' + NOIR.esc(s.title || (off ? '휴방' : '방송')) + '</div>'
       + (times ? '<div class="up-time">' + NOIR.esc(times) + '</div>' : '') + '</div>'
       + '<span class="up-badge' + (off ? ' off' : '') + '">' + (off ? 'CLOSED' : 'OPEN') + '</span></div>';
@@ -163,20 +174,22 @@ function renderWeek(){
   document.getElementById('weekBox').innerHTML = DOW_EN.map(function(d, i){
     var live = on.indexOf(String(i)) >= 0;
     return '<div style="border:1px solid ' + (i===todayIdx ? 'var(--brass)' : 'var(--line)') + ';padding:14px 6px;text-align:center">'
-      + '<div style="font-family:var(--micro);font-size:9px;font-weight:800;letter-spacing:.16em;color:' + (live ? 'var(--brass-lt)' : 'var(--tx3)') + '">' + d + '</div>'
-      + '<div style="font-size:11px;margin-top:8px;color:' + (live ? 'var(--paper)' : 'var(--tx3)') + '">' + (live ? 'OPEN' : 'REST') + '</div>'
-      + '<div style="font-size:10px;margin-top:5px;color:var(--tx3)">' + NOIR.esc(NOIR.val('wk-' + i)) + '</div></div>';
+      + '<div style="font-family:var(--micro);font-size:calc(9px * var(--fs-label));font-weight:800;letter-spacing:.16em;color:' + (live ? 'var(--brass-lt)' : 'var(--tx3)') + '">' + d + '</div>'
+      + '<div style="font-size:calc(11px * var(--fs-label));margin-top:8px;color:' + (live ? 'var(--paper)' : 'var(--tx3)') + '">' + (live ? 'OPEN' : 'REST') + '</div>'
+      + '<div style="font-size:calc(10px * var(--fs-label));margin-top:5px;color:var(--tx3)">' + NOIR.esc(NOIR.val('wk-' + i)) + '</div></div>';
   }).join('');
 }
 
 function openModal(dateStr){
-  var events = allSchedule.filter(function(s){ return s.date === dateStr; });
+  var events = eventsOn(dateStr);
   if(!events.length) return;
   var dd = new Date(dateStr + 'T00:00:00');
   var html = '<div class="m-date">' + dateStr + ' (' + DAYS[dd.getDay()] + ')</div>';
   events.forEach(function(s){
     var off = kind(s.type) === 'off';
     html += '<div class="m-badge ' + (off ? 'c-pink' : '') + '">' + (off ? 'CLOSED · 휴방' : 'OPEN · 방송') + '</div>';
+    if(s.end_date && s.end_date > s.date)
+      html += '<div class="m-part"><div class="pt">기간</div><div class="pn">' + NOIR.esc(s.date) + ' ~ ' + NOIR.esc(s.end_date) + '</div></div>';
     html += '<div class="m-part"><div class="pt">' + (s.time ? NOIR.esc(s.time) : '1부') + '</div><div class="pn">' + NOIR.esc(s.title || (off ? '휴방' : '방송')) + '</div></div>';
     if(s.title2 || s.time2)
       html += '<div class="m-part"><div class="pt">' + (s.time2 ? NOIR.esc(s.time2) : '2부') + '</div><div class="pn">' + NOIR.esc(s.title2 || '방송') + '</div></div>';

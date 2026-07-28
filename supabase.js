@@ -1,19 +1,14 @@
-/* =============================================
-   supabase.js — Supabase 연동 공통 스크립트
-   ✅ 이 파일 상단 두 줄만 본인 값으로 교체!
-   ============================================= */
+/* Supabase client. Replace the two lines below when moving to a new project. */
 
 const SUPABASE_URL  = 'https://nmjcqzfcejxkaczmfink.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5tamNxemZjZWp4a2Fjem1maW5rIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUxNzA5NjgsImV4cCI6MjEwMDc0Njk2OH0.zfhDgn9wjm1ZFa509AyL2c-WYJyR4EEbXKJ9aFAUVpU';
 
 // ── Supabase 클라이언트 초기화 ──
-// CDN이 일시적으로 안 떠도 페이지가 죽지 않도록 방어
+// Keep the page alive if the CDN fails to load
 const { createClient } = (window.supabase || { createClient: null });
 const db = createClient ? createClient(SUPABASE_URL, SUPABASE_ANON) : null;
 
-/* =============================================
-   CRUD 헬퍼 함수
-   ============================================= */
+/* CRUD helpers */
 
 /** 전체 조회 (최신순)
  *  예) const rows = await fetchAll('schedule');
@@ -55,9 +50,9 @@ async function updateRow(table, id, updates) {
   return true;
 }
 
-/* 이미지는 “링크” 방식이라 Storage(버킷) 업로드 함수는 쓰지 않습니다. */
+/* Images are plain URLs; no Storage upload helper here. */
 
-/* ─ 토스트 유틸 ─ */
+/* Toast */
 function showToast(msg, duration = 2500) {
   let t = document.getElementById('toast');
   if (!t) {
@@ -70,7 +65,7 @@ function showToast(msg, duration = 2500) {
   setTimeout(() => t.classList.remove('show'), duration);
 }
 
-/* ─ iframe 자동 높이 ─ */
+/* Auto height for the SOOP iframe */
 function initIframeResize() {
   const send = () =>
     window.parent.postMessage({ type: 'resize', height: document.body.scrollHeight }, '*');
@@ -84,4 +79,4 @@ function initIframeResize() {
 function enableIframeAutoHeight() { initIframeResize(); }
 
 
-/* 팔레트(🎨 테마 탭) 적용은 site.js의 NOIR.applyPalette 가 담당합니다. */
+/* Palette is applied by NOIR.applyPalette in site.js. */

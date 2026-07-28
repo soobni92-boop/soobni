@@ -17,26 +17,26 @@
 <div class="mast"><div class="mast-in">
   <a class="nav-logo" href="../"><b data-hook="name-kr">숩니찡</b><span data-hook="name-en">SOOBNIJJING</span></a>
   <nav class="nm">
-    <a href="../">Cover<b>메인</b></a>
-    <a href="../profile/">Dossier<b>프로필</b></a>
-    <a href="../schedule/">Agenda<b>일정</b></a>
-    <a href="../notice/">Bulletin<b>공지</b></a>
-    <a href="./" class="act">Ledger<b>업보</b></a>
-    <a href="../diary/">Notes<b>일기</b></a>
-    <a href="../dress/">Atelier<b>옷장</b></a>
+    <a href="../">Cover<b data-t="nav-main">메인</b></a>
+    <a href="../profile/">Dossier<b data-t="nav-profile">프로필</b></a>
+    <a href="../schedule/">Agenda<b data-t="nav-schedule">일정</b></a>
+    <a href="../notice/">Bulletin<b data-t="nav-notice">공지</b></a>
+    <a href="./" class="act">Ledger<b data-t="nav-work">업보</b></a>
+    <a href="../diary/">Notes<b data-t="nav-diary">일기</b></a>
+    <a href="../dress/">Atelier<b data-t="nav-dress">옷장</b></a>
   </nav>
   <div class="mast-tools">
     <div class="dk" title="낮 / 밤 전환">NIGHT<span class="sw"><i></i></span>DAY</div>
-    <button class="ask" onclick="openAsk()">✉ SEND</button>
+    <button class="ask" onclick="openAsk()" data-t="send-btn">✉ SEND</button>
   </div>
 </div></div>
 <div class="shell">
 <div class="pagehero">
   <div class="ph-main">
     <div class="kicker"><i></i><span>FILE 04 · LEDGER</span></div>
-    <div class="ph-kr">업보 장부</div>
+    <div class="ph-kr" data-t="w-kr">업보 장부</div>
     <div class="ph-title">LED<span>GER</span></div>
-    <p class="ph-sub">단골들이 달아둔 외상 장부. 이름을 누르면 내역이 펼쳐집니다.</p>
+    <p class="ph-sub" data-t="w-sub">단골들이 달아둔 외상 장부. 이름을 누르면 내역이 펼쳐집니다.</p>
     <div class="ghost">04</div>
   </div>
   <div class="ph-side">
@@ -46,7 +46,7 @@
 </div>
 <div class="card">
   <div class="upbo-bar">
-    <input class="search-box" id="search" placeholder="닉네임 또는 아이디로 찾기">
+    <input class="search-box" id="search" data-tph="w-ph" placeholder="닉네임 또는 아이디로 찾기">
     <span class="upbo-update" id="update-date"></span>
   </div>
   <div class="viewer-grid" id="grid"><div class="spinner"></div></div>
@@ -55,8 +55,8 @@
 
 <div class="marquee" aria-hidden="true">
   <div>
-    <span>보다 보면 숩며든다 <b>✦</b> SOOBNIJJING NOIR SALON <b>✦</b> 아무래도~ <b>✦</b> 찡구 ONLY <b>✦</b>&nbsp;</span>
-    <span>보다 보면 숩며든다 <b>✦</b> SOOBNIJJING NOIR SALON <b>✦</b> 아무래도~ <b>✦</b> 찡구 ONLY <b>✦</b>&nbsp;</span>
+    <span><i data-t="marquee" style="font-style:normal">보다 보면 숩며든다</i> <b>✦</b> SOOBNIJJING NOIR SALON <b>✦</b> 아무래도~ <b>✦</b> 찡구 ONLY <b>✦</b>&nbsp;</span>
+    <span><i data-t="marquee" style="font-style:normal">보다 보면 숩며든다</i> <b>✦</b> SOOBNIJJING NOIR SALON <b>✦</b> 아무래도~ <b>✦</b> 찡구 ONLY <b>✦</b>&nbsp;</span>
   </div>
 </div>
 
@@ -67,13 +67,13 @@
 
 <div class="askmask" id="askmask">
   <div class="askmodal">
-    <div class="mk">SEND A SIGNAL</div>
-    <h3>문의하기</h3>
-    <p>숩니찡에게 하고 싶은 말을 남겨주세요. (익명 · 관리자만 확인)</p>
-    <textarea id="askmsg" placeholder="문의 내용을 적어주세요..."></textarea>
+    <div class="mk" data-t="ask-kicker">SEND A SIGNAL</div>
+    <h3 data-t="ask-title">문의하기</h3>
+    <p data-t="ask-note">남긴 내용은 관리자만 확인합니다</p>
+    <textarea id="askmsg" data-tph="ask-ph" placeholder="문의 내용을 적어주세요..."></textarea>
     <div class="askbtns">
-      <button class="no" onclick="closeAsk()">CANCEL</button>
-      <button class="yes" onclick="sendAsk()">TRANSMIT ↗</button>
+      <button class="no" onclick="closeAsk()" data-t="ask-cancel">CANCEL</button>
+      <button class="yes" onclick="sendAsk()" data-t="ask-ok">TRANSMIT ↗</button>
     </div>
   </div>
 </div>

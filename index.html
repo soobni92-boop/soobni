@@ -13,8 +13,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <style>
-/* ═══ COVER — ISSUE 04 / NOIR SALON (시안 1:1 재현 + 배선) ═══ */
-:root{ --char:url('assets/mascot.png'); }
+/* Cover */
+:root{ --char:url('assets/mascot.png');
+  --fs-display:1; --fs-title:1; --fs-body:1; --fs-label:1; }
 html,body{ width:100%; height:100%; margin:0; overflow:hidden; }
 body{ opacity:0; transition:opacity .42s ease; }
 body.ready{ opacity:1; }
@@ -32,7 +33,7 @@ body.ready{ opacity:1; }
   background:linear-gradient(90deg,var(--ink) 0,rgba(0,0,0,0) 26%,rgba(0,0,0,0) 74%,var(--ink) 100%);
 }
 body.day .c4-photo{ filter:saturate(.88) brightness(1.05) contrast(.94); }
-/* 낮 모드: 사진이 종이 위에 검은 덩어리로 뜨지 않게 밝은 베일을 한 겹 */
+/* Day mode: lift the photo so it does not read as a dark slab on paper */
 body.day .c4-photo::after{
   background:
     linear-gradient(90deg,var(--ink) 0,rgba(239,230,225,.34) 30%,rgba(239,230,225,.34) 70%,var(--ink) 100%);
@@ -46,63 +47,63 @@ body.day .c4-photo::after{
   border-bottom:1px solid var(--line);
 }
 .c4-mast span,.c4-mast em{
-  font-family:var(--micro); font-size:clamp(8px,.58vw,11px); font-style:normal;
+  font-family:var(--micro); font-size:calc(clamp(8px,.58vw,11px) * var(--fs-label)); font-style:normal;
   font-weight:800; letter-spacing:.22em; color:var(--tx2);
 }
-.c4-mast b{ font-family:var(--disp); font-size:clamp(22px,1.75vw,34px); font-weight:400; }
+.c4-mast b{ font-family:var(--disp); font-size:calc(clamp(22px,1.75vw,34px) * var(--fs-display)); font-weight:400; }
 .c4-mast em{ justify-self:end; color:var(--brass); }
 
 .c4-editorial{ position:absolute; z-index:2; top:15vh; left:4.3vw; width:26vw; }
 .c4-editorial .edition{
-  font-family:var(--micro); color:var(--brass); font-size:clamp(8px,.6vw,11px);
+  font-family:var(--micro); color:var(--brass); font-size:calc(clamp(8px,.6vw,11px) * var(--fs-label));
   font-weight:900; letter-spacing:.2em;
 }
 .c4-editorial h1{
-  margin-top:2vh; font-family:var(--disp); font-size:clamp(52px,6.8vw,132px);
+  margin-top:2vh; font-family:var(--disp); font-size:calc(clamp(64px,9.9vw,200px) * var(--fs-display));
   font-weight:400; letter-spacing:-.08em; line-height:.76;
 }
 .c4-editorial h1 span{ display:block; color:transparent; -webkit-text-stroke:1px var(--brass); }
 .c4-editorial .quote{
-  margin-top:4vh; font-family:var(--disp); font-size:clamp(14px,1.2vw,23px); line-height:1.65;
+  margin-top:4vh; font-family:var(--disp); font-size:calc(clamp(14px,1.2vw,23px) * var(--fs-title)); line-height:1.65;
 }
 .c4-meta{ display:grid; margin-top:4vh; gap:1.2vh; border-top:1px solid var(--line); padding-top:1.8vh; }
 .c4-meta span{
   display:grid; grid-template-columns:4.6vw 1fr; color:var(--tx2);
-  font-family:var(--micro); font-size:clamp(8px,.56vw,10px); font-weight:700; letter-spacing:.13em;
+  font-family:var(--micro); font-size:calc(clamp(8px,.56vw,10px) * var(--fs-label)); font-weight:700; letter-spacing:.13em;
 }
 .c4-meta b{ color:var(--brass); }
 
 .c4-agenda{ position:absolute; z-index:3; top:15vh; right:4vw; width:min(24vw,450px); }
 .c4-agenda>p{
   margin-bottom:2vh; font-family:var(--micro); color:var(--brass);
-  font-size:clamp(8px,.58vw,11px); font-weight:900; letter-spacing:.2em;
+  font-size:calc(clamp(8px,.58vw,11px) * var(--fs-label)); font-weight:900; letter-spacing:.2em;
 }
 .c4-agenda ol{ border-top:1px solid var(--line); }
 .c4-agenda li{
   display:grid; grid-template-columns:2.4vw 3.6vw 1fr; align-items:center;
   min-height:6.1vh; border-bottom:1px solid var(--line-2);
 }
-.c4-agenda li i{ font-family:var(--disp); font-style:normal; font-size:clamp(11px,.85vw,16px); color:var(--tx3); }
-.c4-agenda li b{ font-family:var(--micro); font-size:clamp(9px,.67vw,13px); letter-spacing:.1em; }
+.c4-agenda li i{ font-family:var(--disp); font-style:normal; font-size:calc(clamp(11px,.85vw,16px) * var(--fs-body)); color:var(--tx3); }
+.c4-agenda li b{ font-family:var(--micro); font-size:calc(clamp(9px,.67vw,13px) * var(--fs-body)); letter-spacing:.1em; }
 .c4-agenda li em{
   justify-self:end; font-family:var(--micro); font-style:normal; color:var(--tx2);
-  font-size:clamp(8px,.6vw,11px); letter-spacing:.1em; text-align:right;
+  font-size:calc(clamp(8px,.6vw,11px) * var(--fs-label)); letter-spacing:.1em; text-align:right;
 }
 .c4-agenda li.on b{ color:var(--paper); }
 .c4-agenda li.today{ border-bottom-color:var(--brass); color:var(--brass-lt); }
 .c4-agenda li.today em,.c4-agenda li.today i{ color:var(--brass-lt); }
 
 .c4-next{ display:grid; margin-top:2.6vh; border-left:2px solid var(--brass); padding-left:1.1vw; gap:.7vh; }
-.c4-next span{ font-family:var(--micro); font-size:8px; font-weight:800; letter-spacing:.18em; color:var(--tx3); }
-.c4-next b{ font-family:var(--disp); font-size:clamp(15px,1.3vw,25px); font-weight:400; }
+.c4-next span{ font-family:var(--micro); font-size:calc(8px * var(--fs-label)); font-weight:800; letter-spacing:.18em; color:var(--tx3); }
+.c4-next b{ font-family:var(--disp); font-size:calc(clamp(15px,1.3vw,25px) * var(--fs-title)); font-weight:400; }
 
 .c4-links{
   display:flex; margin-top:2.8vh; gap:1.5vw; font-family:var(--micro);
-  font-size:clamp(8px,.56vw,10px); font-weight:800; letter-spacing:.12em;
+  font-size:calc(clamp(8px,.56vw,10px) * var(--fs-label)); font-weight:800; letter-spacing:.12em;
 }
 .c4-links a:hover{ color:var(--brass-lt); }
 
-/* 마스코트 — 살롱 마스코트 도장 */
+/* Mascot stamp */
 .c4-mascot{
   position:absolute; z-index:3; left:25.5%; bottom:11vh; width:clamp(78px,8.6vw,132px);
   filter:drop-shadow(0 16px 30px rgba(0,0,0,.55));
@@ -110,11 +111,11 @@ body.day .c4-photo::after{
 }
 .c4-mascot-cap{
   position:absolute; z-index:3; left:25.5%; bottom:8.4vh; width:clamp(78px,8.6vw,132px);
-  text-align:center; font-family:var(--micro); font-size:7.5px; font-weight:800;
+  text-align:center; font-family:var(--micro); font-size:calc(7.5px * var(--fs-label)); font-weight:800;
   letter-spacing:.2em; color:var(--tx3); pointer-events:none;
 }
 
-/* 하단 인덱스 바 = 목차 + 도구 */
+/* Bottom index bar */
 .c4-foot{
   position:absolute; z-index:4; left:4.1vw; right:4.1vw; bottom:3.4vh;
   height:6vh; display:flex; align-items:center; gap:1.4vw;
@@ -123,15 +124,15 @@ body.day .c4-photo::after{
 .c4-foot .idx{ display:flex; gap:1.5vw; flex-wrap:wrap; }
 .c4-foot .idx a{
   display:flex; align-items:baseline; gap:6px; font-family:var(--micro);
-  font-size:clamp(8px,.56vw,10px); font-weight:800; letter-spacing:.16em; color:var(--tx3);
+  font-size:calc(clamp(8px,.56vw,10px) * var(--fs-label)); font-weight:800; letter-spacing:.16em; color:var(--tx3);
 }
-.c4-foot .idx a b{ font-family:var(--body); font-size:11px; font-weight:400; letter-spacing:0; color:var(--tx2); }
+.c4-foot .idx a b{ font-family:var(--body); font-size:calc(11px * var(--fs-label)); font-weight:400; letter-spacing:0; color:var(--tx2); }
 .c4-foot .idx a:hover,.c4-foot .idx a:hover b{ color:var(--brass-lt); }
 .c4-foot .tools{ margin-left:auto; display:flex; align-items:center; gap:12px; }
 .c4-foot .dk .sw{ width:20px; height:20px; }
 .c4-foot .dk .sw i{ width:12px; height:12px; left:3px; top:3px; }
 body.day .c4-foot .dk .sw i{ transform:translateX(0); }
-.c4-foot .ask{ padding:7px 12px; font-size:8.5px; }
+.c4-foot .ask{ padding:7px 12px; font-size:calc(8.5px * var(--fs-label)); }
 
 @media (min-aspect-ratio:2/1){ .c4-photo{ background-position:64% 43%; } }
 @media (max-height:780px){ .c4-agenda li{ min-height:5.4vh; } .c4-editorial .quote{ margin-top:2.6vh; } }
@@ -143,7 +144,7 @@ body.day .c4-foot .dk .sw i{ transform:translateX(0); }
   .c4-frame{ display:none; }
   .c4-mast{ position:absolute; top:0; left:0; right:0; height:auto; padding:14px 20px; }
   .c4-editorial{ position:relative; top:auto; left:auto; width:auto; padding:26px 20px 0; }
-  .c4-editorial h1{ font-size:15vw; }
+  .c4-editorial h1{ font-size:calc(15vw * var(--fs-display)); }
   .c4-agenda{ position:relative; top:auto; right:auto; width:auto; padding:30px 20px 0; }
   .c4-mascot{ left:auto; right:16px; bottom:auto; top:36vh; width:88px; }
   .c4-mascot-cap{ display:none; }
@@ -157,7 +158,7 @@ body.day .c4-foot .dk .sw i{ transform:translateX(0); }
 <script>if(localStorage.getItem('theme')==='light')document.body.classList.add('day');</script>
 
 <main class="page">
-  <div class="c4-photo" data-img="cover-img" role="img" aria-label="심야 살롱의 숩니찡"></div>
+  <div class="c4-photo" data-img="cover-img" role="img" aria-label="숩니찡"></div>
   <div class="c4-frame"></div>
 
   <header class="c4-mast">
@@ -168,7 +169,7 @@ body.day .c4-foot .dk .sw i{ transform:translateX(0); }
 
   <section class="c4-editorial" aria-label="숩니찡 소개">
     <p class="edition" data-hook="edition">THE NIGHT EDITION</p>
-    <h1><span data-hook="name-en1">SOOPNI</span><span data-hook="name-en2">JJING</span></h1>
+    <h1><span data-hook="name-en1">SOOB</span><span data-hook="name-en2">NI</span></h1>
     <p class="quote" data-hook="cover-quote" data-multiline>늦은 밤의 수다와<br>조금 긴 게임 이야기.</p>
     <div class="c4-meta">
       <span><b data-hook="meta1-k">TYPE</b><i data-hook="meta1-v" style="font-style:normal">CREATOR</i></span>
@@ -181,7 +182,7 @@ body.day .c4-foot .dk .sw i{ transform:translateX(0); }
   <div class="c4-mascot-cap">SALON MASCOT</div>
 
   <aside class="c4-agenda" aria-label="이번 주 방송 일정">
-    <p>WEEKLY AGENDA / KST</p>
+    <p data-t="c-agenda">WEEKLY AGENDA / KST</p>
     <ol id="agenda"></ol>
     <div class="c4-next">
       <span data-hook="next-label">NEXT TRANSMISSION</span>
@@ -197,16 +198,16 @@ body.day .c4-foot .dk .sw i{ transform:translateX(0); }
 
   <div class="c4-foot">
     <div class="idx">
-      <a href="profile/">01<b>프로필</b></a>
-      <a href="schedule/">02<b>일정</b></a>
-      <a href="notice/">03<b>공지</b></a>
-      <a href="work/">04<b>업보</b></a>
-      <a href="diary/">05<b>일기</b></a>
-      <a href="dress/">06<b>옷장</b></a>
+      <a href="profile/">01<b data-t="nav-profile">프로필</b></a>
+      <a href="schedule/">02<b data-t="nav-schedule">일정</b></a>
+      <a href="notice/">03<b data-t="nav-notice">공지</b></a>
+      <a href="work/">04<b data-t="nav-work">업보</b></a>
+      <a href="diary/">05<b data-t="nav-diary">일기</b></a>
+      <a href="dress/">06<b data-t="nav-dress">옷장</b></a>
     </div>
     <div class="tools">
       <div class="dk" title="낮 / 밤 전환">NIGHT<span class="sw"><i></i></span>DAY</div>
-      <button class="ask" onclick="openAsk()">✉ SEND</button>
+      <button class="ask" onclick="openAsk()" data-t="send-btn">✉ SEND</button>
     </div>
   </div>
 </main>
@@ -214,13 +215,13 @@ body.day .c4-foot .dk .sw i{ transform:translateX(0); }
 <!-- 문의 모달 -->
 <div class="askmask" id="askmask">
   <div class="askmodal">
-    <div class="mk">SEND A SIGNAL</div>
-    <h3>문의하기</h3>
-    <p>숩니찡에게 하고 싶은 말을 남겨주세요. (익명 · 관리자만 확인)</p>
-    <textarea id="askmsg" placeholder="문의 내용을 적어주세요..."></textarea>
+    <div class="mk" data-t="ask-kicker">SEND A SIGNAL</div>
+    <h3 data-t="ask-title">문의하기</h3>
+    <p data-t="ask-note">남긴 내용은 관리자만 확인합니다</p>
+    <textarea id="askmsg" data-tph="ask-ph" placeholder="문의 내용을 적어주세요..."></textarea>
     <div class="askbtns">
-      <button class="no" onclick="closeAsk()">CANCEL</button>
-      <button class="yes" onclick="sendAsk()">TRANSMIT ↗</button>
+      <button class="no" onclick="closeAsk()" data-t="ask-cancel">CANCEL</button>
+      <button class="yes" onclick="sendAsk()" data-t="ask-ok">TRANSMIT ↗</button>
     </div>
   </div>
 </div>
@@ -230,12 +231,12 @@ body.day .c4-foot .dk .sw i{ transform:translateX(0); }
 <script src="supabase.js"></script>
 <script src="site.js"></script>
 <script>
-/* 커버 = 주간 아젠다까지 전부 admin 값으로 그림 */
+/* Weekly agenda */
 var DOW_EN = ['MON','TUE','WED','THU','FRI','SAT','SUN'];
 var DOW_KR = ['월','화','수','목','금','토','일'];
 
 NOIR.boot({ after: function(){
-  var todayIdx = (new Date().getDay() + 6) % 7;              /* 0=월 … 6=일 */
+  var todayIdx = (new Date().getDay() + 6) % 7;              /* 0=Mon ... 6=Sun */
   var on = NOIR.val('days').split(',').map(function(s){ return s.trim(); });
   var html = '', nextTxt = '';
   for (var i = 0; i < 7; i++){
@@ -247,7 +248,7 @@ NOIR.boot({ after: function(){
   }
   document.getElementById('agenda').innerHTML = html;
 
-  /* NEXT TRANSMISSION — admin 값이 있으면 그대로, 없으면 다음 방송요일 자동 계산 */
+  /* Next stream: falls back to the checked stream days */
   nextTxt = NOIR.val('next-value');
   if(!nextTxt){
     for (var k = 0; k < 7; k++){

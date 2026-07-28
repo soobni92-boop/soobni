@@ -23,14 +23,14 @@ body{ margin:0; background:var(--ink); color:var(--paper); font-family:var(--bod
 a{ color:var(--brass-lt); }
 h1,h2,h3,p{ margin:0; }
 
-/* ── 로그인 ── */
-#gate{ position:fixed; inset:0; z-index:100; display:grid; place-items:center; background:var(--ink); padding:24px; }
-#gate .box{ width:min(380px,100%); border:1px solid var(--line); padding:34px 30px; text-align:center; }
-#gate .mk{ font-family:var(--micro); font-size:9px; font-weight:800; letter-spacing:.28em; color:var(--brass); }
-#gate h1{ font-family:var(--disp); font-size:30px; font-weight:400; margin:10px 0 6px; }
-#gate p{ color:var(--tx3); font-size:12px; margin-bottom:20px; }
+/* Login gate */
+#snGate{ position:fixed; inset:0; z-index:100; display:grid; place-items:center; background:var(--ink); padding:24px; }
+#snGate .box{ width:min(380px,100%); border:1px solid var(--line); padding:34px 30px; text-align:center; }
+#snGate .mk{ font-family:var(--micro); font-size:9px; font-weight:800; letter-spacing:.28em; color:var(--brass); }
+#snGate h1{ font-family:var(--disp); font-size:30px; font-weight:400; margin:10px 0 6px; }
+#snGate p{ color:var(--tx3); font-size:12px; margin-bottom:20px; }
 
-/* ── 레이아웃 ── */
+/* Layout */
 .wrap{ max-width:1140px; margin:0 auto; padding:26px 18px 80px; }
 .top{ border-bottom:1px solid var(--line); padding-bottom:18px; margin-bottom:20px; text-align:center; }
 .top .mk{ font-family:var(--micro); font-size:9px; font-weight:800; letter-spacing:.28em; color:var(--brass); }
@@ -92,7 +92,7 @@ select.input option{ background:#1A100E; color:#F0DBDA; }
 }
 .chk input{ accent-color:var(--rose); }
 
-/* ── 표 ── */
+/* Tables */
 .table-wrap{ overflow-x:auto; border:1px solid var(--line-2); }
 .table-wrap table{ width:100%; border-collapse:collapse; min-width:560px; }
 .table-wrap th{
@@ -112,7 +112,7 @@ select.input option{ background:#1A100E; color:#F0DBDA; }
 .pill.on{ border-color:var(--rose); color:var(--rose); }
 .pill.br{ border-color:var(--brass); color:var(--brass-lt); }
 
-/* ── 팔레트 ── */
+/* Palette */
 .pal{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
 .pal-row{ display:grid; grid-template-columns:1fr; gap:8px; border:1px solid var(--line-2); padding:14px; }
 .pal-row .pl{ font-family:var(--micro); font-size:9px; font-weight:800; letter-spacing:.16em; color:var(--brass); }
@@ -122,6 +122,50 @@ select.input option{ background:#1A100E; color:#F0DBDA; }
 .preview{ border:1px solid var(--line); padding:22px; margin-top:16px; }
 .preview .pv-t{ font-family:var(--disp); font-size:26px; }
 .preview .pv-k{ font-family:var(--micro); font-size:9px; font-weight:800; letter-spacing:.24em; }
+
+.tsgrid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:14px; }
+.tsgrid .t{ border:1px solid var(--line); padding:14px 16px; }
+.tsgrid .t .n{ font-family:var(--micro); font-size:10px; font-weight:900; letter-spacing:.18em; color:var(--brass); }
+.tsgrid .t .u{ font-size:11.5px; color:var(--tx3); margin:5px 0 11px; line-height:1.6; }
+.tsgrid .t .ctl{ display:flex; align-items:center; gap:10px; }
+.tsgrid .t input[type=range]{ flex:1; accent-color:var(--rose); }
+.tsgrid .t .v{ font-family:var(--disp); font-size:15px; min-width:44px; text-align:right; }
+.tsprev{ margin-top:16px; border:1px solid var(--line); padding:22px 20px; }
+.tsprev .p-disp{ font-family:var(--disp); letter-spacing:-.04em; line-height:1; font-size:calc(44px * var(--pv-display,1)); }
+.tsprev .p-lbl{ font-family:var(--micro); font-size:calc(10px * var(--pv-label,1)); font-weight:900; letter-spacing:.22em; color:var(--brass); margin-top:14px; }
+.tsprev .p-title{ font-size:calc(24px * var(--pv-title,1)); font-weight:700; margin-top:4px; }
+.tsprev .p-body{ font-size:calc(14px * var(--pv-body,1)); color:var(--tx2); margin-top:8px; }
+
+.presets{ display:flex; gap:8px; flex-wrap:wrap; }
+.preset{ border:1px solid var(--line); background:transparent; cursor:pointer; padding:9px 11px; display:flex; align-items:center; gap:8px; }
+.preset:hover{ border-color:var(--brass); }
+.preset .chips{ display:flex; }
+.preset .chips i{ width:11px; height:16px; display:block; }
+.preset span{ font-family:var(--micro); font-size:9.5px; font-weight:800; letter-spacing:.1em; color:var(--tx2); }
+.ctrast{ display:grid; gap:0; margin-top:16px; }
+.ctrast .row{ display:grid; grid-template-columns:1fr auto auto; gap:10px; align-items:center; font-size:11.5px; padding:8px 0; border-bottom:1px solid var(--line-2); }
+.ctrast .row b{ font-family:var(--disp); font-size:13px; color:var(--tx2); }
+.ctrast .g{ font-family:var(--micro); font-size:8.5px; font-weight:800; letter-spacing:.14em; padding:3px 7px; border:1px solid; }
+.ctrast .ok{ color:#7FBF95; border-color:#7FBF95; }
+.ctrast .warn{ color:#D9BC5C; border-color:#D9BC5C; }
+.ctrast .bad{ color:var(--rose); border-color:var(--rose); }
+
+.thumb{ margin-top:10px; border:1px solid var(--line); height:104px; display:none; background:rgba(0,0,0,.25) center/contain no-repeat; }
+.thumb.on{ display:block; }
+.thumb.err{ display:flex; align-items:center; justify-content:center; text-align:center; padding:0 12px; color:var(--rose); font-size:11.5px; background-image:none; }
+details.spec{ margin-top:12px; border:1px solid var(--line-2); padding:10px 12px; }
+details.spec summary{ cursor:pointer; font-family:var(--micro); font-size:9px; font-weight:800; letter-spacing:.16em; color:var(--brass); }
+details.spec .tw{ overflow-x:auto; margin-top:10px; }
+details.spec table{ width:100%; border-collapse:collapse; min-width:360px; font-size:11.5px; }
+details.spec th,details.spec td{ border-bottom:1px solid var(--line-2); padding:7px 8px; text-align:left; }
+
+#snDiag{ position:relative; z-index:200; padding:14px 18px; background:#2A0E16; color:#FFD9E2;
+  font-family:Arial,sans-serif; font-size:12.5px; line-height:1.7; display:none; }
+#snDiag b{ display:block; margin-bottom:6px; letter-spacing:.1em; }
+#snDiag input{ width:100%; box-sizing:border-box; padding:9px 11px; margin-top:6px; background:#160810; color:#fff; border:1px solid #7A2A40; }
+#snDiag button{ margin-top:8px; padding:9px 14px; background:#FA3883; color:#fff; border:0; cursor:pointer; }
+
+.dirty{ color:var(--rose); font-family:var(--micro); font-size:9.5px; font-weight:800; letter-spacing:.12em; }
 
 .toast{
   position:fixed; left:50%; bottom:30px; transform:translate(-50%,16px); z-index:200;
@@ -137,25 +181,96 @@ select.input option{ background:#1A100E; color:#F0DBDA; }
 </style>
 </head>
 <body>
+<div id="snDiag"></div>
+<script>
+/* Self-check banner. Inline styles only so it still shows if style.css fails. */
+(function(){
+  var box = document.getElementById('snDiag'), lines = [];
+  function add(m){
+    if (lines.indexOf(m) >= 0) return;
+    lines.push(m);
+    box.style.display = 'block';
+    var d = document.createElement('span');
+    d.className = 'er'; d.style.display = 'block';
+    d.textContent = m;
+    box.appendChild(d);
+  }
+  function head(){
+    if (box.firstChild && box.firstChild.tagName === 'B') return;
+    var b = document.createElement('b'); b.textContent = '관리자 자가진단';
+    box.insertBefore(b, box.firstChild);
+  }
+  window.addEventListener('error', function(e){
+    head();
+    if (e.target && e.target !== window && (e.target.src || e.target.href))
+      add('파일을 못 불러왔습니다: ' + (e.target.src || e.target.href));
+    else add('스크립트 오류: ' + (e.message || e));
+  }, true);
+  window.addEventListener('unhandledrejection', function(e){
+    head(); add('처리되지 않은 오류: ' + ((e.reason && (e.reason.message || e.reason)) || e));
+  });
+  function measure(el){
+    if (!el) return '없음';
+    var cs = getComputedStyle(el), r = el.getBoundingClientRect();
+    return '높이 ' + Math.round(r.height) + ' · display ' + cs.display + ' · opacity ' + cs.opacity
+         + ' · visibility ' + cs.visibility + ' · class "' + el.className + '"';
+  }
+  setTimeout(function(){
+    var g = document.getElementById('snGate'), a = document.getElementById('snApp');
+    var gv = g && g.getBoundingClientRect().height > 20 && parseFloat(getComputedStyle(g).opacity) > 0.05;
+    var av = a && a.getBoundingClientRect().height > 20;
+    if (gv || av) return;
+    head();
+    add('로그인 화면이 그려지지 않았습니다. 광고차단 확장을 끄고 새로고침해 보세요.');
+    add('gate → ' + measure(g));
+    add('app → '  + measure(a));
+    add('style.css: ' + (getComputedStyle(document.body).getPropertyValue('--brass').trim() ? 'O' : 'X')
+      + ' / site.js: '     + (typeof NOIR !== 'undefined' ? 'O' : 'X')
+      + ' / supabase.js: ' + (typeof fetchAll === 'function' ? 'O' : 'X')
+      + ' / 라이브러리: '   + (typeof supabase !== 'undefined' ? 'O' : 'X'));
+    var em = document.createElement('input'); em.type = 'email'; em.placeholder = '이메일';
+    var pw = document.createElement('input'); pw.type = 'password'; pw.placeholder = '비밀번호';
+    var bt = document.createElement('button'); bt.textContent = '비상 로그인';
+    bt.onclick = function(){
+      if (typeof db === 'undefined' || !db){ add('Supabase에 연결할 수 없습니다.'); return; }
+      db.auth.signInWithPassword({ email: em.value.trim(), password: pw.value })
+        .then(function(r){
+          if (r.error){ add('로그인 실패: ' + r.error.message); return; }
+          location.reload();
+        });
+    };
+    box.appendChild(em); box.appendChild(pw); box.appendChild(bt);
+  }, 2500);
+})();
+</script>
 
-<!-- ══════════ 로그인 ══════════ -->
-<div id="gate">
+<!-- 로그인 -->
+<div id="snGate">
   <div class="box">
     <div class="mk">MEMBERS ONLY</div>
     <h1>NOIR SALON</h1>
-    <p>관리자 비밀번호를 입력해 주세요</p>
-    <input class="input" id="pw" type="password" placeholder="비밀번호" onkeydown="if(event.key==='Enter')login()">
-    <div style="margin-top:12px"><button class="btn pri" style="width:100%" onclick="login()">ENTER ↗</button></div>
+    <p>Supabase에 등록된 관리자 계정으로 로그인</p>
+    <input class="input" id="email" type="email" autocomplete="username" placeholder="이메일" style="margin-bottom:8px" onkeydown="if(event.key==='Enter')login()">
+    <input class="input" id="pw" type="password" autocomplete="current-password" placeholder="비밀번호" onkeydown="if(event.key==='Enter')login()">
+    <div style="margin-top:12px"><button class="btn pri" style="width:100%" id="loginBtn" onclick="login()">ENTER ↗</button></div>
+    <div id="snGate-msg" style="margin-top:12px;color:var(--rose);font-size:11.5px;min-height:17px"></div>
   </div>
 </div>
 
-<div class="wrap" id="app" style="display:none">
+<div class="wrap" id="snApp" style="display:none">
 
   <div class="top">
     <div class="mk">SOOBNIJJING · CONTROL ROOM</div>
     <h1>관리자 페이지</h1>
-    <div class="sub">여기서 고친 내용은 저장 즉시 사이트 전체에 반영됩니다</div>
-    <div class="out"><a class="btn sm" href="../" target="_blank">사이트 열기 ↗</a> <button class="btn sm" onclick="logout()">LOG OUT</button></div>
+    <div class="sub">저장하면 사이트 전체에 반영</div>
+    <div class="out">
+      <a class="btn sm" id="act-view" href="../" target="_blank">이 탭 페이지 보기 ↗</a>
+      <button class="btn sm" onclick="doBackup()">백업(.json)</button>
+      <button class="btn sm" onclick="document.getElementById('restoreFile').click()">복원</button>
+      <input type="file" id="restoreFile" accept="application/json" style="display:none" onchange="doRestore(this)">
+      <button class="btn sm" onclick="logout()">LOG OUT</button>
+    </div>
+    <div class="dirty" id="act-dirty" style="margin-top:8px"></div>
   </div>
 
   <div class="tabs" id="tabs">
@@ -167,14 +282,15 @@ select.input option{ background:#1A100E; color:#F0DBDA; }
     <button class="tab" data-tab="diary">📓 일기</button>
     <button class="tab" data-tab="dress">👗 옷장</button>
     <button class="tab" data-tab="ask">✉ 문의함</button>
+    <button class="tab" data-tab="words">✏️ 문구</button>
     <button class="tab" data-tab="theme">🎨 테마</button>
   </div>
 
-  <!-- ══════════════════ 🏠 메인 ══════════════════ -->
+  <!-- 🏠 메인 -->
   <div class="panel active" id="tab-main">
     <div class="savebar">
       <button class="btn pri" onclick="saveProfile()">메인 · 프로필 저장</button>
-      <span class="note">메인/프로필 탭은 저장 버튼 하나로 함께 저장됩니다</span>
+      <span class="note">메인·프로필 탭은 저장 버튼 하나로 함께 저장</span>
     </div>
 
     <div class="card">
@@ -182,47 +298,67 @@ select.input option{ background:#1A100E; color:#F0DBDA; }
       <div class="grid">
         <div class="f"><label>SOOP 아이디</label>
           <input class="input" id="f-soop-id">
-          <span class="hint">방송국 주소 sooplive.com/station/<b>여기</b>. 프로필 사진이 자동으로 따라옵니다.</span></div>
+          <span class="hint">방송국 주소 sooplive.com/station/<b>여기</b>. 프로필 사진이 자동으로 연결됨</span></div>
         <div class="f"><label>프로필 사진 직접 지정 (선택)</label>
           <input class="input" id="f-avatar" placeholder="https://...jpg">
-          <span class="hint">비워두면 SOOP 프사 자동. 넣으면 이쪽이 우선합니다.</span></div>
+          <span class="hint">비우면 SOOP 프사 자동, 넣으면 이쪽이 우선</span></div>
         <div class="f full"><label>커버 배경 사진 URL (선택)</label>
           <input class="input" id="f-cover-img" placeholder="https://...jpg">
-          <span class="hint">메인 첫 화면 가운데 큰 사진. 비우면 기본 이미지(assets/soop-noir-lounge.webp). <b>가로형(16:9) 권장</b>, 인물이 오른쪽에 있으면 가장 잘 맞습니다.</span></div>
+          <span class="hint">메인 가운데 큰 사진. 가로 16:9 권장. 비우면 기본 이미지 사용</span></div>
         <div class="f full"><label>마스코트 이미지 URL (선택)</label>
           <input class="input" id="f-mascot-img" placeholder="https://...png">
-          <span class="hint">배경이 뚫린 <b>투명 PNG</b>를 넣어주세요. 메인 커버·각 페이지 제목 옆·로딩화면에 함께 쓰입니다. 비우면 기본 악마날개 마스코트.</span></div>
+          <span class="hint">투명 PNG. 메인 커버, 각 페이지 제목 옆, 로딩화면에 함께 사용</span></div>
       </div>
+      <details class="spec">
+        <summary>이미지 규격 · 넣는 방법</summary>
+        <div class="tw">
+          <table>
+            <tr><th>자리</th><th>비율</th><th>권장 크기</th></tr>
+            <tr><td>프로필 사진</td><td>1:1</td><td>500×500</td></tr>
+            <tr><td>커버 배경</td><td>16:9</td><td>1920×1080</td></tr>
+            <tr><td>마스코트</td><td>자유 (투명 PNG)</td><td>가로 500 내외</td></tr>
+            <tr><td>옷장</td><td>3:4</td><td>900×1200</td></tr>
+            <tr><td>공지·일기</td><td>자유</td><td>가로 1200 이하</td></tr>
+          </table>
+        </div>
+        <p class="hint" style="margin-top:10px">이미지는 파일을 올리지 않고 주소만 씁니다. SOOP 비공개 게시판에 올린 뒤 이미지 우클릭 → 이미지 주소 복사. 글 주소가 아니라 stimg.sooplive.com 으로 시작하는 직접 주소여야 합니다. 원본 글을 지우면 사이트 이미지도 깨집니다.</p>
+      </details>
     </div>
 
     <div class="card">
       <div class="card-title">02 · COVER <em>메인 커버 문구</em></div>
       <div class="grid3">
         <div class="f"><label>왼쪽 머리글</label><input class="input" id="f-mast-left">
-          <span class="hint">커버 맨 위 왼쪽 (예: NOIR SALON)</span></div>
+          <span class="hint">커버 맨 위 왼쪽</span></div>
         <div class="f"><label>이름 (한글)</label><input class="input" id="f-name-kr">
-          <span class="hint">커버 가운데 · 전 페이지 로고</span></div>
+          <span class="hint">커버 가운데, 전 페이지 로고</span></div>
         <div class="f"><label>오른쪽 호수</label><input class="input" id="f-mast-issue">
-          <span class="hint">예: ISSUE 04</span></div>
+          <span class="hint">커버 맨 위 오른쪽</span></div>
         <div class="f"><label>이름 (영문)</label><input class="input" id="f-name-en">
-          <span class="hint">로고 아래 작은 영문</span></div>
+          <span class="hint">로고 아래 영문</span></div>
         <div class="f"><label>대문 글자 1행</label><input class="input" id="f-name-en1">
-          <span class="hint">커버 대형 글자 윗줄 (예: SOOPNI)</span></div>
+          <span class="hint">커버 큰 글자 윗줄 (예: SOOB)</span></div>
         <div class="f"><label>대문 글자 2행</label><input class="input" id="f-name-en2">
-          <span class="hint">아랫줄 — 테두리만 있는 글자 (예: JJING)</span></div>
+          <span class="hint">커버 큰 글자 아랫줄, 테두리만 (예: NI)</span></div>
         <div class="f full"><label>에디션 라벨</label><input class="input" id="f-edition">
-          <span class="hint">대문 글자 위 작은 문구 (예: THE NIGHT EDITION)</span></div>
+          <span class="hint">큰 글자 위 작은 문구</span></div>
         <div class="f full"><label>커버 문구</label><textarea class="input" id="f-cover-quote" style="min-height:70px"></textarea>
-          <span class="hint">줄바꿈하면 커버에서도 그대로 줄이 나뉩니다. 2줄 권장.</span></div>
+          <span class="hint">줄바꿈 그대로 반영. 2줄 권장</span></div>
       </div>
       <div class="grid" style="margin-top:16px">
-        <div class="f"><label>메타 1 라벨</label><input class="input" id="f-meta1-k"></div>
-        <div class="f"><label>메타 1 값</label><input class="input" id="f-meta1-v"></div>
-        <div class="f"><label>메타 2 라벨</label><input class="input" id="f-meta2-k"></div>
-        <div class="f"><label>메타 2 값</label><input class="input" id="f-meta2-v"></div>
-        <div class="f"><label>메타 3 라벨</label><input class="input" id="f-meta3-k"></div>
-        <div class="f"><label>메타 3 값</label><input class="input" id="f-meta3-v"></div>
-        <div class="f full"><span class="hint" style="display:block">커버 왼쪽 아래에 3줄로 들어가는 정보입니다. 라벨은 <b>짧은 영문 대문자</b>가 가장 잘 어울려요.</span></div>
+        <div class="f"><label>메타 1 라벨</label><input class="input" id="f-meta1-k">
+          <span class="hint">커버 왼쪽 아래 1번 줄 라벨</span></div>
+        <div class="f"><label>메타 1 값</label><input class="input" id="f-meta1-v">
+          <span class="hint">1번 줄 값</span></div>
+        <div class="f"><label>메타 2 라벨</label><input class="input" id="f-meta2-k">
+          <span class="hint">2번 줄 라벨</span></div>
+        <div class="f"><label>메타 2 값</label><input class="input" id="f-meta2-v">
+          <span class="hint">2번 줄 값</span></div>
+        <div class="f"><label>메타 3 라벨</label><input class="input" id="f-meta3-k">
+          <span class="hint">3번 줄 라벨</span></div>
+        <div class="f"><label>메타 3 값</label><input class="input" id="f-meta3-v">
+          <span class="hint">3번 줄 값</span></div>
+        <div class="f full"><span class="hint" style="display:block">커버 왼쪽 아래 3줄. 라벨은 짧은 영문 대문자</span></div>
       </div>
     </div>
 
@@ -231,53 +367,64 @@ select.input option{ background:#1A100E; color:#F0DBDA; }
       <div class="f" style="margin-bottom:14px">
         <label>방송 요일</label>
         <div class="chk" id="daysBox"></div>
-        <span class="hint">체크한 요일이 커버·일정 페이지에서 <b>OPEN</b>으로 표시됩니다. (월=0 … 일=6)</span>
+        <span class="hint">체크한 요일이 커버·일정에서 OPEN으로 표시 (월=0 ~ 일=6)</span>
       </div>
       <div class="grid3" id="wkBox"></div>
       <div class="grid" style="margin-top:16px">
         <div class="f"><label>다음 방송 라벨</label><input class="input" id="f-next-label">
-          <span class="hint">예: NEXT TRANSMISSION</span></div>
+          <span class="hint">주간표 아래 라벨</span></div>
         <div class="f"><label>다음 방송 내용 (선택)</label><input class="input" id="f-next-value" placeholder="비우면 자동 계산">
-          <span class="hint">비워두면 <b>방송 요일 체크</b>를 보고 자동으로 다음 방송을 표시합니다.</span></div>
+          <span class="hint">비우면 방송 요일 체크로 자동 계산</span></div>
       </div>
     </div>
 
     <div class="card">
       <div class="card-title">04 · CHANNELS <em>링크 · 푸터</em></div>
       <div class="grid">
-        <div class="f"><label>SOOP</label><input class="input" id="f-link-soop"></div>
-        <div class="f"><label>유튜브</label><input class="input" id="f-link-youtube"></div>
-        <div class="f"><label>X (트위터)</label><input class="input" id="f-link-x" placeholder="비우면 버튼이 숨겨집니다"></div>
-        <div class="f"><label>기타 링크</label><input class="input" id="f-link-etc" placeholder="비우면 버튼이 숨겨집니다"></div>
+        <div class="f"><label>SOOP</label><input class="input" id="f-link-soop">
+          <span class="hint">방송국 주소</span></div>
+        <div class="f"><label>유튜브</label><input class="input" id="f-link-youtube">
+          <span class="hint">채널 주소</span></div>
+        <div class="f"><label>X (트위터)</label><input class="input" id="f-link-x" placeholder="비우면 버튼 숨김">
+          <span class="hint">프로필 주소. 비우면 버튼 숨김</span></div>
+        <div class="f"><label>기타 링크</label><input class="input" id="f-link-etc" placeholder="비우면 버튼 숨김">
+          <span class="hint">비우면 버튼 숨김</span></div>
         <div class="f"><label>기타 링크 이름</label><input class="input" id="f-link-etc-label">
           <span class="hint">예: DISCORD, 마시멜로, 팬카페</span></div>
         <div class="f"><label>푸터 문구</label><input class="input" id="f-footer-line">
-          <span class="hint">모든 하위 페이지 맨 아래 한 줄. 메일 주소를 적어도 좋아요.</span></div>
+          <span class="hint">하위 페이지 맨 아래 한 줄</span></div>
       </div>
     </div>
   </div>
 
-  <!-- ══════════════════ 🎀 프로필 ══════════════════ -->
+  <!-- 🎀 프로필 -->
   <div class="panel" id="tab-profile">
     <div class="savebar">
       <button class="btn pri" onclick="saveProfile()">메인 · 프로필 저장</button>
-      <span class="note">저장 후 프로필 페이지를 새로고침하면 바로 보입니다</span>
+      <span class="note">저장 후 페이지를 새로고침하면 반영</span>
     </div>
 
     <div class="card">
       <div class="card-title">01 · IDENTITY <em>신상 명세</em></div>
       <div class="grid3">
-        <div class="f"><label>이름</label><input class="input" id="f-info-name"></div>
-        <div class="f"><label>팬 애칭</label><input class="input" id="f-info-fandom"></div>
+        <div class="f"><label>이름</label><input class="input" id="f-info-name">
+          <span class="hint">프로필 표에 표시</span></div>
+        <div class="f"><label>팬 애칭</label><input class="input" id="f-info-fandom">
+          <span class="hint">팬을 부르는 이름</span></div>
         <div class="f"><label>생일</label><input class="input" id="f-info-birth" placeholder="09-28">
-          <span class="hint">MM-DD 형식. 여기서 <b>생일 D-Day</b>가 자동 계산됩니다.</span></div>
+          <span class="hint">MM-DD. 생일 D-Day 자동 계산</span></div>
         <div class="f"><label>데뷔일</label><input class="input" id="f-info-debut" placeholder="2026-02-28">
-          <span class="hint">YYYY-MM-DD. 방송 며칠째인지 자동 계산됩니다.</span></div>
-        <div class="f"><label>MBTI</label><input class="input" id="f-info-mbti"></div>
-        <div class="f"><label>소속</label><input class="input" id="f-info-agency"></div>
-        <div class="f"><label>성별</label><input class="input" id="f-info-gender"></div>
-        <div class="f"><label>주요 콘텐츠</label><input class="input" id="f-info-content"></div>
-        <div class="f"><label>방송 주기</label><input class="input" id="f-info-schedule"></div>
+          <span class="hint">YYYY-MM-DD. 경과일 자동 계산</span></div>
+        <div class="f"><label>MBTI</label><input class="input" id="f-info-mbti">
+          <span class="hint">없으면 - 로 두기</span></div>
+        <div class="f"><label>소속</label><input class="input" id="f-info-agency">
+          <span class="hint">소속사 또는 개인세</span></div>
+        <div class="f"><label>성별</label><input class="input" id="f-info-gender">
+          <span class="hint">프로필 표에 표시</span></div>
+        <div class="f"><label>주요 콘텐츠</label><input class="input" id="f-info-content">
+          <span class="hint">구분자는 / 권장</span></div>
+        <div class="f"><label>방송 주기</label><input class="input" id="f-info-schedule">
+          <span class="hint">예: 랜덤, 주 4회</span></div>
       </div>
     </div>
 
@@ -285,39 +432,50 @@ select.input option{ background:#1A100E; color:#F0DBDA; }
       <div class="card-title">02 · VOICE <em>한마디 · 소개</em></div>
       <div class="grid">
         <div class="f"><label>입버릇 / 캐치프레이즈</label><input class="input" id="f-catchphrase">
-          <span class="hint">프로필 상단 큰 따옴표 자리</span></div>
+          <span class="hint">프로필 상단 큰 문구</span></div>
         <div class="f"><label>한 줄 소개</label><input class="input" id="f-bio-short">
-          <span class="hint">프로필 사진 아래 띠에 얹힙니다</span></div>
+          <span class="hint">프로필 사진 아래 띠</span></div>
         <div class="f full"><label>자기소개 (여러 줄)</label><textarea class="input" id="f-about"></textarea>
-          <span class="hint">줄바꿈 그대로 반영됩니다. 3줄 정도가 가장 예뻐요.</span></div>
+          <span class="hint">줄바꿈 그대로 반영. 3줄 권장</span></div>
         <div class="f full"><label>어록 (한 줄에 하나)</label><textarea class="input" id="f-quotes"></textarea>
-          <span class="hint">한 줄에 하나씩. 각각 따옴표 박스로 그려집니다.</span></div>
+          <span class="hint">한 줄에 하나</span></div>
       </div>
     </div>
 
     <div class="card">
       <div class="card-title">03 · MENU <em>좋아함 · 싫어함</em></div>
       <div class="grid">
-        <div class="f"><label>좋아함 1</label><input class="input" id="f-like1"></div>
-        <div class="f"><label>싫어함 1</label><input class="input" id="f-dislike1"></div>
-        <div class="f"><label>좋아함 2</label><input class="input" id="f-like2"></div>
-        <div class="f"><label>싫어함 2</label><input class="input" id="f-dislike2"></div>
-        <div class="f"><label>좋아함 3</label><input class="input" id="f-like3"></div>
-        <div class="f"><label>싫어함 3</label><input class="input" id="f-dislike3"></div>
-        <div class="f"><label>좋아함 4</label><input class="input" id="f-like4"></div>
-        <div class="f full"><span class="hint" style="display:block">비워둔 칸은 프로필 페이지에 아예 표시되지 않습니다.</span></div>
+        <div class="f"><label>좋아함 1</label><input class="input" id="f-like1">
+          <span class="hint">프로필 목록에 순서대로 표시</span></div>
+        <div class="f"><label>싫어함 1</label><input class="input" id="f-dislike1">
+          <span class="hint">프로필 목록에 순서대로 표시</span></div>
+        <div class="f"><label>좋아함 2</label><input class="input" id="f-like2">
+          <span class="hint">비우면 표시되지 않음</span></div>
+        <div class="f"><label>싫어함 2</label><input class="input" id="f-dislike2">
+          <span class="hint">비우면 표시되지 않음</span></div>
+        <div class="f"><label>좋아함 3</label><input class="input" id="f-like3">
+          <span class="hint">비우면 표시되지 않음</span></div>
+        <div class="f"><label>싫어함 3</label><input class="input" id="f-dislike3">
+          <span class="hint">비우면 표시되지 않음</span></div>
+        <div class="f"><label>좋아함 4</label><input class="input" id="f-like4">
+          <span class="hint">비우면 표시되지 않음</span></div>
+        <div class="f full"><span class="hint" style="display:block">빈 칸은 표시되지 않음</span></div>
       </div>
     </div>
 
     <div class="card">
       <div class="card-title">04 · SIGNATURE <em>TMI · 태그</em></div>
       <div class="grid">
-        <div class="f"><label>좋아하는 음식</label><input class="input" id="f-tmi-food"></div>
-        <div class="f"><label>주력 게임</label><input class="input" id="f-tmi-game"></div>
-        <div class="f"><label>노래</label><input class="input" id="f-tmi-song"></div>
-        <div class="f"><label>시그니처 동작 / 아이템</label><input class="input" id="f-tmi-item"></div>
+        <div class="f"><label>좋아하는 음식</label><input class="input" id="f-tmi-food">
+          <span class="hint">TMI 표에 표시</span></div>
+        <div class="f"><label>주력 게임</label><input class="input" id="f-tmi-game">
+          <span class="hint">TMI 표에 표시</span></div>
+        <div class="f"><label>노래</label><input class="input" id="f-tmi-song">
+          <span class="hint">TMI 표에 표시</span></div>
+        <div class="f"><label>시그니처 동작 / 아이템</label><input class="input" id="f-tmi-item">
+          <span class="hint">TMI 표에 표시</span></div>
         <div class="f full"><label>특징 태그</label><input class="input" id="f-tags">
-          <span class="hint">쉼표(,)로 구분. 예: 하트, 달/밤하늘, 악마날개, 시크</span></div>
+          <span class="hint">쉼표로 구분</span></div>
       </div>
     </div>
 
@@ -325,35 +483,39 @@ select.input option{ background:#1A100E; color:#F0DBDA; }
       <div class="card-title">05 · SPECS <em>능력치 · 마일스톤</em></div>
       <div class="grid">
         <div class="f"><label>능력치</label><textarea class="input" id="f-stats"></textarea>
-          <span class="hint">한 줄에 하나, <b>이름:숫자</b> 형식 (0~100). 예: <code>입담:92</code></span></div>
+          <span class="hint">한 줄에 하나. 이름:숫자 (0~100)</span></div>
         <div class="f"><label>마일스톤 / 목표</label><textarea class="input" id="f-milestones"></textarea>
-          <span class="hint">한 줄에 하나, <b>상태|내용</b> 형식. 예: <code>진행중|찡구 1,000명</code></span></div>
+          <span class="hint">한 줄에 하나. 상태|내용</span></div>
       </div>
     </div>
 
     <div class="card">
       <div class="card-title">06 · RERUN <em>다시보기(VOD)</em></div>
       <div class="grid">
-        <div class="f"><label>제목</label><input class="input" id="vod-title" placeholder="예: 첫 방송 다시보기"></div>
+        <div class="f"><label>제목</label><input class="input" id="vod-title" placeholder="예: 첫 방송 다시보기">
+          <span class="hint">목록에 보이는 제목</span></div>
         <div class="f"><label>VOD 번호</label><input class="input" id="vod-id" placeholder="예: 123456789">
-          <span class="hint">SOOP 다시보기 주소 <code>vod.sooplive.co.kr/player/<b>123456789</b></code> 의 숫자만 넣으세요.</span></div>
+          <span class="hint">SOOP 다시보기 주소 vod.sooplive.co.kr/player/<b>번호</b> 의 숫자만</span></div>
       </div>
       <div style="margin:14px 0 18px"><button class="btn" onclick="addVod()">＋ 다시보기 추가</button></div>
       <div class="table-wrap"><table><thead><tr><th>제목</th><th>VOD 번호</th><th>삭제</th></tr></thead><tbody id="vodTable"></tbody></table></div>
     </div>
   </div>
 
-  <!-- ══════════════════ 📢 공지 ══════════════════ -->
+  <!-- 📢 공지 -->
   <div class="panel" id="tab-notice">
     <div class="card">
       <div class="card-title">NEW BULLETIN <em>공지 등록</em></div>
       <div class="grid">
-        <div class="f full"><label>제목</label><input class="input" id="nt-title"></div>
-        <div class="f full"><label>내용</label><textarea class="input" id="nt-content"></textarea></div>
+        <div class="f full"><label>제목</label><input class="input" id="nt-title">
+          <span class="hint">목록에 보이는 제목</span></div>
+        <div class="f full"><label>내용</label><textarea class="input" id="nt-content"></textarea>
+          <span class="hint">줄바꿈 그대로 반영</span></div>
         <div class="f full"><label>이미지 주소 (선택 · 한 줄에 하나)</label><textarea class="input" id="nt-images" style="min-height:70px"></textarea>
-          <span class="hint">SOOP 비공개 게시판에 올린 뒤 이미지 <b>우클릭 → 이미지 주소 복사</b>. 글 주소가 아니라 <code>stimg.sooplive.com/…</code> 로 시작하는 직접 주소여야 합니다.</span></div>
+          <span class="hint">이미지 우클릭 → 이미지 주소 복사. 글 주소가 아닌 stimg.sooplive.com 으로 시작하는 직접 주소</span></div>
         <div class="f"><label>고정</label>
-          <div class="chk"><label><input type="checkbox" id="nt-pinned"> 맨 위에 고정</label></div></div>
+          <div class="chk"><label><input type="checkbox" id="nt-pinned"> 맨 위에 고정</label></div>
+          <span class="hint">체크한 공지가 목록 맨 위에 붙습니다</span></div>
       </div>
       <div style="margin-top:16px"><button class="btn pri" onclick="addNotice()">공지 등록</button></div>
     </div>
@@ -363,48 +525,57 @@ select.input option{ background:#1A100E; color:#F0DBDA; }
     </div>
   </div>
 
-  <!-- ══════════════════ 📅 일정 ══════════════════ -->
+  <!-- 📅 일정 -->
   <div class="panel" id="tab-schedule">
     <div class="card">
       <div class="card-title">NEW AGENDA <em>일정 등록</em></div>
       <div class="grid3">
-        <div class="f"><label>날짜</label><input class="input" id="sc-date" type="date"></div>
+        <div class="f"><label>시작 날짜</label><input class="input" id="sc-date" type="date">
+          <span class="hint">달력에 표시되는 날짜</span></div>
+        <div class="f"><label>종료 날짜 (선택)</label><input class="input" id="sc-end" type="date">
+          <span class="hint">비우면 하루짜리. 넣으면 달력에 시작일부터 종료일까지 띠로 이어집니다</span></div>
         <div class="f"><label>구분</label>
           <select class="input" id="sc-type"><option>일반</option><option>특별</option><option>콜라보</option><option>휴방</option></select>
-          <span class="hint">‘휴방’을 고르면 페이지에 CLOSED로 표시됩니다</span></div>
+          <span class="hint">휴방 선택 시 CLOSED로 표시</span></div>
         <div class="f"><label>달력 색</label>
+          <span class="hint" style="margin:0 0 5px">달력 칸 왼쪽 선 색</span>
           <select class="input" id="sc-color">
             <option value="green">초록</option><option value="blue">파랑</option><option value="pink">핑크</option>
             <option value="purple">보라</option><option value="orange">주황</option><option value="red">빨강</option>
             <option value="yellow">노랑</option><option value="gray">회색</option>
           </select></div>
-        <div class="f"><label>1부 시간</label><input class="input" id="sc-time" placeholder="20:00"></div>
-        <div class="f"><label>1부 제목</label><input class="input" id="sc-title" placeholder="배그 소통"></div>
+        <div class="f"><label>1부 시간</label><input class="input" id="sc-time" placeholder="20:00">
+          <span class="hint">예: 20:00</span></div>
+        <div class="f"><label>1부 제목</label><input class="input" id="sc-title" placeholder="배그 소통">
+          <span class="hint">달력 칸에 보이는 문구</span></div>
         <div class="f"><label>강조</label>
-          <div class="chk"><label><input type="checkbox" id="sc-highlight"> 달력에서 강조</label></div></div>
-        <div class="f"><label>2부 시간 (선택)</label><input class="input" id="sc-time2" placeholder="23:00"></div>
-        <div class="f"><label>2부 제목 (선택)</label><input class="input" id="sc-title2"></div>
+          <div class="chk"><label><input type="checkbox" id="sc-highlight"> 달력에서 강조</label></div>
+          <span class="hint">해당 칸에 테두리가 생깁니다</span></div>
+        <div class="f"><label>2부 시간 (선택)</label><input class="input" id="sc-time2" placeholder="23:00">
+          <span class="hint">예: 23:00</span></div>
+        <div class="f"><label>2부 제목 (선택)</label><input class="input" id="sc-title2">
+          <span class="hint">비우면 1부만 표시</span></div>
         <div class="f full"><label>설명 (선택)</label><textarea class="input" id="sc-desc" style="min-height:70px"></textarea>
-          <span class="hint">달력에서 날짜를 눌렀을 때 나오는 상세 설명</span></div>
+          <span class="hint">달력에서 날짜를 누르면 나오는 설명</span></div>
       </div>
       <div style="margin-top:16px"><button class="btn pri" onclick="addSchedule()">일정 등록</button></div>
     </div>
     <div class="card">
       <div class="card-title">AGENDA LIST <em>등록된 일정</em></div>
-      <div class="table-wrap"><table><thead><tr><th>날짜</th><th>구분</th><th>1부</th><th>2부</th><th>색</th><th>삭제</th></tr></thead><tbody id="scheduleTable"></tbody></table></div>
+      <div class="table-wrap"><table><thead><tr><th>날짜</th><th>기간</th><th>구분</th><th>1부</th><th>2부</th><th>삭제</th></tr></thead><tbody id="scheduleTable"></tbody></table></div>
     </div>
   </div>
 
-  <!-- ══════════════════ ⚡ 업보 ══════════════════ -->
+  <!-- ⚡ 업보 -->
   <div class="panel" id="tab-work">
     <div class="grid">
       <div class="card">
         <div class="card-title">GUESTS <em>시청자 등록</em></div>
         <div class="f" style="margin-bottom:12px"><label>닉네임</label><input class="input" id="vw-nick"></div>
         <div class="f" style="margin-bottom:12px"><label>SOOP 아이디 (선택)</label><input class="input" id="vw-id">
-          <span class="hint">넣으면 그 사람 프로필 사진이 자동으로 붙습니다</span></div>
+          <span class="hint">넣으면 프로필 사진 자동 연결</span></div>
         <div class="f" style="margin-bottom:14px"><label>메모 (선택)</label><input class="input" id="vw-memo">
-          <span class="hint">업보 상세창 맨 아래에 표시됩니다</span></div>
+          <span class="hint">업보 상세창 맨 아래 표시</span></div>
         <button class="btn pri" onclick="addViewer()">시청자 추가</button>
       </div>
       <div class="card">
@@ -412,7 +583,7 @@ select.input option{ background:#1A100E; color:#F0DBDA; }
         <div class="f" style="margin-bottom:12px"><label>업보 이름</label><input class="input" id="tp-name" placeholder="예: 지각, 트롤, 킬뺏기"></div>
         <div class="f" style="margin-bottom:14px"><label>분류</label>
           <select class="input" id="tp-cat"><option>일반</option><option>이벤트</option></select>
-          <span class="hint">‘이벤트’는 상세창에서 EVENT 배지가 붙습니다</span></div>
+          <span class="hint">이벤트 선택 시 EVENT 배지 표시</span></div>
         <button class="btn pri" onclick="addType()">업보 종류 추가</button>
       </div>
     </div>
@@ -431,24 +602,27 @@ select.input option{ background:#1A100E; color:#F0DBDA; }
       <div class="card-title">COUNTER <em>업보 카운트 입력</em></div>
       <div class="f" style="margin-bottom:14px"><label>시청자 선택</label>
         <select class="input" id="cnt-viewer" onchange="renderCounter()"></select>
-        <span class="hint">시청자를 고르면 아래에 업보 종류별 횟수 칸이 나옵니다. 숫자를 고치고 <b>카운트 저장</b>을 누르세요.</span></div>
+        <span class="hint">시청자를 고르면 종류별 횟수 칸이 나옴. 숫자 수정 후 카운트 저장</span></div>
       <div class="grid3" id="counterBox"></div>
       <div style="margin-top:16px"><button class="btn pri" onclick="saveCounts()">카운트 저장</button></div>
     </div>
   </div>
 
-  <!-- ══════════════════ 📓 일기 ══════════════════ -->
+  <!-- 📓 일기 -->
   <div class="panel" id="tab-diary">
     <div class="card">
       <div class="card-title">NEW NOTE <em>일기 작성</em></div>
       <div class="grid">
-        <div class="f"><label>날짜</label><input class="input" id="dr-date" type="date"></div>
+        <div class="f"><label>날짜</label><input class="input" id="dr-date" type="date">
+          <span class="hint">목록 정렬 기준</span></div>
         <div class="f"><label>기분 (선택)</label><input class="input" id="dr-mood" placeholder="예: 나른함 / 신남">
-          <span class="hint">제목 옆 작은 배지로 붙습니다</span></div>
-        <div class="f full"><label>제목</label><input class="input" id="dr-title"></div>
-        <div class="f full"><label>내용</label><textarea class="input" id="dr-content" style="min-height:140px"></textarea></div>
+          <span class="hint">제목 옆 배지</span></div>
+        <div class="f full"><label>제목</label><input class="input" id="dr-title">
+          <span class="hint">목록에 보이는 제목</span></div>
+        <div class="f full"><label>내용</label><textarea class="input" id="dr-content" style="min-height:140px"></textarea>
+          <span class="hint">줄바꿈 그대로 반영</span></div>
         <div class="f full"><label>이미지 주소 (선택 · 한 줄에 하나)</label><textarea class="input" id="dr-images" style="min-height:70px"></textarea>
-          <span class="hint">이미지 <b>직접 주소</b>를 붙여넣으세요 (우클릭 → 이미지 주소 복사)</span></div>
+          <span class="hint">이미지 직접 주소 (우클릭 → 이미지 주소 복사)</span></div>
       </div>
       <div style="margin-top:16px"><button class="btn pri" onclick="addDiary()">일기 등록</button></div>
     </div>
@@ -462,20 +636,23 @@ select.input option{ background:#1A100E; color:#F0DBDA; }
     </div>
   </div>
 
-  <!-- ══════════════════ 👗 옷장 ══════════════════ -->
+  <!-- 👗 옷장 -->
   <div class="panel" id="tab-dress">
     <div class="card">
       <div class="card-title">NEW LOOK <em>옷 등록</em></div>
       <div class="grid">
         <div class="f"><label>분류</label>
-          <select class="input" id="ds-cat"><option value="hair">헤어</option><option value="outfit">의상</option><option value="lens">렌즈</option></select></div>
-        <div class="f"><label>이름</label><input class="input" id="ds-name"></div>
+          <select class="input" id="ds-cat"><option value="hair">헤어</option><option value="outfit">의상</option><option value="lens">렌즈</option></select>
+          <span class="hint">옷 종류</span></div>
+        <div class="f"><label>이름</label><input class="input" id="ds-name">
+          <span class="hint">프로필 표에 표시</span></div>
         <div class="f full"><label>이미지 주소</label><input class="input" id="ds-img" placeholder="https://stimg.sooplive.com/...">
-          <span class="hint"><b>세로 3:4 (900×1200) 권장.</b> SOOP 비공개 게시판에 올린 뒤 이미지 우클릭 → 이미지 주소 복사.</span></div>
-        <div class="f full"><label>설명 (선택)</label><input class="input" id="ds-desc"></div>
+          <span class="hint">세로 3:4 (900×1200) 권장. 이미지 우클릭 → 이미지 주소 복사</span></div>
+        <div class="f full"><label>설명 (선택)</label><input class="input" id="ds-desc">
+          <span class="hint">옷 이름 아래 한 줄</span></div>
         <div class="f full"><label>포스터</label>
           <div class="chk"><label><input type="checkbox" id="ds-new" checked> ✦ 새 옷으로 올리기</label></div>
-          <span class="hint">체크하면 옷장의 <b>NEW LOOKS</b> 포스터 벽에, 해제하면 <b>ARCHIVE</b> 그리드에 들어갑니다. 나중에 표에서 언제든 전환할 수 있어요.</span></div>
+          <span class="hint">체크 = NEW LOOKS 포스터, 해제 = ARCHIVE 그리드. 표에서 전환 가능</span></div>
       </div>
       <div style="margin-top:16px"><button class="btn pri" onclick="addDress()">옷 등록</button></div>
     </div>
@@ -485,7 +662,7 @@ select.input option{ background:#1A100E; color:#F0DBDA; }
     </div>
   </div>
 
-  <!-- ══════════════════ ✉ 문의함 ══════════════════ -->
+  <!-- ✉ 문의함 -->
   <div class="panel" id="tab-ask">
     <div class="card">
       <div class="card-title">INBOX <em>받은 문의</em></div>
@@ -493,16 +670,121 @@ select.input option{ background:#1A100E; color:#F0DBDA; }
     </div>
   </div>
 
-  <!-- ══════════════════ 🎨 테마 ══════════════════ -->
+  <!-- ✏️ 문구 -->
+  <div class="panel" id="tab-words">
+    <div class="savebar">
+      <button class="btn pri" onclick="saveProfile()">문구 저장</button>
+      <span class="note">비워두면 기본값이 그대로 나옵니다</span>
+    </div>
+    <div class="card">
+      <div class="card-title">FIND <em>문구 찾기</em></div>
+      <input class="input" id="wordFind" placeholder="바꾸고 싶은 문구를 입력">
+    </div>
+      <div class="card">
+        <div class="card-title">공통 (전 페이지)</div>
+        <div class="grid">
+        <div class="f field"><label>메인</label><input class="input" id="f-txt-nav-main" placeholder="메인"><span class="hint">기본값: 메인</span></div>
+        <div class="f field"><label>프로필</label><input class="input" id="f-txt-nav-profile" placeholder="프로필"><span class="hint">기본값: 프로필</span></div>
+        <div class="f field"><label>일정</label><input class="input" id="f-txt-nav-schedule" placeholder="일정"><span class="hint">기본값: 일정</span></div>
+        <div class="f field"><label>공지</label><input class="input" id="f-txt-nav-notice" placeholder="공지"><span class="hint">기본값: 공지</span></div>
+        <div class="f field"><label>업보</label><input class="input" id="f-txt-nav-work" placeholder="업보"><span class="hint">기본값: 업보</span></div>
+        <div class="f field"><label>일기</label><input class="input" id="f-txt-nav-diary" placeholder="일기"><span class="hint">기본값: 일기</span></div>
+        <div class="f field"><label>옷장</label><input class="input" id="f-txt-nav-dress" placeholder="옷장"><span class="hint">기본값: 옷장</span></div>
+        <div class="f field"><label>✉ SEND</label><input class="input" id="f-txt-send-btn" placeholder="✉ SEND"><span class="hint">기본값: ✉ SEND</span></div>
+        <div class="f field"><label>SEND A SIGNAL</label><input class="input" id="f-txt-ask-kicker" placeholder="SEND A SIGNAL"><span class="hint">기본값: SEND A SIGNAL</span></div>
+        <div class="f field"><label>문의하기</label><input class="input" id="f-txt-ask-title" placeholder="문의하기"><span class="hint">기본값: 문의하기</span></div>
+        <div class="f field"><label>남긴 내용은 관리자만 확인합니다</label><input class="input" id="f-txt-ask-note" placeholder="남긴 내용은 관리자만 확인합니다"><span class="hint">기본값: 남긴 내용은 관리자만 확인합니다</span></div>
+        <div class="f field"><label>문의 내용을 적어주세요...</label><input class="input" id="f-txt-ask-ph" placeholder="문의 내용을 적어주세요..."><span class="hint">기본값: 문의 내용을 적어주세요...</span></div>
+        <div class="f field"><label>CANCEL</label><input class="input" id="f-txt-ask-cancel" placeholder="CANCEL"><span class="hint">기본값: CANCEL</span></div>
+        <div class="f field"><label>TRANSMIT ↗</label><input class="input" id="f-txt-ask-ok" placeholder="TRANSMIT ↗"><span class="hint">기본값: TRANSMIT ↗</span></div>
+        <div class="f field"><label>보다 보면 숩며든다</label><input class="input" id="f-txt-marquee" placeholder="보다 보면 숩며든다"><span class="hint">기본값: 보다 보면 숩며든다</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">메인 커버</div>
+        <div class="grid">
+        <div class="f field"><label>WEEKLY AGENDA / KST</label><input class="input" id="f-txt-c-agenda" placeholder="WEEKLY AGENDA / KST"><span class="hint">기본값: WEEKLY AGENDA / KST</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">프로필</div>
+        <div class="grid">
+        <div class="f field"><label>프로필</label><input class="input" id="f-txt-p-kr" placeholder="프로필"><span class="hint">기본값: 프로필</span></div>
+        <div class="f field"><label>살롱 주인장의 신상 명세. 기본 정보…</label><input class="input" id="f-txt-p-sub" placeholder="살롱 주인장의 신상 명세. 기본 정보부터 어록·능력치·다시보기까지 한 장에."><span class="hint">기본값: 살롱 주인장의 신상 명세. 기본 정보부터 어록·능력치·다시보기까지 한 장에.</span></div>
+        <div class="f field"><label>기본 정보</label><input class="input" id="f-txt-p-c1" placeholder="기본 정보"><span class="hint">기본값: 기본 정보</span></div>
+        <div class="f field"><label>소개</label><input class="input" id="f-txt-p-c2" placeholder="소개"><span class="hint">기본값: 소개</span></div>
+        <div class="f field"><label>좋아함</label><input class="input" id="f-txt-p-c3" placeholder="좋아함"><span class="hint">기본값: 좋아함</span></div>
+        <div class="f field"><label>싫어함</label><input class="input" id="f-txt-p-c4" placeholder="싫어함"><span class="hint">기본값: 싫어함</span></div>
+        <div class="f field"><label>능력치</label><input class="input" id="f-txt-p-c5" placeholder="능력치"><span class="hint">기본값: 능력치</span></div>
+        <div class="f field"><label>TMI</label><input class="input" id="f-txt-p-c6" placeholder="TMI"><span class="hint">기본값: TMI</span></div>
+        <div class="f field"><label>마일스톤</label><input class="input" id="f-txt-p-c7" placeholder="마일스톤"><span class="hint">기본값: 마일스톤</span></div>
+        <div class="f field"><label>어록</label><input class="input" id="f-txt-p-c8" placeholder="어록"><span class="hint">기본값: 어록</span></div>
+        <div class="f field"><label>특징 태그</label><input class="input" id="f-txt-p-c9" placeholder="특징 태그"><span class="hint">기본값: 특징 태그</span></div>
+        <div class="f field"><label>다시보기</label><input class="input" id="f-txt-p-c10" placeholder="다시보기"><span class="hint">기본값: 다시보기</span></div>
+        <div class="f field"><label>관련 링크</label><input class="input" id="f-txt-p-c11" placeholder="관련 링크"><span class="hint">기본값: 관련 링크</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">일정</div>
+        <div class="grid">
+        <div class="f field"><label>방송 일정</label><input class="input" id="f-txt-s-kr" placeholder="방송 일정"><span class="hint">기본값: 방송 일정</span></div>
+        <div class="f field"><label>이번 달 영업일. 시간은 랜덤이라 오…</label><input class="input" id="f-txt-s-sub" placeholder="이번 달 영업일. 시간은 랜덤이라 오방공을 함께 확인해 주세요."><span class="hint">기본값: 이번 달 영업일. 시간은 랜덤이라 오방공을 함께 확인해 주세요.</span></div>
+        <div class="f field"><label>다가오는 일정</label><input class="input" id="f-txt-s-c1" placeholder="다가오는 일정"><span class="hint">기본값: 다가오는 일정</span></div>
+        <div class="f field"><label>고정 요일</label><input class="input" id="f-txt-s-c2" placeholder="고정 요일"><span class="hint">기본값: 고정 요일</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">공지</div>
+        <div class="grid">
+        <div class="f field"><label>공지사항</label><input class="input" id="f-txt-n-kr" placeholder="공지사항"><span class="hint">기본값: 공지사항</span></div>
+        <div class="f field"><label>살롱 문 앞에 붙는 안내문. 고정 공…</label><input class="input" id="f-txt-n-sub" placeholder="살롱 문 앞에 붙는 안내문. 고정 공지가 맨 위에 걸립니다."><span class="hint">기본값: 살롱 문 앞에 붙는 안내문. 고정 공지가 맨 위에 걸립니다.</span></div>
+        <div class="f field"><label>공지</label><input class="input" id="f-txt-n-c1" placeholder="공지"><span class="hint">기본값: 공지</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">업보</div>
+        <div class="grid">
+        <div class="f field"><label>업보 장부</label><input class="input" id="f-txt-w-kr" placeholder="업보 장부"><span class="hint">기본값: 업보 장부</span></div>
+        <div class="f field"><label>단골들이 달아둔 외상 장부. 이름을 …</label><input class="input" id="f-txt-w-sub" placeholder="단골들이 달아둔 외상 장부. 이름을 누르면 내역이 펼쳐집니다."><span class="hint">기본값: 단골들이 달아둔 외상 장부. 이름을 누르면 내역이 펼쳐집니다.</span></div>
+        <div class="f field"><label>닉네임 또는 아이디로 찾기</label><input class="input" id="f-txt-w-ph" placeholder="닉네임 또는 아이디로 찾기"><span class="hint">기본값: 닉네임 또는 아이디로 찾기</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">일기</div>
+        <div class="grid">
+        <div class="f field"><label>심야 일기</label><input class="input" id="f-txt-d-kr" placeholder="심야 일기"><span class="hint">기본값: 심야 일기</span></div>
+        <div class="f field"><label>방송이 끝난 뒤 남기는 밤의 기록. …</label><input class="input" id="f-txt-d-sub" placeholder="방송이 끝난 뒤 남기는 밤의 기록. 한마디를 남길 수 있어요."><span class="hint">기본값: 방송이 끝난 뒤 남기는 밤의 기록. 한마디를 남길 수 있어요.</span></div>
+        <div class="f field"><label>일기</label><input class="input" id="f-txt-d-c1" placeholder="일기"><span class="hint">기본값: 일기</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">옷장</div>
+        <div class="grid">
+        <div class="f field"><label>옷장</label><input class="input" id="f-txt-r-kr" placeholder="옷장"><span class="hint">기본값: 옷장</span></div>
+        <div class="f field"><label>새로 맞춘 옷은 포스터로, 지난 옷은…</label><input class="input" id="f-txt-r-sub" placeholder="새로 맞춘 옷은 포스터로, 지난 옷은 아카이브로. 눌러서 크게 볼 수 있어요."><span class="hint">기본값: 새로 맞춘 옷은 포스터로, 지난 옷은 아카이브로. 눌러서 크게 볼 수 있어요.</span></div>
+        <div class="f field"><label>NEW LOOKS · 새 옷</label><input class="input" id="f-txt-r-new" placeholder="NEW LOOKS · 새 옷"><span class="hint">기본값: NEW LOOKS · 새 옷</span></div>
+        <div class="f field"><label>ARCHIVE · 기존 옷</label><input class="input" id="f-txt-r-old" placeholder="ARCHIVE · 기존 옷"><span class="hint">기본값: ARCHIVE · 기존 옷</span></div>
+        </div>
+      </div>
+  </div>
+
+  <!-- 🎨 테마 -->
   <div class="panel" id="tab-theme">
     <div class="savebar">
       <button class="btn pri" onclick="saveTheme()">테마 저장</button>
       <button class="btn" onclick="resetTheme()">기본값으로 되돌리기</button>
-      <span class="note">저장하면 메인·프로필·전 카테고리 페이지 색이 한 번에 바뀝니다</span>
+      <span class="note">저장하면 전 페이지 색이 바뀜</span>
     </div>
+    <div class="card">
+      <div class="card-title">PRESET <em>미리 맞춰둔 색 조합</em></div>
+      <div class="presets" id="presetBox"></div>
+      <p class="hint" style="margin-top:10px">누르면 6색이 한 번에 채워집니다. 저장해야 반영됩니다.</p>
+    </div>
+
     <div class="card">
       <div class="card-title">PALETTE <em>색 6종</em></div>
       <div class="pal" id="palBox"></div>
+      <div class="ctrast" id="ctrastBox"></div>
       <div class="preview" id="palPreview">
         <div class="pv-k" style="color:var(--brass)">THE NIGHT EDITION</div>
         <div class="pv-t" style="margin-top:6px">숩니찡 · NOIR SALON</div>
@@ -510,8 +792,21 @@ select.input option{ background:#1A100E; color:#F0DBDA; }
         <div style="display:flex;gap:8px;flex-wrap:wrap">
           <span class="pill br">BRASS</span><span class="pill on">ROSE</span><span class="pill">LINE</span>
         </div>
-        <p style="color:var(--tx3);font-size:11.5px;margin-top:12px">색을 고르면 이 상자에서 바로 확인할 수 있어요.</p>
+        <p style="color:var(--tx3);font-size:11.5px;margin-top:12px">색을 고르면 이 상자에 바로 반영</p>
       </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">TYPE SCALE <em>글자 크기</em></div>
+      <p class="hint" style="margin-bottom:14px">배율입니다. 1.00이 기본, 1.20이면 20% 크게. 저장하면 모든 페이지에 적용됩니다.</p>
+      <div class="tsgrid" id="tsgrid"></div>
+      <div class="tsprev" id="tsprev">
+        <div class="p-disp">숩니찡</div>
+        <div class="p-lbl">FILE 01 · DOSSIER</div>
+        <div class="p-title">기본 정보</div>
+        <div class="p-body">이 문장 크기가 본문 크기입니다.</div>
+      </div>
+      <div style="margin-top:14px"><button class="btn" id="ts-reset">기본값으로</button></div>
     </div>
   </div>
 
@@ -523,24 +818,34 @@ select.input option{ background:#1A100E; color:#F0DBDA; }
 <script src="../supabase.js"></script>
 <script src="../site.js"></script>
 <script>
-/* ═══════════════════════════════════════════════════════════════
-   숩니찡 ADMIN — 저장 키 목록
-   ⚠ 이 배열 · 아래 f-{키} 입력칸 · 각 페이지 data-hook 은 항상 같은 집합이어야 합니다.
-   ═══════════════════════════════════════════════════════════════ */
+/* Saved keys.
+   This array, the f-{key} inputs below and each page data-hook must stay one identical set. */
 var profileKeys = [
-  /* 🏠 메인 */
+  /* Main */
   'soop-id','avatar','cover-img','mascot-img',
   'mast-left','mast-issue','edition','name-kr','name-en','name-en1','name-en2',
   'cover-quote','meta1-k','meta1-v','meta2-k','meta2-v','meta3-k','meta3-v',
   'days','wk-0','wk-1','wk-2','wk-3','wk-4','wk-5','wk-6','next-label','next-value',
   'link-soop','link-youtube','link-x','link-etc','link-etc-label','footer-line',
-  /* 🎀 프로필 */
+  /* Profile */
   'info-name','info-fandom','info-birth','info-debut','info-mbti','info-agency','info-gender',
   'info-content','info-schedule','catchphrase','bio-short','about','quotes',
   'like1','like2','like3','like4','dislike1','dislike2','dislike3',
   'tmi-food','tmi-game','tmi-song','tmi-item','tags','stats','milestones',
-  /* 🎨 테마 */
-  'theme-ink','theme-paper','theme-brass','theme-brass-lt','theme-rose','theme-day-bg'
+  /* Theme */
+  'theme-ink','theme-paper','theme-brass','theme-brass-lt','theme-rose','theme-day-bg',
+  'type-display','type-title','type-body','type-label',
+  /* Fixed copy. The same key is used on every page: edit once, applies everywhere. */
+  'txt-nav-main','txt-nav-profile','txt-nav-schedule','txt-nav-notice','txt-nav-work',
+  'txt-nav-diary','txt-nav-dress','txt-send-btn','txt-ask-kicker','txt-ask-title',
+  'txt-ask-note','txt-ask-ph','txt-ask-cancel','txt-ask-ok','txt-marquee',
+  'txt-c-agenda','txt-p-kr','txt-p-sub','txt-p-c1','txt-p-c2',
+  'txt-p-c3','txt-p-c4','txt-p-c5','txt-p-c6','txt-p-c7',
+  'txt-p-c8','txt-p-c9','txt-p-c10','txt-p-c11','txt-s-kr',
+  'txt-s-sub','txt-s-c1','txt-s-c2','txt-n-kr','txt-n-sub',
+  'txt-n-c1','txt-w-kr','txt-w-sub','txt-w-ph','txt-d-kr',
+  'txt-d-sub','txt-d-c1','txt-r-kr','txt-r-sub','txt-r-new',
+  'txt-r-old'
 ];
 
 var PALETTE = [
@@ -553,50 +858,232 @@ var PALETTE = [
 ];
 
 var DAY_NAMES = ['월','화','수','목','금','토','일'];
+
+var TS = [
+  ['type-display','디스플레이','페이지 맨 위 초대형 제목'],
+  ['type-title',  '섹션 제목',  '각 구획 제목'],
+  ['type-body',   '본문',      '설명·값·목록'],
+  ['type-label',  '작은 라벨',  '영문 마이크로 라벨, 캡션']
+];
+
+/* label, [ink, paper, brass, brass-lt, rose, modal-bg] */
+var PRESETS = [
+  ['느와르',   ['#0C0706','#F0DBDA','#C87848','#E39A6E','#FA3883','#130C0A']],
+  ['미드나잇', ['#09070D','#F3EAFA','#9D77A6','#C79BD8','#E4CDF0','#140F1B']],
+  ['체리',     ['#0C0709','#FBEDF2','#B87A93','#E8A8BE','#F6D6E1','#170D12']],
+  ['피치',     ['#0D0806','#FCEFE6','#C08761','#F0B48C','#F9DCC6','#1A100B']],
+  ['오션',     ['#05080D','#EAF3FA','#6A97B8','#8FC7E8','#CFE6F5','#0C1420']]
+];
+
+var IMG_FIELDS = ['avatar','cover-img','mascot-img'];
+
+var DIRTY = false;
+function markDirty(){ DIRTY = true; var e=$('act-dirty'); if(e) e.textContent = '● 저장하지 않은 변경이 있습니다'; }
+function clearDirty(){ DIRTY = false; var e=$('act-dirty'); if(e) e.textContent = ''; }
+window.addEventListener('beforeunload', function(e){ if(DIRTY){ e.preventDefault(); e.returnValue=''; } });
+
+var TAB_PAGE = { main:'../', profile:'../profile/', notice:'../notice/', schedule:'../schedule/',
+                 work:'../work/', diary:'../diary/', dress:'../dress/', ask:'../', theme:'../', words:'../' };
+
+function _lum(hex){
+  var m = /^#([0-9a-fA-F]{6})$/.exec(String(hex||'').trim()); if(!m) return null;
+  var n = parseInt(m[1],16);
+  var f = [(n>>16)&255,(n>>8)&255,n&255].map(function(v){
+    v/=255; return v<=0.03928 ? v/12.92 : Math.pow((v+0.055)/1.055,2.4); });
+  return 0.2126*f[0] + 0.7152*f[1] + 0.0722*f[2];
+}
+function _ratio(a,b){
+  var l1=_lum(a), l2=_lum(b); if(l1===null||l2===null) return null;
+  return (Math.max(l1,l2)+0.05)/(Math.min(l1,l2)+0.05);
+}
+function palVal(key){
+  var el = $('f-'+key), def = (PALETTE.filter(function(p){ return p.key===key; })[0]||{}).def || '';
+  var v = (el && el.value || '').trim();
+  return /^#[0-9a-fA-F]{6}$/.test(v) ? v : def;
+}
+function renderContrast(){
+  var ink=palVal('theme-ink'), paper=palVal('theme-paper'), brass=palVal('theme-brass'),
+      lt=palVal('theme-brass-lt'), rose=palVal('theme-rose');
+  var pairs = [
+    ['본문 글자 / 배경', paper, ink],
+    ['포인트 / 배경',    brass, ink],
+    ['밝은 포인트 / 배경', lt,  ink],
+    ['시그널 / 배경',    rose, ink],
+    ['흰 글자 / 시그널 버튼', '#FFFFFF', rose]
+  ];
+  $('ctrastBox').innerHTML = pairs.map(function(p){
+    var r = _ratio(p[1], p[2]);
+    if(r === null) return '';
+    var cls = r >= 4.5 ? 'ok' : (r >= 3 ? 'warn' : 'bad');
+    var word = r >= 4.5 ? '좋음' : (r >= 3 ? '아슬함' : '안 읽힘');
+    return '<div class="row"><span>' + p[0] + '</span><b>' + r.toFixed(1) + ':1</b>'
+      + '<span class="g ' + cls + '">' + word + '</span></div>';
+  }).join('');
+}
+
+function tsPreview(){
+  TS.forEach(function(t){
+    var el = $('f-'+t[0]); if(!el) return;
+    var v = parseFloat(el.value) || 1;
+    var r = $('r-'+t[0]), lab = $('v-'+t[0]);
+    if(r) r.value = v;
+    if(lab) lab.textContent = v.toFixed(2);
+    $('tsprev').style.setProperty('--pv-' + t[0].replace('type-',''), v);
+  });
+}
+
+function setupThumbs(){
+  IMG_FIELDS.forEach(function(k){
+    var input = $('f-'+k); if(!input || input._paintThumb) return;
+    var box = document.createElement('div');
+    box.className = 'thumb'; box.id = 'th-'+k;
+    input.parentElement.appendChild(box);
+    var probe = new Image();
+    function paint(){
+      var v = String(input.value||'').trim();
+      if(!v){ box.className='thumb'; box.textContent=''; box.style.backgroundImage=''; return; }
+      probe.onload = function(){
+        box.className='thumb on'; box.textContent='';
+        box.style.backgroundImage = 'url("' + v.replace(/"/g,'%22') + '")';
+      };
+      probe.onerror = function(){
+        box.className='thumb on err'; box.style.backgroundImage='';
+        box.textContent='이 주소로는 이미지가 안 열립니다. 글 주소가 아닌 이미지 주소인지 확인하세요';
+      };
+      probe.referrerPolicy = 'no-referrer';
+      probe.src = v;
+    }
+    input.addEventListener('input', paint);
+    input._paintThumb = paint;
+  });
+}
+
+function doBackup(){
+  var data = {};
+  profileKeys.forEach(function(k){ var el = $('f-'+k); data[k] = el ? el.value : ''; });
+  var days = [];
+  document.querySelectorAll('.dayck').forEach(function(c){ if(c.checked) days.push(c.value); });
+  data['days'] = days.join(',');
+  var blob = new Blob([JSON.stringify({ saved_at:new Date().toISOString(), profile:data }, null, 2)],
+                      { type:'application/json' });
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'soobnijjing-' + new Date().toISOString().slice(0,10) + '.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+function doRestore(input){
+  var f = input.files && input.files[0]; if(!f) return;
+  var rd = new FileReader();
+  rd.onload = function(){
+    try{
+      var j = JSON.parse(rd.result);
+      var d = j.profile || j;
+      profileKeys.forEach(function(k){
+        var el = $('f-'+k);
+        if(el && d[k] !== undefined) el.value = d[k];
+      });
+      if(d['days'] !== undefined){
+        var on = String(d['days']).split(',');
+        document.querySelectorAll('.dayck').forEach(function(c){ c.checked = on.indexOf(c.value) >= 0; });
+      }
+      applyPreview(); tsPreview(); renderContrast();
+      IMG_FIELDS.forEach(function(k){ var el=$('f-'+k); if(el && el._paintThumb) el._paintThumb(); });
+      markDirty();
+      toast('불러왔어요. 저장을 눌러야 반영됩니다');
+    }catch(e){ toast('이 파일은 읽을 수 없어요'); }
+  };
+  rd.readAsText(f);
+  input.value = '';
+}
 var DEF = NOIR.DEFAULTS;
-var PW = '1234';   /* ⚠ 배포 전에 반드시 바꾸세요 */
 
 var P = {}, vodRows = [], viewers = [], types = [], counts = [];
 
-/* ─── 공통 ─── */
+/* Utils */
 function $(id){ return document.getElementById(id); }
 function esc(s){ return NOIR.esc(s); }
 function toast(m){ var t=$('toast'); t.textContent=m; t.classList.add('show'); clearTimeout(t._t); t._t=setTimeout(function(){t.classList.remove('show');},2400); }
 function fmt(s){ if(!s) return ''; var d=new Date(s); if(isNaN(d)) return String(s).slice(0,10);
   return d.getFullYear()+'.'+String(d.getMonth()+1).padStart(2,'0')+'.'+String(d.getDate()).padStart(2,'0'); }
 
-/* ─── 로그인 ─── */
-function login(){
-  if($('pw').value === PW){
-    sessionStorage.setItem('noir-admin','1');
-    $('gate').style.display='none'; $('app').style.display='';
-    initAll();
-  } else { toast('비밀번호가 달라요'); }
-}
-function logout(){ sessionStorage.removeItem('noir-admin'); location.reload(); }
-if(sessionStorage.getItem('noir-admin') === '1'){
-  $('gate').style.display='none'; $('app').style.display='';
-}
+/* ─── 로그인 (Supabase Auth) ───
+   비밀번호는 소스에 없습니다. Supabase에 등록된 관리자 계정으로만 들어올 수 있고,
+   로그인해야 DB 쓰기 권한(RLS)이 열립니다. */
+function gateMsg(m){ var e=$('gate-msg'); if(e) e.textContent = m || ''; }
 
-/* ─── 탭 ─── */
+async function login(){
+  var email = ($('email').value || '').trim();
+  var pw = $('pw').value || '';
+  if(!email || !pw){ gateMsg('이메일과 비밀번호를 모두 입력해 주세요'); return; }
+  if(!db){ gateMsg('Supabase에 연결할 수 없어요. 잠시 후 다시 시도해 주세요'); return; }
+  $('loginBtn').disabled = true; gateMsg('확인 중…');
+  try{
+    var r = await db.auth.signInWithPassword({ email: email, password: pw });
+    if(r.error){
+      gateMsg(/Invalid/i.test(r.error.message) ? '이메일 또는 비밀번호가 맞지 않아요' : r.error.message);
+      $('loginBtn').disabled = false; return;
+    }
+    enterAdmin();
+  }catch(e){
+    gateMsg('로그인 중 문제가 생겼어요: ' + (e && e.message || e));
+    $('loginBtn').disabled = false;
+  }
+}
+function enterAdmin(){
+  showApp();
+  initAll();
+  /* Ad-blocker filter lists can hide elements after load; re-assert for a few seconds. */
+  var t = 0, iv = setInterval(function(){ showApp(); if (++t > 12) clearInterval(iv); }, 400);
+}
+function showApp(){
+  var g = $('snGate'), a = $('snApp');
+  if (g) g.style.setProperty('display','none','important');
+  if (a) a.style.setProperty('display','block','important');
+}
+async function logout(){
+  try{ if(db) await db.auth.signOut(); }catch(e){}
+  location.reload();
+}
+/* Restore the session on reload */
+(async function(){
+  try{
+    if(!db) return;
+    var r = await db.auth.getSession();
+    if(r && r.data && r.data.session) enterAdmin();
+  }catch(e){}
+})();
+
+/* Tabs */
 document.querySelectorAll('.tab').forEach(function(b){
   b.onclick = function(){
     document.querySelectorAll('.tab').forEach(function(x){ x.classList.remove('active'); });
     document.querySelectorAll('.panel').forEach(function(x){ x.classList.remove('active'); });
     b.classList.add('active');
     $('tab-' + b.dataset.tab).classList.add('active');
+    var v = $('act-view'); if(v) v.href = TAB_PAGE[b.dataset.tab] || '../';
     window.scrollTo(0,0);
   };
 });
 
-/* ─── 요일 · 주간 아젠다 칸 만들기 ─── */
+/* Build day + weekly agenda inputs */
 (function(){
   $('daysBox').innerHTML = DAY_NAMES.map(function(d,i){
     return '<label><input type="checkbox" class="dayck" value="' + i + '">' + d + '</label>';
   }).join('');
   $('wkBox').innerHTML = DAY_NAMES.map(function(d,i){
     return '<div class="f"><label>' + d + '요일 표시글</label><input class="input" id="f-wk-' + i + '">'
-      + (i===0 ? '<span class="hint">커버 주간표에 그대로 뜹니다. 예: <code>GAME 21:00</code>, <code>DAY OFF</code></span>' : '') + '</div>';
+      + (i===0 ? '<span class="hint">커버 주간표에 그대로 표시. 예: GAME 21:00 / DAY OFF</span>' : '') + '</div>';
+  }).join('');
+  $('tsgrid').innerHTML = TS.map(function(t){
+    return '<div class="t"><div class="n">' + t[1] + '</div><div class="u">' + t[2] + '</div>'
+      + '<div class="ctl"><input type="range" id="r-' + t[0] + '" min="0.8" max="1.4" step="0.05" value="1">'
+      + '<span class="v" id="v-' + t[0] + '">1.00</span></div>'
+      + '<input type="hidden" id="f-' + t[0] + '" value="1"></div>';
+  }).join('');
+  $('presetBox').innerHTML = PRESETS.map(function(pr,i){
+    var chips = pr[1].slice(0,5).map(function(c){ return '<i style="background:' + c + '"></i>'; }).join('');
+    return '<button class="preset" data-preset="' + i + '"><span class="chips">' + chips + '</span><span>' + pr[0] + '</span></button>';
   }).join('');
   $('palBox').innerHTML = PALETTE.map(function(p){
     return '<div class="pal-row"><div class="pl">' + p.label + '</div><div class="pd">' + p.desc + '</div>'
@@ -605,7 +1092,48 @@ document.querySelectorAll('.tab').forEach(function(b){
   }).join('');
 })();
 
-/* ═══════════ 프로필(메인+프로필+테마) 불러오기 / 저장 ═══════════ */
+$('tsgrid').addEventListener('input', function(e){
+  var r = e.target.closest && e.target.closest('input[type=range]'); if(!r) return;
+  $('f-' + r.id.slice(2)).value = r.value;
+  tsPreview(); markDirty();
+});
+$('ts-reset').addEventListener('click', function(){
+  TS.forEach(function(t){ $('f-'+t[0]).value = '1'; });
+  tsPreview(); markDirty();
+});
+$('presetBox').addEventListener('click', function(e){
+  var b = e.target.closest && e.target.closest('[data-preset]'); if(!b) return;
+  var cols = PRESETS[+b.getAttribute('data-preset')][1];
+  PALETTE.forEach(function(p,i){
+    $('f-'+p.key).value = cols[i] || '';
+    var c = $('c-'+p.key); if(c && /^#[0-9a-fA-F]{6}$/.test(cols[i]||'')) c.value = cols[i];
+  });
+  applyPreview(); markDirty();
+  toast('색을 채웠어요. 저장을 눌러야 반영됩니다');
+});
+document.addEventListener('input', function(e){
+  if(e.target && e.target.id && e.target.id.indexOf('f-') === 0) markDirty();
+});
+$('wordFind').addEventListener('input', function(){
+  var q = this.value.trim().toLowerCase();
+  document.querySelectorAll('#tab-words .card').forEach(function(card){
+    if(card.querySelector('#wordFind')) return;
+    var any = false;
+    card.querySelectorAll('.field').forEach(function(fd){
+      var inp = fd.querySelector('input');
+      var hay = fd.textContent + ' ' + (inp ? inp.placeholder : '');
+      var ok = !q || hay.toLowerCase().indexOf(q) >= 0;
+      fd.style.display = ok ? '' : 'none';
+      if(ok) any = true;
+    });
+    card.style.display = any ? '' : 'none';
+  });
+});
+document.addEventListener('change', function(e){
+  if(e.target && e.target.classList && e.target.classList.contains('dayck')) markDirty();
+});
+
+/* Load / save main + profile + theme */
 async function loadProfile(){
   try{ var r = await db.from('profile').select('data').eq('id',1).single(); P = (r && r.data && r.data.data) || {}; }
   catch(e){ P = {}; }
@@ -616,15 +1144,19 @@ async function loadProfile(){
     else if(v && typeof v === 'object'){ try{ v = Object.values(v).join('\n'); }catch(e){ v=''; } }
     el.value = (k.indexOf('theme-') === 0 && !P[k]) ? '' : String(v);
   });
-  /* 요일 체크 */
+  /* Day checkboxes */
   var on = String(P['days'] !== undefined && P['days'] !== '' ? P['days'] : DEF['days']).split(',').map(function(s){return s.trim();});
   document.querySelectorAll('.dayck').forEach(function(c){ c.checked = on.indexOf(c.value) >= 0; });
-  /* 팔레트 미리보기 */
+  /* Palette */
   PALETTE.forEach(function(p){
     var v = (P[p.key] || '').trim() || p.def;
     var c = $('c-' + p.key); if(c) c.value = /^#[0-9a-fA-F]{6}$/.test(v) ? v : p.def;
   });
   applyPreview();
+  tsPreview();
+  setupThumbs();
+  IMG_FIELDS.forEach(function(k){ var el=$('f-'+k); if(el && el._paintThumb) el._paintThumb(); });
+  clearDirty();
 }
 
 async function saveProfile(){
@@ -638,11 +1170,11 @@ async function saveProfile(){
   document.querySelectorAll('.dayck').forEach(function(c){ if(c.checked) days.push(c.value); });
   data['days'] = days.join(',');
   var ok = await updateRow('profile', 1, { data: data, updated_at: new Date().toISOString() });
-  if(ok){ P = data; toast('저장했어요 ✦ 사이트를 새로고침하면 반영됩니다'); }
-  else toast('저장에 실패했어요');
+  if(ok){ P = data; clearDirty(); toast('저장했어요. 사이트를 새로고침하면 반영됩니다'); }
+  else toast('저장에 실패했어요 — 로그인이 풀렸을 수 있어요. 새로고침 후 다시 로그인해 주세요');
 }
 
-/* ═══════════ 🎨 테마 ═══════════ */
+/* Theme */
 function syncColor(key, v){ var t = $('f-' + key); if(t) t.value = v; applyPreview(); }
 function syncHex(key, v){
   v = v.trim(); var c = $('c-' + key);
@@ -655,6 +1187,7 @@ function applyPreview(){
     var v = ($('f-' + p.key).value || '').trim() || p.def;
     document.documentElement.style.setProperty(map[p.key], v);
   });
+  renderContrast();
 }
 async function saveTheme(){ await saveProfile(); }
 function resetTheme(){
@@ -663,7 +1196,7 @@ function resetTheme(){
   toast('기본값으로 되돌렸어요 — 저장을 눌러야 반영됩니다');
 }
 
-/* ═══════════ 다시보기(VOD) ═══════════ */
+/* Rerun (VOD) */
 async function loadVod(){
   try{ vodRows = await fetchAll('original_songs', { order:'created_at', asc:false }); }catch(e){ vodRows = []; }
   $('vodTable').innerHTML = vodRows.length ? vodRows.map(function(v){
@@ -679,7 +1212,7 @@ async function addVod(){
   } else toast('추가에 실패했어요');
 }
 
-/* ═══════════ 📢 공지 ═══════════ */
+/* Notice */
 async function loadNotice(){
   var rows = [];
   try{ rows = await fetchAll('notice', { order:'created_at', asc:false }); }catch(e){}
@@ -702,35 +1235,37 @@ async function addNotice(){
   } else toast('등록에 실패했어요');
 }
 
-/* ═══════════ 📅 일정 ═══════════ */
+/* Schedule */
 async function loadSchedule(){
   var rows = [];
   try{ rows = await fetchAll('schedule', { order:'date', asc:false }); }catch(e){}
   $('scheduleTable').innerHTML = rows.length ? rows.map(function(s){
     return '<tr><td>' + esc(s.date) + '</td>'
+      + '<td>' + (s.end_date && s.end_date > s.date ? '~ ' + esc(s.end_date) : '-') + '</td>'
       + '<td><span class="pill' + (s.type==='휴방' ? ' on' : ' br') + '">' + esc(s.type||'일반') + '</span>' + (s.highlight ? ' <span class="pill on">★</span>' : '') + '</td>'
       + '<td>' + esc([s.time, s.title].filter(Boolean).join(' ')) + '</td>'
       + '<td>' + esc([s.time2, s.title2].filter(Boolean).join(' ')) + '</td>'
-      + '<td>' + esc(s.color || 'green') + '</td>'
       + '<td><button class="btn sm del" onclick="delRow(\'schedule\',' + s.id + ',loadSchedule)">삭제</button></td></tr>';
   }).join('') : '<tr><td colspan="6" class="tb-empty">등록된 일정이 없어요</td></tr>';
 }
 async function addSchedule(){
   var d = $('sc-date').value;
   if(!d){ toast('날짜를 골라 주세요'); return; }
+  var end = $('sc-end').value || null;
+  if(end && end < d){ toast('종료 날짜가 시작 날짜보다 빠릅니다'); return; }
   var row = {
-    date:d, title:$('sc-title').value.trim(), time:$('sc-time').value.trim(),
+    date:d, end_date:end, title:$('sc-title').value.trim(), time:$('sc-time').value.trim(),
     type:$('sc-type').value, color:$('sc-color').value, highlight:$('sc-highlight').checked,
     time2:$('sc-time2').value.trim(), title2:$('sc-title2').value.trim(), description:$('sc-desc').value.trim()
   };
   if(await insertRow('schedule', row)){
-    ['sc-title','sc-time','sc-time2','sc-title2','sc-desc'].forEach(function(i){ $(i).value=''; });
+    ['sc-title','sc-time','sc-time2','sc-title2','sc-desc','sc-end'].forEach(function(i){ $(i).value=''; });
     $('sc-highlight').checked=false;
     toast('일정을 등록했어요'); loadSchedule();
   } else toast('등록에 실패했어요');
 }
 
-/* ═══════════ ⚡ 업보 ═══════════ */
+/* Ledger */
 async function loadWork(){
   try{
     var r = await Promise.all([
@@ -801,7 +1336,7 @@ async function addType(){
   } else toast('추가에 실패했어요');
 }
 
-/* ═══════════ 📓 일기 ═══════════ */
+/* Diary */
 async function loadDiary(){
   var rows = [], cmts = [];
   try{ rows = await fetchAll('diary', { order:'diary_date', asc:false }); }catch(e){}
@@ -835,8 +1370,8 @@ async function addDiary(){
   } else toast('등록에 실패했어요');
 }
 
-/* ═══════════ 👗 옷장 ═══════════ */
-var DRESS_CATS = { hair:'헤어', outfit:'의상', lens:'렌즈' };   /* ⚠ 옷장 페이지 CATS · 위 select 와 같은 값 */
+/* Wardrobe */
+var DRESS_CATS = { hair:'헤어', outfit:'의상', lens:'렌즈' };   /* Keep in sync with CATS on the wardrobe page and the select above */
 var dressRows = [];
 async function loadDress(){
   try{ var r = await db.from('dress_items').select('*').order('sort_order').order('created_at', { ascending:false }); dressRows = r.data || []; }
@@ -872,7 +1407,7 @@ async function delDress(id){
   if(await deleteRow('dress_items', id)){ toast('삭제했어요'); loadDress(); } else toast('삭제에 실패했어요');
 }
 
-/* ═══════════ ✉ 문의함 ═══════════ */
+/* Inbox */
 async function loadAsk(){
   var rows = [];
   try{ rows = await fetchAll('inquiries', { order:'created_at', asc:false }); }catch(e){}
@@ -882,18 +1417,17 @@ async function loadAsk(){
   }).join('') : '<tr><td colspan="3" class="tb-empty">받은 문의가 없어요</td></tr>';
 }
 
-/* ═══════════ 공통 삭제 ═══════════ */
+/* Shared delete */
 async function delRow(table, id, reload){
   if(!confirm('정말 삭제할까요?')) return;
   if(await deleteRow(table, id)){ toast('삭제했어요'); reload(); } else toast('삭제에 실패했어요');
 }
 
-/* ═══════════ 시작 ═══════════ */
+/* Boot */
 async function initAll(){
   await loadProfile();
   loadVod(); loadNotice(); loadSchedule(); loadWork(); loadDiary(); loadDress(); loadAsk();
 }
-if(sessionStorage.getItem('noir-admin') === '1') initAll();
 </script>
 </body>
 </html>

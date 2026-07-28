@@ -17,26 +17,26 @@
 <div class="mast"><div class="mast-in">
   <a class="nav-logo" href="../"><b data-hook="name-kr">숩니찡</b><span data-hook="name-en">SOOBNIJJING</span></a>
   <nav class="nm">
-    <a href="../">Cover<b>메인</b></a>
-    <a href="./" class="act">Dossier<b>프로필</b></a>
-    <a href="../schedule/">Agenda<b>일정</b></a>
-    <a href="../notice/">Bulletin<b>공지</b></a>
-    <a href="../work/">Ledger<b>업보</b></a>
-    <a href="../diary/">Notes<b>일기</b></a>
-    <a href="../dress/">Atelier<b>옷장</b></a>
+    <a href="../">Cover<b data-t="nav-main">메인</b></a>
+    <a href="./" class="act">Dossier<b data-t="nav-profile">프로필</b></a>
+    <a href="../schedule/">Agenda<b data-t="nav-schedule">일정</b></a>
+    <a href="../notice/">Bulletin<b data-t="nav-notice">공지</b></a>
+    <a href="../work/">Ledger<b data-t="nav-work">업보</b></a>
+    <a href="../diary/">Notes<b data-t="nav-diary">일기</b></a>
+    <a href="../dress/">Atelier<b data-t="nav-dress">옷장</b></a>
   </nav>
   <div class="mast-tools">
     <div class="dk" title="낮 / 밤 전환">NIGHT<span class="sw"><i></i></span>DAY</div>
-    <button class="ask" onclick="openAsk()">✉ SEND</button>
+    <button class="ask" onclick="openAsk()" data-t="send-btn">✉ SEND</button>
   </div>
 </div></div>
 <div class="shell">
 <div class="pagehero">
   <div class="ph-main">
     <div class="kicker"><i></i><span>FILE 01 · DOSSIER</span></div>
-    <div class="ph-kr">프로필</div>
+    <div class="ph-kr" data-t="p-kr">프로필</div>
     <div class="ph-title">DOS<span>SIER</span></div>
-    <p class="ph-sub">살롱 주인장의 신상 명세. 기본 정보부터 어록·능력치·다시보기까지 한 장에.</p>
+    <p class="ph-sub" data-t="p-sub">살롱 주인장의 신상 명세. 기본 정보부터 어록·능력치·다시보기까지 한 장에.</p>
     <div class="ghost">01</div>
   </div>
   <div class="ph-side">
@@ -59,7 +59,7 @@
     <div class="pf-name"><span data-hook="name-kr" style="display:inline">숩니찡</span><span data-hook="name-en">SOOBNIJJING</span></div>
     <p class="pf-quote" data-hook="catchphrase">아무래도~</p>
     <div class="card" style="margin-top:20px;margin-bottom:0">
-      <div class="card-title"><span class="no">01</span>Identity <em>기본 정보</em></div>
+      <div class="card-title"><span class="no">01</span>Identity <em data-t="p-c1">기본 정보</em></div>
       <dl class="dl two">
         <dt>NAME</dt><dd data-hook="info-name">숩니찡</dd>
         <dt>FANDOM</dt><dd data-hook="info-fandom">찡구</dd>
@@ -76,28 +76,28 @@
 </div>
 
 <div class="card">
-  <div class="card-title"><span class="no">02</span>House Rules <em>소개</em></div>
-  <p data-hook="about" data-multiline style="color:var(--tx2);font-size:13.4px"></p>
+  <div class="card-title"><span class="no">02</span>House Rules <em data-t="p-c2">소개</em></div>
+  <p data-hook="about" data-multiline style="color:var(--tx2);font-size:calc(13.4px * var(--fs-body))"></p>
 </div>
 
 <div class="grid2">
   <div class="card">
-    <div class="card-title"><span class="no">03</span>On the Menu <em>좋아함</em></div>
+    <div class="card-title"><span class="no">03</span>On the Menu <em data-t="p-c3">좋아함</em></div>
     <ul class="lk" id="likeBox"></ul>
   </div>
   <div class="card">
-    <div class="card-title"><span class="no">04</span>Off the Menu <em>싫어함</em></div>
+    <div class="card-title"><span class="no">04</span>Off the Menu <em data-t="p-c4">싫어함</em></div>
     <ul class="lk no" id="dislikeBox"></ul>
   </div>
 </div>
 
 <div class="grid2" style="margin-top:20px">
   <div class="card">
-    <div class="card-title"><span class="no">05</span>House Specs <em>능력치</em></div>
+    <div class="card-title"><span class="no">05</span>House Specs <em data-t="p-c5">능력치</em></div>
     <div id="statBox"></div>
   </div>
   <div class="card">
-    <div class="card-title"><span class="no">06</span>Signature <em>TMI</em></div>
+    <div class="card-title"><span class="no">06</span>Signature <em data-t="p-c6">TMI</em></div>
     <dl class="dl">
       <dt>FOOD</dt><dd data-hook="tmi-food">간장게장</dd>
       <dt>GAME</dt><dd data-hook="tmi-game">배그</dd>
@@ -108,27 +108,27 @@
 </div>
 
 <div class="card" style="margin-top:20px">
-  <div class="card-title"><span class="no">07</span>Reservations <em>마일스톤</em></div>
+  <div class="card-title"><span class="no">07</span>Reservations <em data-t="p-c7">마일스톤</em></div>
   <div id="msBox"></div>
 </div>
 
 <div class="card">
-  <div class="card-title"><span class="no">08</span>Overheard <em>어록</em></div>
+  <div class="card-title"><span class="no">08</span>Overheard <em data-t="p-c8">어록</em></div>
   <div id="quoteBox" style="display:grid;gap:12px"></div>
 </div>
 
 <div class="card">
-  <div class="card-title"><span class="no">09</span>Keywords <em>특징 태그</em></div>
+  <div class="card-title"><span class="no">09</span>Keywords <em data-t="p-c9">특징 태그</em></div>
   <div class="tags" id="tagBox"></div>
 </div>
 
 <div class="card" id="songs-card">
-  <div class="card-title"><span class="no">10</span>Rerun <em>다시보기</em></div>
+  <div class="card-title"><span class="no">10</span>Rerun <em data-t="p-c10">다시보기</em></div>
   <div class="vod-grid" id="ovod-grid"><div class="spinner"></div></div>
 </div>
 
 <div class="card">
-  <div class="card-title"><span class="no">11</span>Channels <em>관련 링크</em></div>
+  <div class="card-title"><span class="no">11</span>Channels <em data-t="p-c11">관련 링크</em></div>
   <div class="linkrow">
     <a class="linkbox" data-link="link-soop" target="_blank" rel="noopener"><b>SOOP LIVE</b><span>↗</span></a>
     <a class="linkbox" data-link="link-youtube" target="_blank" rel="noopener"><b>YOUTUBE</b><span>↗</span></a>
@@ -140,8 +140,8 @@
 
 <div class="marquee" aria-hidden="true">
   <div>
-    <span>보다 보면 숩며든다 <b>✦</b> SOOBNIJJING NOIR SALON <b>✦</b> 아무래도~ <b>✦</b> 찡구 ONLY <b>✦</b>&nbsp;</span>
-    <span>보다 보면 숩며든다 <b>✦</b> SOOBNIJJING NOIR SALON <b>✦</b> 아무래도~ <b>✦</b> 찡구 ONLY <b>✦</b>&nbsp;</span>
+    <span><i data-t="marquee" style="font-style:normal">보다 보면 숩며든다</i> <b>✦</b> SOOBNIJJING NOIR SALON <b>✦</b> 아무래도~ <b>✦</b> 찡구 ONLY <b>✦</b>&nbsp;</span>
+    <span><i data-t="marquee" style="font-style:normal">보다 보면 숩며든다</i> <b>✦</b> SOOBNIJJING NOIR SALON <b>✦</b> 아무래도~ <b>✦</b> 찡구 ONLY <b>✦</b>&nbsp;</span>
   </div>
 </div>
 
@@ -152,13 +152,13 @@
 
 <div class="askmask" id="askmask">
   <div class="askmodal">
-    <div class="mk">SEND A SIGNAL</div>
-    <h3>문의하기</h3>
-    <p>숩니찡에게 하고 싶은 말을 남겨주세요. (익명 · 관리자만 확인)</p>
-    <textarea id="askmsg" placeholder="문의 내용을 적어주세요..."></textarea>
+    <div class="mk" data-t="ask-kicker">SEND A SIGNAL</div>
+    <h3 data-t="ask-title">문의하기</h3>
+    <p data-t="ask-note">남긴 내용은 관리자만 확인합니다</p>
+    <textarea id="askmsg" data-tph="ask-ph" placeholder="문의 내용을 적어주세요..."></textarea>
     <div class="askbtns">
-      <button class="no" onclick="closeAsk()">CANCEL</button>
-      <button class="yes" onclick="sendAsk()">TRANSMIT ↗</button>
+      <button class="no" onclick="closeAsk()" data-t="ask-cancel">CANCEL</button>
+      <button class="yes" onclick="sendAsk()" data-t="ask-ok">TRANSMIT ↗</button>
     </div>
   </div>
 </div>
@@ -169,7 +169,7 @@
 <script src="../site.js"></script>
 <script>
 NOIR.boot({ after: async function(){
-  /* 좋아함 / 싫어함 */
+  /* Likes / dislikes */
   function fill(box, keys){
     var items = keys.map(function(k){ return NOIR.val(k); }).filter(Boolean);
     box.innerHTML = items.length
@@ -179,7 +179,7 @@ NOIR.boot({ after: async function(){
   fill(document.getElementById('likeBox'),    ['like1','like2','like3','like4']);
   fill(document.getElementById('dislikeBox'), ['dislike1','dislike2','dislike3']);
 
-  /* 능력치 — "이름:숫자" 줄 (배열/객체도 방어) */
+  /* Stats: name:number */
   var stats = NOIR.lines('stats').map(function(l){
     var m = l.split(/[:：]/); var n = parseInt((m[1]||'').replace(/[^0-9]/g,''),10);
     return { name:(m[0]||'').trim(), val: isNaN(n) ? 0 : Math.max(0, Math.min(100,n)) };
@@ -190,7 +190,7 @@ NOIR.boot({ after: async function(){
          + '<span class="sv">' + s.val + '</span></div>';
   }).join('') : '<div class="empty">능력치가 아직 없어요</div>';
 
-  /* 마일스톤 — "상태|내용" 줄 */
+  /* Milestones: state|text */
   var ms = NOIR.lines('milestones').map(function(l){
     var p = l.split('|');
     return p.length > 1 ? { k:p[0].trim(), v:p.slice(1).join('|').trim() } : { k:'예정', v:l };
@@ -199,13 +199,13 @@ NOIR.boot({ after: async function(){
     return '<div class="ms-row"><span class="mk">' + NOIR.esc(m.k) + '</span><span class="mv">' + NOIR.esc(m.v) + '</span></div>';
   }).join('') : '<div class="empty">등록된 목표가 없어요</div>';
 
-  /* 어록 */
+  /* Quotes */
   var qs = NOIR.lines('quotes');
   document.getElementById('quoteBox').innerHTML = qs.length ? qs.map(function(q){
-    return '<div style="font-family:var(--disp);font-size:17px;line-height:1.6;border-left:2px solid var(--brass);padding-left:14px">“' + NOIR.esc(q) + '”</div>';
+    return '<div style="font-family:var(--disp);font-size:calc(17px * var(--fs-title));line-height:1.6;border-left:2px solid var(--brass);padding-left:14px">“' + NOIR.esc(q) + '”</div>';
   }).join('') : '<div class="empty">어록이 아직 없어요</div>';
 
-  /* 특징 태그 */
+  /* Tags */
   var tags = NOIR.val('tags').split(/[,\n]/).map(function(s){ return s.trim(); }).filter(Boolean);
   document.getElementById('tagBox').innerHTML = tags.length
     ? tags.map(function(t){ return '<span>' + NOIR.esc(t) + '</span>'; }).join('')
@@ -214,7 +214,7 @@ NOIR.boot({ after: async function(){
   var el = document.getElementById('etcLabel');
   if(el) el.textContent = NOIR.val('link-etc-label') || 'LINK';
 
-  /* 다시보기(VOD) */
+  /* Rerun */
   var grid = document.getElementById('ovod-grid');
   var rows = [];
   try { rows = await fetchAll('original_songs', { order:'created_at', asc:false }); } catch(e){ rows = []; }
