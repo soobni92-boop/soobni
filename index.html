@@ -50,59 +50,59 @@ body.day .c4-photo::after{
   border-bottom:1px solid var(--line);
 }
 .c4-mast span,.c4-mast em{
-  font-family:var(--micro); font-size:calc(0.5625cqw * var(--fs-label)); font-style:normal;
+  font-family:var(--micro); font-size:calc(max(9px,0.5625cqw) * var(--fs-label)); font-style:normal;
   font-weight:800; letter-spacing:.22em; color:var(--tx2);
 }
-.c4-mast b{ font-family:var(--disp); font-size:calc(1.75cqw * var(--fs-display)); font-weight:400; }
+.c4-mast b{ font-family:var(--disp); font-size:calc(max(20px,1.75cqw) * var(--fs-display)); font-weight:400; }
 .c4-mast em{ justify-self:end; color:var(--brass); }
 
 .c4-editorial{ position:absolute; z-index:2; top:8.4375cqw; left:4.3cqw; width:26cqw; }
 .c4-editorial .edition{
-  font-family:var(--micro); color:var(--brass); font-size:calc(0.625cqw * var(--fs-label));
+  font-family:var(--micro); color:var(--brass); font-size:calc(max(9px,0.625cqw) * var(--fs-label));
   font-weight:900; letter-spacing:.2em;
 }
 .c4-editorial h1{
-  margin-top:1.125cqw; font-family:var(--disp); font-size:calc(7.375cqw * var(--fs-display));
+  margin-top:1.125cqw; font-family:var(--disp); font-size:calc(max(20px,7.375cqw) * var(--fs-display));
   font-weight:400; letter-spacing:-.08em; line-height:.76;
 }
 .c4-editorial h1 span{ display:inline; color:transparent; -webkit-text-stroke:1px var(--brass); }
 .c4-editorial .quote{
-  margin-top:2.25cqw; font-family:var(--disp); font-size:calc(1.1875cqw * var(--fs-title)); line-height:1.65;
+  margin-top:2.25cqw; font-family:var(--disp); font-size:calc(max(14px,1.1875cqw) * var(--fs-title)); line-height:1.65;
 }
 .c4-meta{ display:grid; margin-top:2.25cqw; gap:0.675cqw; border-top:1px solid var(--line); padding-top:1.0125cqw; }
 .c4-meta span{
   display:grid; grid-template-columns:4.6cqw 1fr; color:var(--tx2);
-  font-family:var(--micro); font-size:calc(0.5625cqw * var(--fs-label)); font-weight:700; letter-spacing:.13em;
+  font-family:var(--micro); font-size:calc(max(9px,0.5625cqw) * var(--fs-label)); font-weight:700; letter-spacing:.13em;
 }
 .c4-meta b{ color:var(--brass); }
 
 .c4-agenda{ position:absolute; z-index:3; top:8.4375cqw; right:4cqw; width:24cqw; }
 .c4-agenda>p{
   margin-bottom:1.125cqw; font-family:var(--micro); color:var(--brass);
-  font-size:calc(0.5625cqw * var(--fs-label)); font-weight:900; letter-spacing:.2em;
+  font-size:calc(max(9px,0.5625cqw) * var(--fs-label)); font-weight:900; letter-spacing:.2em;
 }
 .c4-agenda ol{ border-top:1px solid var(--line); }
 .c4-agenda li{
   display:grid; grid-template-columns:2.4cqw 3.6cqw 1fr; align-items:center;
   min-height:3.4312cqw; border-bottom:1px solid var(--line-2);
 }
-.c4-agenda li i{ font-family:var(--disp); font-style:normal; font-size:calc(0.875cqw * var(--fs-body)); color:var(--tx3); }
-.c4-agenda li b{ font-family:var(--micro); font-size:calc(0.6875cqw * var(--fs-body)); letter-spacing:.1em; }
+.c4-agenda li i{ font-family:var(--disp); font-style:normal; font-size:calc(max(11px,0.875cqw) * var(--fs-body)); color:var(--tx3); }
+.c4-agenda li b{ font-family:var(--micro); font-size:calc(max(11px,0.6875cqw) * var(--fs-body)); letter-spacing:.1em; }
 .c4-agenda li em{
   justify-self:end; font-family:var(--micro); font-style:normal; color:var(--tx2);
-  font-size:calc(0.625cqw * var(--fs-label)); letter-spacing:.1em; text-align:right;
+  font-size:calc(max(9px,0.625cqw) * var(--fs-label)); letter-spacing:.1em; text-align:right;
 }
 .c4-agenda li.on b{ color:var(--paper); }
 .c4-agenda li.today{ border-bottom-color:var(--brass); color:var(--brass-lt); }
 .c4-agenda li.today em,.c4-agenda li.today i{ color:var(--brass-lt); }
 
 .c4-next{ display:grid; margin-top:1.4625cqw; border-left:2px solid var(--brass); padding-left:1.1cqw; gap:0.3937cqw; }
-.c4-next span{ font-family:var(--micro); font-size:calc(0.5cqw * var(--fs-label)); font-weight:800; letter-spacing:.18em; color:var(--tx3); }
-.c4-next b{ font-family:var(--disp); font-size:calc(1.3125cqw * var(--fs-title)); font-weight:400; }
+.c4-next span{ font-family:var(--micro); font-size:calc(max(9px,0.5cqw) * var(--fs-label)); font-weight:800; letter-spacing:.18em; color:var(--tx3); }
+.c4-next b{ font-family:var(--disp); font-size:calc(max(14px,1.3125cqw) * var(--fs-title)); font-weight:400; }
 
 .c4-links{
   display:flex; margin-top:1.575cqw; gap:1.5cqw; font-family:var(--micro);
-  font-size:calc(0.5625cqw * var(--fs-label)); font-weight:800; letter-spacing:.12em;
+  font-size:calc(max(9px,0.5625cqw) * var(--fs-label)); font-weight:800; letter-spacing:.12em;
 }
 .c4-links a:hover{ color:var(--brass-lt); }
 
@@ -114,7 +114,7 @@ body.day .c4-photo::after{
 }
 .c4-mascot-cap{
   position:absolute; z-index:3; left:25.5%; bottom:4.725cqw; width:8.625cqw;
-  text-align:center; font-family:var(--micro); font-size:calc(0.4688cqw * var(--fs-label)); font-weight:800;
+  text-align:center; font-family:var(--micro); font-size:calc(max(9px,0.4688cqw) * var(--fs-label)); font-weight:800;
   letter-spacing:.2em; color:var(--tx3); pointer-events:none;
 }
 
@@ -127,28 +127,38 @@ body.day .c4-photo::after{
 .c4-foot .idx{ display:flex; gap:1.5cqw; flex-wrap:wrap; }
 .c4-foot .idx a{
   display:flex; align-items:baseline; gap:0.375cqw; font-family:var(--micro);
-  font-size:calc(0.5625cqw * var(--fs-label)); font-weight:800; letter-spacing:.16em; color:var(--tx3);
+  font-size:calc(max(9px,0.5625cqw) * var(--fs-label)); font-weight:800; letter-spacing:.16em; color:var(--tx3);
 }
-.c4-foot .idx a b{ font-family:var(--body); font-size:calc(0.6875cqw * var(--fs-label)); font-weight:400; letter-spacing:0; color:var(--tx2); }
+.c4-foot .idx a b{ font-family:var(--body); font-size:calc(max(9px,0.6875cqw) * var(--fs-label)); font-weight:400; letter-spacing:0; color:var(--tx2); }
 .c4-foot .idx a:hover,.c4-foot .idx a:hover b{ color:var(--brass-lt); }
 .c4-foot .tools{ margin-left:auto; display:flex; align-items:center; gap:0.75cqw; }
 .c4-foot .dk .sw{ width:1.25cqw; height:1.25cqw; }
 .c4-foot .dk .sw i{ width:0.75cqw; height:0.75cqw; left:0.1875cqw; top:0.1875cqw; }
 body.day .c4-foot .dk .sw i{ transform:translateX(0); }
-.c4-foot .ask{ padding:0.4375cqw 0.75cqw; font-size:calc(0.5312cqw * var(--fs-label)); }
+.c4-foot .ask{ padding:0.4375cqw 0.75cqw; font-size:calc(max(9px,0.5312cqw) * var(--fs-label)); }
 
 @media (min-aspect-ratio:2/1){ .c4-photo{ background-position:64% 43%; } }
-@media (max-height:780px){ .c4-agenda li{ min-height:3.0375cqw; } .c4-editorial .quote{ margin-top:1.4625cqw; } }
+/* Direct access: centre the 16:9 cover so square or tall screens (Fold unfolded is
+   984x1092) letterbox instead of leaving the bottom half empty. Embedded keeps the
+   stage flush to the top so the height we report matches the stage exactly. */
+@media (min-width:960px){
+  body:not(.embed){ min-height:100vh; display:flex; flex-direction:column; justify-content:center; }
+  body:not(.embed) .stage{ flex:none; }
+}
 
 /* Mobile: the 16:9 stage is dropped, so every cqw value above must be restated
    in real sizes. cqw here would be 1% of a ~390px viewport = far too small. */
 @media (max-width:959px){
   .stage{ aspect-ratio:auto; overflow:visible; }
-  .page{ position:static; min-height:100vh; padding-bottom:28px; }
+  .page{ position:static; padding-bottom:28px; }
+  body:not(.embed) .page{ min-height:100vh; }
   .c4-frame{ display:none; }
   .c4-mascot-cap{ display:none; }
 
-  .c4-photo{ position:relative; left:0; width:100%; height:50vh; box-shadow:none; }
+  /* Photo height is width-based. vh inside an iframe means the box height the
+     platform chose, which the SOOP app sets very large. */
+  .stage{ --photoH:clamp(300px,112vw,560px); }
+  .c4-photo{ position:relative; left:0; width:100%; height:var(--photoH); box-shadow:none; }
   .c4-photo::after{ background:linear-gradient(180deg,rgba(8,4,3,.55) 0,transparent 22%,transparent 62%,var(--ink) 100%); }
   body.day .c4-photo::after{ background:linear-gradient(180deg,rgba(239,230,225,.5) 0,transparent 24%,transparent 62%,var(--ink) 100%); }
 
@@ -178,7 +188,7 @@ body.day .c4-foot .dk .sw i{ transform:translateX(0); }
   .c4-next b{ font-size:calc(18px * var(--fs-title)); }
   .c4-links{ margin-top:18px; gap:16px; font-size:calc(10px * var(--fs-label)); flex-wrap:wrap; }
 
-  .c4-mascot{ left:auto; right:14px; bottom:auto; top:calc(50vh - 78px); width:82px; }
+  .c4-mascot{ left:auto; right:14px; bottom:auto; top:calc(var(--photoH) - 78px); width:82px; }
 
   .c4-foot{
     position:static; height:auto; flex-wrap:wrap; gap:14px;
@@ -197,6 +207,22 @@ body.day .c4-foot .dk .sw i{ transform:translateX(0); }
   .c4-editorial h1{ font-size:calc(clamp(52px,17vw,96px) * var(--fs-display)); }
   .c4-foot .idx{ gap:11px; }
   .c4-mascot{ width:70px; right:10px; }
+}
+/* Fold cover screen is 360 wide and very tall (21:9); keep the photo from eating the fold. */
+@media (max-width:365px){
+  .c4-editorial,.c4-agenda,.c4-foot{ padding-left:15px; padding-right:15px; }
+  .c4-foot{ margin-left:15px; margin-right:15px; }
+  .c4-meta span{ grid-template-columns:58px 1fr; }
+  .c4-agenda li{ grid-template-columns:22px 40px 1fr; }
+  .c4-foot .idx{ gap:9px; }
+}
+/* Narrow phones: trim the photo so the text starts higher. */
+@media (max-width:420px){
+  .stage{ --photoH:clamp(300px,108vw,440px); }
+  .c4-mascot{ top:calc(var(--photoH) - 68px); }
+}
+@media (max-width:365px){
+  .stage{ --photoH:clamp(280px,104vw,400px); }
 }
 </style>
 </head>
