@@ -255,6 +255,15 @@ footer .fkr{ font-family:var(--body); font-size:calc(11.5px * var(--fs-label)); 
 }
 .toast.show{ opacity:1; transform:translate(-50%,0); }
 
+/* Embedded in a tall iframe: masks are absolute and anchored by JS. */
+body.embed .askmask,body.embed .ov,body.embed .lightbox{
+  position:absolute; top:0; left:0; right:0; bottom:auto;
+}
+body.embed .askmask.on,body.embed .ov.show,body.embed .lightbox.open{
+  align-items:start; place-items:start center;
+}
+body.embed .lightbox-close{ position:absolute; }
+
 /* Notice */
 .notice-item{ border:1px solid var(--line); margin-bottom:-1px; cursor:pointer; background:var(--fill); }
 .notice-item.pinned{ border-left:2px solid var(--rose); }

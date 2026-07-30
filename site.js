@@ -137,6 +137,42 @@ window.NOIR = (function () {
     });
   }
 
+  /* Inside a tall SOOP iframe, position:fixed centers in the whole iframe box,
+     not in the part the reader is looking at. Anchor masks to the last click instead. */
+  var EMBED = false;
+  try { EMBED = window.self !== window.top; } catch(e){ EMBED = true; }
+  var lastY = 0;
+  var MASK_SEL = '.askmask,.ov,.lightbox';
+
+  function docHeight(){
+    return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight,
+                    document.body.offsetHeight, document.documentElement.offsetHeight);
+  }
+  function placeMask(el){
+    if(!EMBED || !el) return;
+    var inner = el.querySelector('.askmodal,.modal,.inner');
+    var dh = docHeight();
+    el.style.height = dh + 'px';
+    var ih = inner ? inner.offsetHeight : 280;
+    var y = Math.round(Math.max(16, Math.min(lastY - ih / 2, dh - ih - 16)));
+    if(inner) inner.style.marginTop = y + 'px';
+    var x = el.querySelector('.lightbox-close');
+    if(x) x.style.top = Math.max(8, y - 34) + 'px';
+  }
+  function watchMasks(){
+    if(!EMBED) return;
+    document.addEventListener('click', function(e){ if(e.pageY) lastY = e.pageY; }, true);
+    if(!window.MutationObserver) return;
+    new MutationObserver(function(muts){
+      for(var i = 0; i < muts.length; i++){
+        var t = muts[i].target;
+        if(t.matches && t.matches(MASK_SEL) &&
+           (t.classList.contains('on') || t.classList.contains('show') || t.classList.contains('open')))
+          placeMask(t);
+      }
+    }).observe(document.documentElement, { attributes:true, attributeFilter:['class'], subtree:true });
+  }
+
   /* Inquiry modal */
   function openAsk(){ var m = document.getElementById('askmask'); if(m) m.classList.add('on'); }
   function closeAsk(){ var m = document.getElementById('askmask'); if(m) m.classList.remove('on'); }
@@ -164,6 +200,8 @@ window.NOIR = (function () {
   function toast(msg){
     var t = document.getElementById('toast');
     if(!t){ t = document.createElement('div'); t.id='toast'; t.className='toast'; document.body.appendChild(t); }
+    if(EMBED){ t.style.position='absolute'; t.style.bottom='auto';
+               t.style.top = Math.round(Math.max(16, lastY + 40)) + 'px'; }
     t.textContent = msg; t.classList.add('show');
     clearTimeout(t._tm); t._tm = setTimeout(function(){ t.classList.remove('show'); }, 2400);
   }
@@ -277,6 +315,8 @@ window.NOIR = (function () {
     var mask = document.getElementById('askmask');
     if(mask) mask.addEventListener('click', function(e){ if(e.target === mask) closeAsk(); });
     bindEsc();
+    if(EMBED) document.body.classList.add('embed');
+    watchMasks();
     setTimeout(ready, 1600);   /* Show the page even if the fetch never resolves */
     await loadProfile();
     applyPalette();
