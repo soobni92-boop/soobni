@@ -66,11 +66,31 @@ function showToast(msg, duration = 2500) {
 }
 
 /* Auto height for the SOOP iframe */
+/* Report content height to the embedding post so one fixed height attribute
+   does not have to fit both desktop and mobile. Several message shapes are sent
+   because the host decides which one it listens for. */
 function initIframeResize() {
-  const send = () =>
-    window.parent.postMessage({ type: 'resize', height: document.body.scrollHeight }, '*');
+  if (window.self === window.top) return;
+  var last = 0;
+  function send() {
+    var h = Math.ceil(Math.max(
+      document.body.scrollHeight, document.body.offsetHeight,
+      document.documentElement.offsetHeight));
+    if (!h || Math.abs(h - last) < 2) return;
+    last = h;
+    var p = window.parent;
+    try { p.postMessage(h, '*'); } catch (e) {}
+    try { p.postMessage({ type: 'resize', height: h }, '*'); } catch (e) {}
+    try { p.postMessage({ height: h }, '*'); } catch (e) {}
+    try { p.postMessage({ context: 'iframe.resize', height: h }, '*'); } catch (e) {}
+    try { p.postMessage('setHeight:' + h, '*'); } catch (e) {}
+  }
   send();
-  new ResizeObserver(send).observe(document.body);
+  window.addEventListener('load', send);
+  window.addEventListener('resize', send);
+  document.addEventListener('click', function () { setTimeout(send, 120); });
+  if (window.ResizeObserver) new ResizeObserver(send).observe(document.body);
+  [200, 600, 1200, 2500].forEach(function (t) { setTimeout(send, t); });
 }
 
 /* ─ 호환용 별칭 ─
