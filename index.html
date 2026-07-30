@@ -140,20 +140,63 @@ body.day .c4-foot .dk .sw i{ transform:translateX(0); }
 @media (min-aspect-ratio:2/1){ .c4-photo{ background-position:64% 43%; } }
 @media (max-height:780px){ .c4-agenda li{ min-height:3.0375cqw; } .c4-editorial .quote{ margin-top:1.4625cqw; } }
 
+/* Mobile: the 16:9 stage is dropped, so every cqw value above must be restated
+   in real sizes. cqw here would be 1% of a ~390px viewport = far too small. */
 @media (max-width:959px){
-  .stage{ aspect-ratio:auto; }
-  .page{ position:static; min-height:100vh; padding-bottom:26px; }
-  .c4-photo{ position:relative; left:0; width:100%; height:56vh; }
+  .stage{ aspect-ratio:auto; overflow:visible; }
+  .page{ position:static; min-height:100vh; padding-bottom:28px; }
   .c4-frame{ display:none; }
-  .c4-mast{ position:absolute; top:0; left:0; right:0; height:auto; padding:14px 20px; }
-  .c4-editorial{ position:relative; top:auto; left:auto; width:auto; padding:26px 20px 0; }
-  .c4-editorial h1{ font-size:calc(14vw * var(--fs-display)); }
-  .c4-agenda{ position:relative; top:auto; right:auto; width:auto; padding:30px 20px 0; }
-  .c4-mascot{ left:auto; right:16px; bottom:auto; top:36vh; width:88px; }
   .c4-mascot-cap{ display:none; }
-  .c4-foot{ position:relative; left:auto; right:auto; bottom:auto; height:auto;
-            flex-wrap:wrap; gap:12px; margin:26px 20px 0; padding-top:16px; }
+
+  .c4-photo{ position:relative; left:0; width:100%; height:50vh; box-shadow:none; }
+  .c4-photo::after{ background:linear-gradient(180deg,rgba(8,4,3,.55) 0,transparent 22%,transparent 62%,var(--ink) 100%); }
+  body.day .c4-photo::after{ background:linear-gradient(180deg,rgba(239,230,225,.5) 0,transparent 24%,transparent 62%,var(--ink) 100%); }
+
+  .c4-mast{
+    position:absolute; top:0; left:0; right:0; height:auto; padding:13px 18px; gap:10px;
+    background:linear-gradient(180deg,rgba(8,4,3,.7),transparent);
+  }
+  body.day .c4-mast{ background:linear-gradient(180deg,rgba(239,230,225,.75),transparent); }
+  .c4-mast span,.c4-mast em{ font-size:calc(8.5px * var(--fs-label)); letter-spacing:.16em; }
+  .c4-mast b{ font-size:calc(19px * var(--fs-display)); }
+
+  .c4-editorial{ position:static; width:auto; padding:24px 18px 0; }
+  .c4-editorial .edition{ font-size:calc(9px * var(--fs-label)); letter-spacing:.18em; }
+  .c4-editorial h1{ margin-top:16px; font-size:calc(clamp(52px,16vw,96px) * var(--fs-display)); }
+  .c4-editorial .quote{ margin-top:22px; font-size:calc(15px * var(--fs-title)); }
+  .c4-meta{ margin-top:18px; gap:7px; padding-top:13px; }
+  .c4-meta span{ grid-template-columns:66px 1fr; font-size:calc(10px * var(--fs-label)); }
+
+  .c4-agenda{ position:static; width:auto; padding:26px 18px 0; }
+  .c4-agenda>p{ margin-bottom:11px; font-size:calc(9px * var(--fs-label)); }
+  .c4-agenda li{ grid-template-columns:26px 46px 1fr; min-height:41px; }
+  .c4-agenda li i{ font-size:calc(12px * var(--fs-body)); }
+  .c4-agenda li b{ font-size:calc(11.5px * var(--fs-body)); }
+  .c4-agenda li em{ font-size:calc(10.5px * var(--fs-label)); }
+  .c4-next{ margin-top:20px; padding-left:11px; gap:5px; }
+  .c4-next span{ font-size:calc(8.5px * var(--fs-label)); }
+  .c4-next b{ font-size:calc(18px * var(--fs-title)); }
+  .c4-links{ margin-top:18px; gap:16px; font-size:calc(10px * var(--fs-label)); flex-wrap:wrap; }
+
+  .c4-mascot{ left:auto; right:14px; bottom:auto; top:calc(50vh - 78px); width:82px; }
+
+  .c4-foot{
+    position:static; height:auto; flex-wrap:wrap; gap:14px;
+    margin:26px 18px 0; padding-top:15px;
+  }
+  .c4-foot .idx{ gap:14px; }
+  .c4-foot .idx a{ font-size:calc(9px * var(--fs-label)); }
+  .c4-foot .idx a b{ font-size:calc(12px * var(--fs-body)); }
   .c4-foot .tools{ margin-left:0; }
+  .c4-foot .ask{ padding:9px 14px; font-size:calc(9.5px * var(--fs-label)); }
+  .c4-foot .dk{ font-size:calc(8.5px * var(--fs-label)); }
+  .c4-foot .dk .sw{ width:20px; height:20px; }
+  .c4-foot .dk .sw i{ width:12px; height:12px; left:3px; top:3px; }
+}
+@media (max-width:420px){
+  .c4-editorial h1{ font-size:calc(clamp(52px,17vw,96px) * var(--fs-display)); }
+  .c4-foot .idx{ gap:11px; }
+  .c4-mascot{ width:70px; right:10px; }
 }
 </style>
 </head>
