@@ -16,11 +16,15 @@
 /* Cover */
 :root{ --char:url('assets/mascot.png');
   --fs-display:1; --fs-title:1; --fs-body:1; --fs-label:1; }
-html,body{ width:100%; height:100%; margin:0; overflow:hidden; }
+html,body{ width:100%; margin:0; }
+html,body{ overflow-x:hidden; }
+/* Fixed 1600x900 stage. JS sets the scale, so the ratio never changes
+   no matter what height the SOOP embed box gives us. */
+.stage{ position:relative; width:100%; overflow:hidden; }
 body{ opacity:0; transition:opacity .42s ease; }
 body.ready{ opacity:1; }
 
-.page{ position:relative; width:100%; height:100%; overflow:hidden; }
+.page{ position:relative; width:1600px; height:900px; overflow:hidden; transform-origin:top left; }
 
 .c4-photo{
   position:absolute; top:0; bottom:0; left:23%; width:55%;
@@ -39,92 +43,92 @@ body.day .c4-photo::after{
     linear-gradient(90deg,var(--ink) 0,rgba(239,230,225,.34) 30%,rgba(239,230,225,.34) 70%,var(--ink) 100%);
 }
 
-.c4-frame{ position:absolute; z-index:1; inset:3.4vh 2.8vw; border:1px solid var(--line); pointer-events:none; }
+.c4-frame{ position:absolute; z-index:1; inset:30.6px 44.8px; border:1px solid var(--line); pointer-events:none; }
 
 .c4-mast{
-  position:absolute; z-index:4; top:3.4vh; left:4.1vw; right:4.1vw;
-  display:grid; height:6vh; grid-template-columns:1fr auto 1fr; align-items:center;
+  position:absolute; z-index:4; top:30.6px; left:65.6px; right:65.6px;
+  display:grid; height:54px; grid-template-columns:1fr auto 1fr; align-items:center;
   border-bottom:1px solid var(--line);
 }
 .c4-mast span,.c4-mast em{
-  font-family:var(--micro); font-size:calc(clamp(8px,.58vw,11px) * var(--fs-label)); font-style:normal;
+  font-family:var(--micro); font-size:calc(9px * var(--fs-label)); font-style:normal;
   font-weight:800; letter-spacing:.22em; color:var(--tx2);
 }
-.c4-mast b{ font-family:var(--disp); font-size:calc(clamp(22px,1.75vw,34px) * var(--fs-display)); font-weight:400; }
+.c4-mast b{ font-family:var(--disp); font-size:calc(28px * var(--fs-display)); font-weight:400; }
 .c4-mast em{ justify-self:end; color:var(--brass); }
 
-.c4-editorial{ position:absolute; z-index:2; top:15vh; left:4.3vw; width:26vw; }
+.c4-editorial{ position:absolute; z-index:2; top:135px; left:68.8px; width:416px; }
 .c4-editorial .edition{
-  font-family:var(--micro); color:var(--brass); font-size:calc(clamp(8px,.6vw,11px) * var(--fs-label));
+  font-family:var(--micro); color:var(--brass); font-size:calc(10px * var(--fs-label));
   font-weight:900; letter-spacing:.2em;
 }
 .c4-editorial h1{
-  margin-top:2vh; font-family:var(--disp); font-size:calc(clamp(46px,7.4vw,146px) * var(--fs-display));
+  margin-top:18px; font-family:var(--disp); font-size:calc(118px * var(--fs-display));
   font-weight:400; letter-spacing:-.08em; line-height:.76;
 }
 .c4-editorial h1 span{ display:inline; color:transparent; -webkit-text-stroke:1px var(--brass); }
 .c4-editorial .quote{
-  margin-top:4vh; font-family:var(--disp); font-size:calc(clamp(14px,1.2vw,23px) * var(--fs-title)); line-height:1.65;
+  margin-top:36px; font-family:var(--disp); font-size:calc(19px * var(--fs-title)); line-height:1.65;
 }
-.c4-meta{ display:grid; margin-top:4vh; gap:1.2vh; border-top:1px solid var(--line); padding-top:1.8vh; }
+.c4-meta{ display:grid; margin-top:36px; gap:10.8px; border-top:1px solid var(--line); padding-top:16.2px; }
 .c4-meta span{
-  display:grid; grid-template-columns:4.6vw 1fr; color:var(--tx2);
-  font-family:var(--micro); font-size:calc(clamp(8px,.56vw,10px) * var(--fs-label)); font-weight:700; letter-spacing:.13em;
+  display:grid; grid-template-columns:73.6px 1fr; color:var(--tx2);
+  font-family:var(--micro); font-size:calc(9px * var(--fs-label)); font-weight:700; letter-spacing:.13em;
 }
 .c4-meta b{ color:var(--brass); }
 
-.c4-agenda{ position:absolute; z-index:3; top:15vh; right:4vw; width:min(24vw,450px); }
+.c4-agenda{ position:absolute; z-index:3; top:135px; right:64px; width:384px; }
 .c4-agenda>p{
-  margin-bottom:2vh; font-family:var(--micro); color:var(--brass);
-  font-size:calc(clamp(8px,.58vw,11px) * var(--fs-label)); font-weight:900; letter-spacing:.2em;
+  margin-bottom:18px; font-family:var(--micro); color:var(--brass);
+  font-size:calc(9px * var(--fs-label)); font-weight:900; letter-spacing:.2em;
 }
 .c4-agenda ol{ border-top:1px solid var(--line); }
 .c4-agenda li{
-  display:grid; grid-template-columns:2.4vw 3.6vw 1fr; align-items:center;
-  min-height:6.1vh; border-bottom:1px solid var(--line-2);
+  display:grid; grid-template-columns:38.4px 57.6px 1fr; align-items:center;
+  min-height:54.9px; border-bottom:1px solid var(--line-2);
 }
-.c4-agenda li i{ font-family:var(--disp); font-style:normal; font-size:calc(clamp(11px,.85vw,16px) * var(--fs-body)); color:var(--tx3); }
-.c4-agenda li b{ font-family:var(--micro); font-size:calc(clamp(9px,.67vw,13px) * var(--fs-body)); letter-spacing:.1em; }
+.c4-agenda li i{ font-family:var(--disp); font-style:normal; font-size:calc(14px * var(--fs-body)); color:var(--tx3); }
+.c4-agenda li b{ font-family:var(--micro); font-size:calc(11px * var(--fs-body)); letter-spacing:.1em; }
 .c4-agenda li em{
   justify-self:end; font-family:var(--micro); font-style:normal; color:var(--tx2);
-  font-size:calc(clamp(8px,.6vw,11px) * var(--fs-label)); letter-spacing:.1em; text-align:right;
+  font-size:calc(10px * var(--fs-label)); letter-spacing:.1em; text-align:right;
 }
 .c4-agenda li.on b{ color:var(--paper); }
 .c4-agenda li.today{ border-bottom-color:var(--brass); color:var(--brass-lt); }
 .c4-agenda li.today em,.c4-agenda li.today i{ color:var(--brass-lt); }
 
-.c4-next{ display:grid; margin-top:2.6vh; border-left:2px solid var(--brass); padding-left:1.1vw; gap:.7vh; }
+.c4-next{ display:grid; margin-top:23.4px; border-left:2px solid var(--brass); padding-left:17.6px; gap:6.3px; }
 .c4-next span{ font-family:var(--micro); font-size:calc(8px * var(--fs-label)); font-weight:800; letter-spacing:.18em; color:var(--tx3); }
-.c4-next b{ font-family:var(--disp); font-size:calc(clamp(15px,1.3vw,25px) * var(--fs-title)); font-weight:400; }
+.c4-next b{ font-family:var(--disp); font-size:calc(21px * var(--fs-title)); font-weight:400; }
 
 .c4-links{
-  display:flex; margin-top:2.8vh; gap:1.5vw; font-family:var(--micro);
-  font-size:calc(clamp(8px,.56vw,10px) * var(--fs-label)); font-weight:800; letter-spacing:.12em;
+  display:flex; margin-top:25.2px; gap:24px; font-family:var(--micro);
+  font-size:calc(9px * var(--fs-label)); font-weight:800; letter-spacing:.12em;
 }
 .c4-links a:hover{ color:var(--brass-lt); }
 
 /* Mascot stamp */
 .c4-mascot{
-  position:absolute; z-index:3; left:25.5%; bottom:11vh; width:clamp(78px,8.6vw,132px);
+  position:absolute; z-index:3; left:25.5%; bottom:99px; width:138px;
   filter:drop-shadow(0 16px 30px rgba(0,0,0,.55));
   animation:mascot-float 5.5s ease-in-out infinite; pointer-events:none;
 }
 .c4-mascot-cap{
-  position:absolute; z-index:3; left:25.5%; bottom:8.4vh; width:clamp(78px,8.6vw,132px);
+  position:absolute; z-index:3; left:25.5%; bottom:75.6px; width:138px;
   text-align:center; font-family:var(--micro); font-size:calc(7.5px * var(--fs-label)); font-weight:800;
   letter-spacing:.2em; color:var(--tx3); pointer-events:none;
 }
 
 /* Bottom index bar */
 .c4-foot{
-  position:absolute; z-index:4; left:4.1vw; right:4.1vw; bottom:3.4vh;
-  height:6vh; display:flex; align-items:center; gap:1.4vw;
+  position:absolute; z-index:4; left:65.6px; right:65.6px; bottom:30.6px;
+  height:54px; display:flex; align-items:center; gap:22.4px;
   border-top:1px solid var(--line);
 }
-.c4-foot .idx{ display:flex; gap:1.5vw; flex-wrap:wrap; }
+.c4-foot .idx{ display:flex; gap:24px; flex-wrap:wrap; }
 .c4-foot .idx a{
   display:flex; align-items:baseline; gap:6px; font-family:var(--micro);
-  font-size:calc(clamp(8px,.56vw,10px) * var(--fs-label)); font-weight:800; letter-spacing:.16em; color:var(--tx3);
+  font-size:calc(9px * var(--fs-label)); font-weight:800; letter-spacing:.16em; color:var(--tx3);
 }
 .c4-foot .idx a b{ font-family:var(--body); font-size:calc(11px * var(--fs-label)); font-weight:400; letter-spacing:0; color:var(--tx2); }
 .c4-foot .idx a:hover,.c4-foot .idx a:hover b{ color:var(--brass-lt); }
@@ -135,11 +139,11 @@ body.day .c4-foot .dk .sw i{ transform:translateX(0); }
 .c4-foot .ask{ padding:7px 12px; font-size:calc(8.5px * var(--fs-label)); }
 
 @media (min-aspect-ratio:2/1){ .c4-photo{ background-position:64% 43%; } }
-@media (max-height:780px){ .c4-agenda li{ min-height:5.4vh; } .c4-editorial .quote{ margin-top:2.6vh; } }
+@media (max-height:780px){ .c4-agenda li{ min-height:48.6px; } .c4-editorial .quote{ margin-top:23.4px; } }
 
-@media (max-width:960px){
-  html,body{ height:auto; overflow:auto; }
-  .page{ height:auto; min-height:100vh; padding-bottom:26px; }
+@media (max-width:959px){
+  .stage{ height:auto !important; }
+  .page{ width:auto !important; height:auto !important; transform:none !important; min-height:100vh; padding-bottom:26px; }
   .c4-photo{ position:relative; left:0; width:100%; height:56vh; }
   .c4-frame{ display:none; }
   .c4-mast{ position:absolute; top:0; left:0; right:0; height:auto; padding:14px 20px; }
@@ -157,7 +161,8 @@ body.day .c4-foot .dk .sw i{ transform:translateX(0); }
 <body>
 <script>if(localStorage.getItem('theme')==='light')document.body.classList.add('day');</script>
 
-<main class="page">
+<div class="stage" id="stage">
+<main class="page" id="cover">
   <div class="c4-photo" data-img="cover-img" role="img" aria-label="숩니찡"></div>
   <div class="c4-frame"></div>
 
@@ -211,6 +216,7 @@ body.day .c4-foot .dk .sw i{ transform:translateX(0); }
     </div>
   </div>
 </main>
+</div>
 
 <!-- 문의 모달 -->
 <div class="askmask" id="askmask">
@@ -227,6 +233,27 @@ body.day .c4-foot .dk .sw i{ transform:translateX(0); }
 </div>
 <div class="toast" id="toast"></div>
 
+<script>
+/* Scale the fixed stage. Width-fit when embedded, contain-fit when standalone. */
+(function(){
+  var W = 1600, H = 900;
+  function fit(){
+    var stage = document.getElementById('stage'), page = document.getElementById('cover');
+    if(!stage || !page) return;
+    if(window.innerWidth < 960){ stage.style.height=''; page.style.transform=''; return; }
+    var bw = stage.clientWidth || window.innerWidth;
+    var embedded = window.self !== window.top;
+    var s = embedded ? bw / W : Math.min(bw / W, window.innerHeight / H);
+    page.style.transform = 'scale(' + s + ')';
+    stage.style.height = Math.round(H * s) + 'px';
+    page.style.left = embedded ? '0px' : Math.round((bw - W * s) / 2) + 'px';
+  }
+  window.addEventListener('resize', fit);
+  window.addEventListener('load', fit);
+  document.addEventListener('DOMContentLoaded', fit);
+  fit();
+})();
+</script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="supabase.js"></script>
 <script src="site.js"></script>
